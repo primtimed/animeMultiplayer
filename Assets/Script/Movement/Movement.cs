@@ -39,7 +39,13 @@ public class Movement : NetworkBehaviour
 
     void Awake()
     {
-        _input = new PlayerControlls();
+        if (!IsOwner)
+        {
+            GameObject.Find("Keep").GetComponent<GameUI>()._rb = _back._rb;
+            GameObject.Find("Keep").GetComponent<GameUI>().StartAll();
+
+            _input = new PlayerControlls();
+        }
     }
 
     void OnEnable()
@@ -148,6 +154,14 @@ public class Movement : NetworkBehaviour
         {
             _sprinting = false;
             _moveSpeed = _walkSpeed;
+        }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (!_grounded)
+        {
+            _back._rb.velocity += new Vector3(0, -1, 0);
         }
     }
 }

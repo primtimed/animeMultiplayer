@@ -12,17 +12,20 @@ public class ConnectTo : MonoBehaviour
     {
         NetworkManager.Singleton.StartHost();
         _ui.SetActive(false);
+        Debug.Log("You are the HOST");
     }
 
     public void Join()
     {
         NetworkManager.Singleton.StartClient();
         _ui.SetActive(false);
+        Debug.Log("You are Connected");
     }
 
     public void Server()
     {
         NetworkManager.Singleton.StartServer();
         _ui.SetActive(false);
+        Debug.Log("You are the SERVER");
     }
 }
