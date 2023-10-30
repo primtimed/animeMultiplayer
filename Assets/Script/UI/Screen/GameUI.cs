@@ -5,11 +5,13 @@ using UnityEngine;
 
 public class GameUI : MonoBehaviour
 {
-    public Rigidbody _rb;
+    Rigidbody _rb;
     public TextMeshProUGUI _speedUI;
 
-    public void StartAll()
+    private void Start()
     {
+        _rb = GetComponent<Rigidbody>();
+
         StartCoroutine(Speed());
     }
 

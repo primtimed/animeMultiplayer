@@ -62,6 +62,15 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Slide"",
+                    ""type"": ""Button"",
+                    ""id"": ""29cccb7b-1b9e-417c-bac7-38fd6c1049b5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -152,6 +161,17 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                     ""action"": ""Rotation"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""57d5057b-7716-431a-84c7-f0de0457db95"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Slide"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -172,6 +192,15 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                     ""name"": ""Reload"",
                     ""type"": ""Button"",
                     ""id"": ""b02420ee-d318-4fd5-bee6-3d2ff011f6b5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Grappling"",
+                    ""type"": ""Button"",
+                    ""id"": ""7612451c-b724-4100-a56e-76fd5cef3fc5"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -198,6 +227,17 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Reload"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""15a4b061-2b44-45eb-9f69-7af5d5c25c65"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Grappling"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -250,6 +290,34 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Admin"",
+            ""id"": ""24256872-1bc3-445f-bdee-6425dc0da887"",
+            ""actions"": [
+                {
+                    ""name"": ""Console"",
+                    ""type"": ""Button"",
+                    ""id"": ""5a6a0c19-1837-43ea-9a82-06811efa08cd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""37b3980c-28bb-42e2-ba1a-55262892a614"",
+                    ""path"": ""<Keyboard>/backquote"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Console"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -260,14 +328,19 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
         m_Movement_Rotation = m_Movement.FindAction("Rotation", throwIfNotFound: true);
         m_Movement_Jump = m_Movement.FindAction("Jump", throwIfNotFound: true);
         m_Movement_Sprint = m_Movement.FindAction("Sprint", throwIfNotFound: true);
+        m_Movement_Slide = m_Movement.FindAction("Slide", throwIfNotFound: true);
         // Weapon
         m_Weapon = asset.FindActionMap("Weapon", throwIfNotFound: true);
         m_Weapon_Shoot = m_Weapon.FindAction("Shoot", throwIfNotFound: true);
         m_Weapon_Reload = m_Weapon.FindAction("Reload", throwIfNotFound: true);
+        m_Weapon_Grappling = m_Weapon.FindAction("Grappling", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_MouseLock = m_UI.FindAction("Mouse Lock", throwIfNotFound: true);
         m_UI_Esc = m_UI.FindAction("Esc", throwIfNotFound: true);
+        // Admin
+        m_Admin = asset.FindActionMap("Admin", throwIfNotFound: true);
+        m_Admin_Console = m_Admin.FindAction("Console", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -333,6 +406,7 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Movement_Rotation;
     private readonly InputAction m_Movement_Jump;
     private readonly InputAction m_Movement_Sprint;
+    private readonly InputAction m_Movement_Slide;
     public struct MovementActions
     {
         private @PlayerControlls m_Wrapper;
@@ -341,6 +415,7 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
         public InputAction @Rotation => m_Wrapper.m_Movement_Rotation;
         public InputAction @Jump => m_Wrapper.m_Movement_Jump;
         public InputAction @Sprint => m_Wrapper.m_Movement_Sprint;
+        public InputAction @Slide => m_Wrapper.m_Movement_Slide;
         public InputActionMap Get() { return m_Wrapper.m_Movement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -362,6 +437,9 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
             @Sprint.started += instance.OnSprint;
             @Sprint.performed += instance.OnSprint;
             @Sprint.canceled += instance.OnSprint;
+            @Slide.started += instance.OnSlide;
+            @Slide.performed += instance.OnSlide;
+            @Slide.canceled += instance.OnSlide;
         }
 
         private void UnregisterCallbacks(IMovementActions instance)
@@ -378,6 +456,9 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
             @Sprint.started -= instance.OnSprint;
             @Sprint.performed -= instance.OnSprint;
             @Sprint.canceled -= instance.OnSprint;
+            @Slide.started -= instance.OnSlide;
+            @Slide.performed -= instance.OnSlide;
+            @Slide.canceled -= instance.OnSlide;
         }
 
         public void RemoveCallbacks(IMovementActions instance)
@@ -401,12 +482,14 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
     private List<IWeaponActions> m_WeaponActionsCallbackInterfaces = new List<IWeaponActions>();
     private readonly InputAction m_Weapon_Shoot;
     private readonly InputAction m_Weapon_Reload;
+    private readonly InputAction m_Weapon_Grappling;
     public struct WeaponActions
     {
         private @PlayerControlls m_Wrapper;
         public WeaponActions(@PlayerControlls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Shoot => m_Wrapper.m_Weapon_Shoot;
         public InputAction @Reload => m_Wrapper.m_Weapon_Reload;
+        public InputAction @Grappling => m_Wrapper.m_Weapon_Grappling;
         public InputActionMap Get() { return m_Wrapper.m_Weapon; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -422,6 +505,9 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
             @Reload.started += instance.OnReload;
             @Reload.performed += instance.OnReload;
             @Reload.canceled += instance.OnReload;
+            @Grappling.started += instance.OnGrappling;
+            @Grappling.performed += instance.OnGrappling;
+            @Grappling.canceled += instance.OnGrappling;
         }
 
         private void UnregisterCallbacks(IWeaponActions instance)
@@ -432,6 +518,9 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
             @Reload.started -= instance.OnReload;
             @Reload.performed -= instance.OnReload;
             @Reload.canceled -= instance.OnReload;
+            @Grappling.started -= instance.OnGrappling;
+            @Grappling.performed -= instance.OnGrappling;
+            @Grappling.canceled -= instance.OnGrappling;
         }
 
         public void RemoveCallbacks(IWeaponActions instance)
@@ -503,21 +592,73 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
         }
     }
     public UIActions @UI => new UIActions(this);
+
+    // Admin
+    private readonly InputActionMap m_Admin;
+    private List<IAdminActions> m_AdminActionsCallbackInterfaces = new List<IAdminActions>();
+    private readonly InputAction m_Admin_Console;
+    public struct AdminActions
+    {
+        private @PlayerControlls m_Wrapper;
+        public AdminActions(@PlayerControlls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Console => m_Wrapper.m_Admin_Console;
+        public InputActionMap Get() { return m_Wrapper.m_Admin; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(AdminActions set) { return set.Get(); }
+        public void AddCallbacks(IAdminActions instance)
+        {
+            if (instance == null || m_Wrapper.m_AdminActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_AdminActionsCallbackInterfaces.Add(instance);
+            @Console.started += instance.OnConsole;
+            @Console.performed += instance.OnConsole;
+            @Console.canceled += instance.OnConsole;
+        }
+
+        private void UnregisterCallbacks(IAdminActions instance)
+        {
+            @Console.started -= instance.OnConsole;
+            @Console.performed -= instance.OnConsole;
+            @Console.canceled -= instance.OnConsole;
+        }
+
+        public void RemoveCallbacks(IAdminActions instance)
+        {
+            if (m_Wrapper.m_AdminActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IAdminActions instance)
+        {
+            foreach (var item in m_Wrapper.m_AdminActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_AdminActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public AdminActions @Admin => new AdminActions(this);
     public interface IMovementActions
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnRotation(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
+        void OnSlide(InputAction.CallbackContext context);
     }
     public interface IWeaponActions
     {
         void OnShoot(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
+        void OnGrappling(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
         void OnMouseLock(InputAction.CallbackContext context);
         void OnEsc(InputAction.CallbackContext context);
+    }
+    public interface IAdminActions
+    {
+        void OnConsole(InputAction.CallbackContext context);
     }
 }

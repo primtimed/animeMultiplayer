@@ -5,6 +5,7 @@ using Unity.Mathematics;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.GraphicsBuffer;
 
 public class Movement : NetworkBehaviour
 {
@@ -23,11 +24,11 @@ public class Movement : NetworkBehaviour
 
     //private
     PlayerControlls _input;
-    InputAction _move, _mouse, _sprint, _jump;
+    InputAction _move, _mouse, _sprint, _jump, _slide;
 
     float _x, _y;
 
-    bool _grounded, _sprinting, _jumping;
+    bool _grounded, _sprinting, _jumping, _slidding;
 
     [Serializable]
     public class BackSettings
@@ -35,17 +36,12 @@ public class Movement : NetworkBehaviour
         [SerializeField] public GameObject _camera;
         [SerializeField] public Rigidbody _rb;
         [SerializeField] public GameObject _center;
+        [SerializeField] public bool _wallrunning, _grappling;
     }
 
-    void Awake()
+    private void Awake()
     {
-        if (!IsOwner)
-        {
-            GameObject.Find("Keep").GetComponent<GameUI>()._rb = _back._rb;
-            GameObject.Find("Keep").GetComponent<GameUI>().StartAll();
-
-            _input = new PlayerControlls();
-        }
+        _input = new PlayerControlls();
     }
 
     void OnEnable()
@@ -57,12 +53,17 @@ public class Movement : NetworkBehaviour
         _move = _input.Movement.Movement;
         _mouse = _input.Movement.Rotation;
         _sprint = _input.Movement.Sprint;
+        _slide = _input.Movement.Slide;
         _jump = _input.Movement.Jump;
 
-        _jump.started += Jump;
 
         _sprint.started += Sprint;
         _sprint.canceled += Sprint;
+
+        _slide.started += Slide;
+        _slide.canceled += Slide;
+
+        _jump.started += Jump;
     }
 
     void OnDisable()
@@ -70,24 +71,43 @@ public class Movement : NetworkBehaviour
         _input.Disable();
     }
 
+    public void NotOwner()
+    {
+        GetComponentInChildren<Camera>().enabled = false;
+        GetComponentInChildren<AudioListener>().enabled = false;
+        GetComponent<OwnerCheck>()._owner = false;
+        GetComponent<WallRunning>().enabled = false;
+        enabled = false;
+    }
+
     void Update()
     {
+        if (!IsOwner) { NotOwner(); return; }
+
         Move(_move.ReadValue<Vector2>());
         Rotate(_mouse.ReadValue<Vector2>());
 
         Grounded();
-        SpeedControle();
     }
 
     void Move(Vector2 _moveV2)
     {
-        if (_moveV2.y != 0 || _moveV2.x != 0 && _grounded)
+        if (_moveV2.y != 0 || _moveV2.x != 0)
         {
-            Vector3 _moveDirection = _back._center.transform.forward * -_moveV2.x + _back._center.transform.right * _moveV2.y;
-            _back._rb.AddForce(_moveDirection * _moveSpeed, ForceMode.Force);
+            if (_grounded && !_slidding || _jumping)
+            {
+                Vector3 _moveDirection = _back._center.transform.forward * -_moveV2.x + _back._center.transform.right * _moveV2.y;
+                _back._rb.AddForce(_moveDirection * _moveSpeed, ForceMode.Force);
+
+                if (!_back._grappling || _grounded)
+                {
+                    Debug.Log("Move");
+                    SpeedControle();
+                }
+            }
         }
 
-        else if (_grounded)
+        else if (_grounded && !_jumping &&! _back._grappling && !_slidding)
         {
             _back._rb.velocity = new Vector3(0, 0, 0);
         }
@@ -127,7 +147,7 @@ public class Movement : NetworkBehaviour
             _grounded = true;
         }
 
-        else
+        else if (!_back._wallrunning || !_back._grappling)
         {
             _back._rb.velocity += new Vector3(0, -0.05f, 0);
             _grounded = false;
@@ -136,7 +156,14 @@ public class Movement : NetworkBehaviour
 
     void Jump(InputAction.CallbackContext context)
     {
-        if (_grounded)
+        if (_grounded && !_back._wallrunning)
+        {
+            _jumping = true;
+            _back._rb.AddForce(transform.up * _jumpHight, ForceMode.Impulse);
+            StartCoroutine(JumpTime());
+        }
+
+        else if (_back._wallrunning)
         {
             _back._rb.AddForce(transform.up * _jumpHight, ForceMode.Impulse);
         }
@@ -157,11 +184,33 @@ public class Movement : NetworkBehaviour
         }
     }
 
+    void Slide(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            _slidding = true;
+
+            _back._rb.velocity *= 1.5f;
+        }
+
+        else if (context.canceled)
+        {
+            transform.rotation = new quaternion(0,0,0,0);
+            _slidding = false;
+        }
+    }
+
     private void OnCollisionStay(Collision collision)
     {
-        if (!_grounded)
+        if (!_grounded && !_back._wallrunning)
         {
             _back._rb.velocity += new Vector3(0, -1, 0);
         }
+    }
+
+    IEnumerator JumpTime()
+    {
+        yield return new WaitForSeconds(.3f);
+        _jumping = false;
     }
 }
