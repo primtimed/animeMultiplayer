@@ -47,12 +47,12 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Jump"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""fecf2d47-8106-4b39-97f5-2e929f8f327d"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""Sprint"",
@@ -67,6 +67,15 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                     ""name"": ""Slide"",
                     ""type"": ""Button"",
                     ""id"": ""29cccb7b-1b9e-417c-bac7-38fd6c1049b5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Croush"",
+                    ""type"": ""Button"",
+                    ""id"": ""2cffd4a1-4092-4d29-abf1-15224c3589a8"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -89,6 +98,17 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                     ""name"": ""Up"",
                     ""id"": ""48b3036f-1bad-47bf-87e7-139a118b48d2"",
                     ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Up"",
+                    ""id"": ""abec5fb7-1a83-466e-99cd-3cf745d04771"",
+                    ""path"": ""<Mouse>/scroll/up"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -142,6 +162,17 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""f220ae0e-896b-47be-b796-542d78a7d838"",
+                    ""path"": ""<Mouse>/scroll/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""6e35d0f1-17f9-41f9-bb1a-7e93ee8f36fa"",
                     ""path"": ""<Keyboard>/leftShift"",
                     ""interactions"": """",
@@ -172,6 +203,17 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                     ""action"": ""Slide"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4555fdfa-25d1-4836-ac03-fe2a9d9ebce1"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Croush"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -192,15 +234,6 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                     ""name"": ""Reload"",
                     ""type"": ""Button"",
                     ""id"": ""b02420ee-d318-4fd5-bee6-3d2ff011f6b5"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Grappling"",
-                    ""type"": ""Button"",
-                    ""id"": ""7612451c-b724-4100-a56e-76fd5cef3fc5"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -227,17 +260,6 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Reload"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""15a4b061-2b44-45eb-9f69-7af5d5c25c65"",
-                    ""path"": ""<Keyboard>/q"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Grappling"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -318,6 +340,34 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Abbilities"",
+            ""id"": ""3e017b29-9005-496b-ad33-b88eeb5fa905"",
+            ""actions"": [
+                {
+                    ""name"": ""1"",
+                    ""type"": ""Button"",
+                    ""id"": ""6ae33d43-3d3c-41b5-958c-9db2ea2503b4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""31c29ccb-d9bd-48f2-8890-7741fdb18b18"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -329,11 +379,11 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
         m_Movement_Jump = m_Movement.FindAction("Jump", throwIfNotFound: true);
         m_Movement_Sprint = m_Movement.FindAction("Sprint", throwIfNotFound: true);
         m_Movement_Slide = m_Movement.FindAction("Slide", throwIfNotFound: true);
+        m_Movement_Croush = m_Movement.FindAction("Croush", throwIfNotFound: true);
         // Weapon
         m_Weapon = asset.FindActionMap("Weapon", throwIfNotFound: true);
         m_Weapon_Shoot = m_Weapon.FindAction("Shoot", throwIfNotFound: true);
         m_Weapon_Reload = m_Weapon.FindAction("Reload", throwIfNotFound: true);
-        m_Weapon_Grappling = m_Weapon.FindAction("Grappling", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_MouseLock = m_UI.FindAction("Mouse Lock", throwIfNotFound: true);
@@ -341,6 +391,9 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
         // Admin
         m_Admin = asset.FindActionMap("Admin", throwIfNotFound: true);
         m_Admin_Console = m_Admin.FindAction("Console", throwIfNotFound: true);
+        // Abbilities
+        m_Abbilities = asset.FindActionMap("Abbilities", throwIfNotFound: true);
+        m_Abbilities__1 = m_Abbilities.FindAction("1", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -407,6 +460,7 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Movement_Jump;
     private readonly InputAction m_Movement_Sprint;
     private readonly InputAction m_Movement_Slide;
+    private readonly InputAction m_Movement_Croush;
     public struct MovementActions
     {
         private @PlayerControlls m_Wrapper;
@@ -416,6 +470,7 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_Movement_Jump;
         public InputAction @Sprint => m_Wrapper.m_Movement_Sprint;
         public InputAction @Slide => m_Wrapper.m_Movement_Slide;
+        public InputAction @Croush => m_Wrapper.m_Movement_Croush;
         public InputActionMap Get() { return m_Wrapper.m_Movement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -440,6 +495,9 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
             @Slide.started += instance.OnSlide;
             @Slide.performed += instance.OnSlide;
             @Slide.canceled += instance.OnSlide;
+            @Croush.started += instance.OnCroush;
+            @Croush.performed += instance.OnCroush;
+            @Croush.canceled += instance.OnCroush;
         }
 
         private void UnregisterCallbacks(IMovementActions instance)
@@ -459,6 +517,9 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
             @Slide.started -= instance.OnSlide;
             @Slide.performed -= instance.OnSlide;
             @Slide.canceled -= instance.OnSlide;
+            @Croush.started -= instance.OnCroush;
+            @Croush.performed -= instance.OnCroush;
+            @Croush.canceled -= instance.OnCroush;
         }
 
         public void RemoveCallbacks(IMovementActions instance)
@@ -482,14 +543,12 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
     private List<IWeaponActions> m_WeaponActionsCallbackInterfaces = new List<IWeaponActions>();
     private readonly InputAction m_Weapon_Shoot;
     private readonly InputAction m_Weapon_Reload;
-    private readonly InputAction m_Weapon_Grappling;
     public struct WeaponActions
     {
         private @PlayerControlls m_Wrapper;
         public WeaponActions(@PlayerControlls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Shoot => m_Wrapper.m_Weapon_Shoot;
         public InputAction @Reload => m_Wrapper.m_Weapon_Reload;
-        public InputAction @Grappling => m_Wrapper.m_Weapon_Grappling;
         public InputActionMap Get() { return m_Wrapper.m_Weapon; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -505,9 +564,6 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
             @Reload.started += instance.OnReload;
             @Reload.performed += instance.OnReload;
             @Reload.canceled += instance.OnReload;
-            @Grappling.started += instance.OnGrappling;
-            @Grappling.performed += instance.OnGrappling;
-            @Grappling.canceled += instance.OnGrappling;
         }
 
         private void UnregisterCallbacks(IWeaponActions instance)
@@ -518,9 +574,6 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
             @Reload.started -= instance.OnReload;
             @Reload.performed -= instance.OnReload;
             @Reload.canceled -= instance.OnReload;
-            @Grappling.started -= instance.OnGrappling;
-            @Grappling.performed -= instance.OnGrappling;
-            @Grappling.canceled -= instance.OnGrappling;
         }
 
         public void RemoveCallbacks(IWeaponActions instance)
@@ -638,6 +691,52 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
         }
     }
     public AdminActions @Admin => new AdminActions(this);
+
+    // Abbilities
+    private readonly InputActionMap m_Abbilities;
+    private List<IAbbilitiesActions> m_AbbilitiesActionsCallbackInterfaces = new List<IAbbilitiesActions>();
+    private readonly InputAction m_Abbilities__1;
+    public struct AbbilitiesActions
+    {
+        private @PlayerControlls m_Wrapper;
+        public AbbilitiesActions(@PlayerControlls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @_1 => m_Wrapper.m_Abbilities__1;
+        public InputActionMap Get() { return m_Wrapper.m_Abbilities; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(AbbilitiesActions set) { return set.Get(); }
+        public void AddCallbacks(IAbbilitiesActions instance)
+        {
+            if (instance == null || m_Wrapper.m_AbbilitiesActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_AbbilitiesActionsCallbackInterfaces.Add(instance);
+            @_1.started += instance.On_1;
+            @_1.performed += instance.On_1;
+            @_1.canceled += instance.On_1;
+        }
+
+        private void UnregisterCallbacks(IAbbilitiesActions instance)
+        {
+            @_1.started -= instance.On_1;
+            @_1.performed -= instance.On_1;
+            @_1.canceled -= instance.On_1;
+        }
+
+        public void RemoveCallbacks(IAbbilitiesActions instance)
+        {
+            if (m_Wrapper.m_AbbilitiesActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IAbbilitiesActions instance)
+        {
+            foreach (var item in m_Wrapper.m_AbbilitiesActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_AbbilitiesActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public AbbilitiesActions @Abbilities => new AbbilitiesActions(this);
     public interface IMovementActions
     {
         void OnMovement(InputAction.CallbackContext context);
@@ -645,12 +744,12 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
         void OnSlide(InputAction.CallbackContext context);
+        void OnCroush(InputAction.CallbackContext context);
     }
     public interface IWeaponActions
     {
         void OnShoot(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
-        void OnGrappling(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
@@ -660,5 +759,9 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
     public interface IAdminActions
     {
         void OnConsole(InputAction.CallbackContext context);
+    }
+    public interface IAbbilitiesActions
+    {
+        void On_1(InputAction.CallbackContext context);
     }
 }

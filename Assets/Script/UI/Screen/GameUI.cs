@@ -6,7 +6,9 @@ using UnityEngine;
 public class GameUI : MonoBehaviour
 {
     Rigidbody _rb;
-    public TextMeshProUGUI _speedUI;
+    public TextMeshProUGUI _speedUI, _abbilUI;
+
+    public float _time;
 
     private void Start()
     {
@@ -21,5 +23,18 @@ public class GameUI : MonoBehaviour
         yield return new WaitForSeconds(.2f);
 
         StartCoroutine(Speed());
+    }
+
+    private void Update()
+    {
+        if (_time <= 0)
+        {
+            _abbilUI.text = _time.ToString("f1");
+        }
+
+        else
+        {
+            _abbilUI.text = null;
+        }
     }
 }

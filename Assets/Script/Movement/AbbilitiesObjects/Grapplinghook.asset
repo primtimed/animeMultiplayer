@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d81257a48c5c4842a47f07f02d11be6, type: 3}
+  m_Name: Grapplinghook
+  m_EditorClassIdentifier: 
+  _maxDistance: 100
+  _aimAssist: 1.5
+  _spring: 40
+  _jumpBoost: 15
+  _jumpTime: 1
+  _whatIsGrappleable:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  _gun: {fileID: 3632069814365642577, guid: 7483da1c978bfdb4f850cc17ed5d3d2a, type: 3}

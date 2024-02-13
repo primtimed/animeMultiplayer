@@ -1,0 +1,31 @@
+[1030/020131.725:ERROR:gpu_init.cc(523)] Passthrough is not supported, GL is disabled, ANGLE is 
+[1030/042038.800:WARNING:dns_config_service_win.cc(583)] Failed to read DnsConfig.
+[1030/042038.823:WARNING:dns_config_service_win.cc(583)] Failed to read DnsConfig.
+[1030/042039.227:WARNING:dns_config_service_win.cc(583)] Failed to read DnsConfig.
+[1030/042039.231:WARNING:dns_config_service_win.cc(583)] Failed to read DnsConfig.
+[1030/042039.321:WARNING:dns_config_service_win.cc(583)] Failed to read DnsConfig.
+[1030/042039.325:WARNING:dns_config_service_win.cc(583)] Failed to read DnsConfig.
+[1030/104136.889:ERROR:gpu_init.cc(523)] Passthrough is not supported, GL is disabled, ANGLE is 
+[1030/130021.775:ERROR:gpu_init.cc(523)] Passthrough is not supported, GL is disabled, ANGLE is 
+[1101/133531.303:ERROR:gpu_init.cc(523)] Passthrough is not supported, GL is disabled, ANGLE is 
+[1102/135321.120:ERROR:gpu_init.cc(523)] Passthrough is not supported, GL is disabled, ANGLE is 
+[1103/102237.795:ERROR:gpu_init.cc(523)] Passthrough is not supported, GL is disabled, ANGLE is 
+[1109/133229.226:WARNING:value_store_frontend.cc(47)] Reading mhjfbmdgcfjbbpaeojofohoefgiehjai.alarms from  failed: IO error: .../LOCK: File currently in use. (ChromeMethodBFE: 15::LockFile::2)
+[1109/133427.533:ERROR:gpu_init.cc(523)] Passthrough is not supported, GL is disabled, ANGLE is 
+[1113/190118.863:ERROR:gpu_init.cc(523)] Passthrough is not supported, GL is disabled, ANGLE is 
+[1114/183613.692:ERROR:gpu_init.cc(523)] Passthrough is not supported, GL is disabled, ANGLE is 
+[1114/225408.138:ERROR:gpu_init.cc(523)] Passthrough is not supported, GL is disabled, ANGLE is 
+[1114/230440.062:ERROR:gpu_init.cc(523)] Passthrough is not supported, GL is disabled, ANGLE is 
+[1115/121937.471:ERROR:gpu_init.cc(523)] Passthrough is not supported, GL is disabled, ANGLE is 
+[1116/160148.264:ERROR:gpu_init.cc(523)] Passthrough is not supported, GL is disabled, ANGLE is 
+[1120/024438.969:ERROR:gpu_init.cc(523)] Passthrough is not supported, GL is disabled, ANGLE is 
+[1124/112832.254:WARNING:value_store_frontend.cc(47)] Reading mhjfbmdgcfjbbpaeojofohoefgiehjai.alarms from  failed: IO error: .../LOCK: File currently in use. (ChromeMethodBFE: 15::LockFile::2)
+[1124/113030.544:ERROR:gpu_init.cc(523)] Passthrough is not supported, GL is disabled, ANGLE is 
+[1218/203154.608:WARNING:value_store_frontend.cc(47)] Reading mhjfbmdgcfjbbpaeojofohoefgiehjai.alarms from  failed: IO error: .../LOCK: File currently in use. (ChromeMethodBFE: 15::LockFile::2)
+[1218/203352.857:ERROR:gpu_init.cc(523)] Passthrough is not supported, GL is disabled, ANGLE is 
+[0109/145553.588:ERROR:gpu_init.cc(523)] Passthrough is not supported, GL is disabled, ANGLE is 
+[0110/104418.201:ERROR:gpu_init.cc(523)] Passthrough is not supported, GL is disabled, ANGLE is 
+[0116/130828.199:WARNING:value_store_frontend.cc(47)] Reading mhjfbmdgcfjbbpaeojofohoefgiehjai.alarms from  failed: IO error: .../LOCK: File currently in use. (ChromeMethodBFE: 15::LockFile::2)
+[0119/135644.684:ERROR:gpu_init.cc(523)] Passthrough is not supported, GL is disabled, ANGLE is 
+[0212/121755.921:ERROR:gpu_init.cc(523)] Passthrough is not supported, GL is disabled, ANGLE is 
+[0212/170657.818:ERROR:gpu_init.cc(523)] Passthrough is not supported, GL is disabled, ANGLE is 

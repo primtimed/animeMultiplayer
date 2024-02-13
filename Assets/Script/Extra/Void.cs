@@ -6,9 +6,14 @@ using UnityEngine;
 
 public class Void : NetworkBehaviour
 {
+    public Transform _spawnloc;
     private void OnTriggerEnter(Collider other)
     {
-        GameObject _spawn = NetworkBehaviour.Instantiate(other.gameObject);
-        Destroy(other.gameObject);
+        other.transform.position= Vector3.zero;
+
+        //GameObject _spawnPlayer = Instantiate(other.gameObject, _spawnloc);
+        //_spawnPlayer.GetComponent<NetworkObject>().IsOwner= true;
+        //Destroy(other.gameObject);
+
     }
 }

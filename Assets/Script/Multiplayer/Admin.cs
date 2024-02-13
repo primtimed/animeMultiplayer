@@ -46,19 +46,9 @@ public class Admin : MonoBehaviour
 
     void Console(InputAction.CallbackContext context)
     {
-        if (GameObject.FindWithTag("Player").GetComponent<Movement>().IsOwner)
+        if (GameObject.FindWithTag("Player").GetComponent<OwnerCheck>().IsOwner)
         {
             _player = GameObject.FindWithTag("Player");
-        }
-
-        if (_player.GetComponent<Movement>().enabled)
-        {
-            _player.GetComponent<Movement>().enabled = false;
-        }
-
-        else if (!_player.GetComponent<Movement>().enabled)
-        {
-            _player.GetComponent<Movement>().enabled = true;
         }
     }
 }
