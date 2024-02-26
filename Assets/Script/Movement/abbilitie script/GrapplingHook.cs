@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Unity.Mathematics;
 using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "Grapplinghook", menuName = "Grapplinghook")]
 public class GrapplingHook : BaseAbillitie
@@ -36,6 +38,11 @@ public class GrapplingHook : BaseAbillitie
     Vector3 _currentGrapplePosition;
     bool _grappleJump;
 
+    Image _crosseair;
+
+    public float _cooldown;
+    float _timer;
+
     public override void Open(GameObject player, AbilitieManager manager, GameObject NetworkManager, GameObject keep)
     {
         _player = player;
@@ -49,6 +56,8 @@ public class GrapplingHook : BaseAbillitie
         _movement = _player.GetComponent<Movement>();
         _camera = _player.GetComponentInChildren<Camera>().gameObject.transform;
 
+        _crosseair = _player.GetComponentInChildren<Image>();
+
         _lr.positionCount = 0;
     }
 
@@ -56,8 +65,24 @@ public class GrapplingHook : BaseAbillitie
 
     public override void LateUpdate()
     {
+        RaycastHit hit1;
+
+        if (Physics.SphereCast(_camera.position, _aimAssist, _camera.forward, out hit1, _maxDistance, _whatIsGrappleable))
+        {
+            _crosseair.color = Color.cyan;
+        }
+
+        else
+        {
+            _crosseair.color = Color.red;
+        }
+
+        _timer -= Time.unscaledDeltaTime;
+        GrapplingSlide();
+
         DrawRope();
     }
+
 
     public override void Start(InputAction.CallbackContext context)
     {
@@ -91,7 +116,20 @@ public class GrapplingHook : BaseAbillitie
         _lr.positionCount = 0;
         _gunBarrel.transform.rotation = new quaternion(0,0,0,0);
         _movement._back._grappling = false;
+        _timer = _cooldown;
+
         Destroy(_joint);
+    }
+
+    void GrapplingSlide()
+    {
+        Vector3 _speed = new Vector3(_movement._back._rb.velocity.x, 0, _movement._back._rb.velocity.z);
+
+        if (_movement._back._grapplingSlide && _speed.magnitude < _movement._sprintSpeed)
+        {
+            _movement._speedAcceleration = 4000;
+            _movement._back._grapplingSlide = false;
+        }
     }
 
 
@@ -105,6 +143,8 @@ public class GrapplingHook : BaseAbillitie
         _lr.SetPosition(1, _currentGrapplePosition);
 
         _movement._back._grappling = true;
+        _movement._back._grapplingSlide = true;
+        _movement._speedAcceleration = 0;
 
         float distanceFromPoint = Vector3.Distance(_player.transform.position, _grapplePoint);
 

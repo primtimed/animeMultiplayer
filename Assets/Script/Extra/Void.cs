@@ -6,14 +6,8 @@ using UnityEngine;
 
 public class Void : NetworkBehaviour
 {
-    public Transform _spawnloc;
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-        other.transform.position= Vector3.zero;
-
-        //GameObject _spawnPlayer = Instantiate(other.gameObject, _spawnloc);
-        //_spawnPlayer.GetComponent<NetworkObject>().IsOwner= true;
-        //Destroy(other.gameObject);
-
+        other.GetComponent<PlayerStats>().DeadServerRpc();
     }
 }

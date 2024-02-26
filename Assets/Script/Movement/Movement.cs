@@ -7,6 +7,12 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+public enum Passive
+{
+    None,
+    WallRun,
+    DubbleJump
+}
 public class Movement : MonoBehaviour
 {
     public bool _spectator;
@@ -57,16 +63,9 @@ public class Movement : MonoBehaviour
         [SerializeField] public GameObject _camera;
         [SerializeField] public Rigidbody _rb;
         [SerializeField] public GameObject _center;
-        [SerializeField] public bool _grappling, _dash;
+        [SerializeField] public bool _grappling, _dash, _grapplingSlide;
 
         public Vector2 _move;
-    }
-
-    public enum Passive
-    {
-        None,
-        WallRun,
-        DubbleJump
     }
 
     public Passive _passive;
@@ -131,6 +130,12 @@ public class Movement : MonoBehaviour
             {
                 Vector3 _moveDirection = (_back._center.transform.forward * _moveV2.y + _back._center.transform.right * _moveV2.x) * Time.deltaTime;
                 _moveDirection = new Vector3 (_moveDirection.x, 0, _moveDirection.z);
+
+                if(_climming)
+                {
+                    _moveDirection = _moveDirection / 1.5f;
+                }
+
                 _back._rb.AddForce(_moveDirection * _speedAcceleration);
 
                 if (!_back._grappling || _grounded)
@@ -149,7 +154,7 @@ public class Movement : MonoBehaviour
     //speedcontroler
     void SpeedControle()
     {
-        if (_back._dash)
+        if (_back._dash || _back._grapplingSlide)
         {
 
         }
@@ -204,7 +209,18 @@ public class Movement : MonoBehaviour
             {
                 _jumping = true;
 
-                _back._rb.AddForce(transform.up * (_jumpHight * 1.5f), ForceMode.Impulse);
+                _back._rb.AddForce(transform.up * (_jumpHight * 1.0f), ForceMode.Impulse);
+
+                if (_wallrunL)
+                {
+                    _back._rb.AddForce(transform.right * (_jumpHight), ForceMode.Impulse);
+                }
+
+                else if (_wallrunR)
+                {
+                    _back._rb.AddForce(-transform.right * (_jumpHight), ForceMode.Impulse);
+                }
+
                 StartCoroutine(JumpTime());
 
                 return;
@@ -212,11 +228,9 @@ public class Movement : MonoBehaviour
 
             if (_passive == Passive.DubbleJump && _dubbleJump)
             {
-                Debug.Log("Dubble");
-
                 Vector3 _moveDirection = (_back._center.transform.forward * _back._move.y + _back._center.transform.right * _back._move.x) * Time.deltaTime;
                 _moveDirection = new Vector3(_moveDirection.x, 0, _moveDirection.z);
-                _back._rb.AddForce(_moveDirection * _speedAcceleration * 2.5f);
+                _back._rb.AddForce(_moveDirection * _speedAcceleration * _back._rb.velocity.magnitude);
 
                 _back._rb.AddForce(transform.up * _jumpHight, ForceMode.Impulse);
 
@@ -430,7 +444,7 @@ public class Movement : MonoBehaviour
     {
         RaycastHit hit;
 
-        if (Physics.SphereCast(_feet.transform.position, .1f, _feet.transform.forward, out hit, 1) && _climming && _timer < _walclimHight && !_spectator)
+        if (Physics.SphereCast(_feet.transform.position, .1f, _feet.transform.forward, out hit, 2) && _climming && _timer < _walclimHight && !_spectator)
         {
             _timer += Time.deltaTime;
             _back._rb.velocity = new Vector3(_back._rb.velocity.x, _wallclimSpeed, _back._rb.velocity.z);
@@ -439,6 +453,11 @@ public class Movement : MonoBehaviour
         else if (_spectator && _climming)
         {
             _back._rb.AddForce(transform.up * (_speedAcceleration / 100));
+        }
+
+        else
+        {
+            _climming = false;
         }
     }
 

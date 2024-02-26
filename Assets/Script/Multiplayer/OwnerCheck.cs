@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class OwnerCheck : NetworkBehaviour
 {
+    public bool _isOwner;
+
     public GameObject _gameUI;
 
     public AbilitieManager _abilitieManager;
@@ -18,6 +20,8 @@ public class OwnerCheck : NetworkBehaviour
     {
         if (!IsOwner)
         {
+            _isOwner = false;
+
             //_abilitieManager.enabled = false;
             _gameUi.enabled = false;
             _camer.enabled = false;
@@ -30,6 +34,8 @@ public class OwnerCheck : NetworkBehaviour
 
         else
         {
+            _isOwner = true;
+
             //_abilitieManager.enabled = true;
             _abilitieManager.start();
             _gameUi.enabled = true;
@@ -39,7 +45,7 @@ public class OwnerCheck : NetworkBehaviour
             _movement.enabled = true;
 
             _gameUI.SetActive(true);
+            GameObject.Find("Keep").GetComponent<PlayerTeam>().TeamPickerServerRpc(gameObject.GetComponent<PlayerStats>()._playerID);
         }
     }
-}
-                       
+}                 

@@ -9,9 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df526c64c3ccc1f40b260e453c2a713f, type: 3}
-  m_Name: Dash
+  m_Script: {fileID: 11500000, guid: 0be3d7d7e0145cd4f8ea6d66bd0add3b, type: 3}
+  m_Name: AR
   m_EditorClassIdentifier: 
-  _icon: {fileID: 2800000, guid: 1958a342ac4c00e4fbb0e691f9dd28f9, type: 3}
-  _cooldown: 10
-  _dashSpeed: 1000
+  _name: AR
+  _ammo: 30
+  _fireRate: 0.1
+  _reloadSpeed: 3
+  _weaponSpretAmount: 2
+  _damage: 1
+  _weaponType: 0
+  _fireMode: 2

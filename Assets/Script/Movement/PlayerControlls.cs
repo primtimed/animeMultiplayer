@@ -162,17 +162,6 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""f220ae0e-896b-47be-b796-542d78a7d838"",
-                    ""path"": ""<Mouse>/scroll/down"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Jump"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""6e35d0f1-17f9-41f9-bb1a-7e93ee8f36fa"",
                     ""path"": ""<Keyboard>/leftShift"",
                     ""interactions"": """",
@@ -238,6 +227,24 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Aim"",
+                    ""type"": ""Button"",
+                    ""id"": ""6210d68c-7e13-445e-ba2b-6ee65338e77c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""weaponSwitch"",
+                    ""type"": ""Button"",
+                    ""id"": ""9d10186b-2670-4fbc-8bef-cbaeede947de"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -260,6 +267,28 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Reload"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fc143088-6319-4807-acac-6648d8c6f4ca"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Aim"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b5c79e20-51ce-4215-9cba-46ad0dede059"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""weaponSwitch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -286,6 +315,15 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Stats"",
+                    ""type"": ""Button"",
+                    ""id"": ""dca755f8-734f-4a6f-8c0c-1b351a23b85a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -308,6 +346,17 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Esc"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dfc57574-b799-48f4-8c0e-1c6827c4254a"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Stats"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -384,10 +433,13 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
         m_Weapon = asset.FindActionMap("Weapon", throwIfNotFound: true);
         m_Weapon_Shoot = m_Weapon.FindAction("Shoot", throwIfNotFound: true);
         m_Weapon_Reload = m_Weapon.FindAction("Reload", throwIfNotFound: true);
+        m_Weapon_Aim = m_Weapon.FindAction("Aim", throwIfNotFound: true);
+        m_Weapon_weaponSwitch = m_Weapon.FindAction("weaponSwitch", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_MouseLock = m_UI.FindAction("Mouse Lock", throwIfNotFound: true);
         m_UI_Esc = m_UI.FindAction("Esc", throwIfNotFound: true);
+        m_UI_Stats = m_UI.FindAction("Stats", throwIfNotFound: true);
         // Admin
         m_Admin = asset.FindActionMap("Admin", throwIfNotFound: true);
         m_Admin_Console = m_Admin.FindAction("Console", throwIfNotFound: true);
@@ -543,12 +595,16 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
     private List<IWeaponActions> m_WeaponActionsCallbackInterfaces = new List<IWeaponActions>();
     private readonly InputAction m_Weapon_Shoot;
     private readonly InputAction m_Weapon_Reload;
+    private readonly InputAction m_Weapon_Aim;
+    private readonly InputAction m_Weapon_weaponSwitch;
     public struct WeaponActions
     {
         private @PlayerControlls m_Wrapper;
         public WeaponActions(@PlayerControlls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Shoot => m_Wrapper.m_Weapon_Shoot;
         public InputAction @Reload => m_Wrapper.m_Weapon_Reload;
+        public InputAction @Aim => m_Wrapper.m_Weapon_Aim;
+        public InputAction @weaponSwitch => m_Wrapper.m_Weapon_weaponSwitch;
         public InputActionMap Get() { return m_Wrapper.m_Weapon; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -564,6 +620,12 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
             @Reload.started += instance.OnReload;
             @Reload.performed += instance.OnReload;
             @Reload.canceled += instance.OnReload;
+            @Aim.started += instance.OnAim;
+            @Aim.performed += instance.OnAim;
+            @Aim.canceled += instance.OnAim;
+            @weaponSwitch.started += instance.OnWeaponSwitch;
+            @weaponSwitch.performed += instance.OnWeaponSwitch;
+            @weaponSwitch.canceled += instance.OnWeaponSwitch;
         }
 
         private void UnregisterCallbacks(IWeaponActions instance)
@@ -574,6 +636,12 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
             @Reload.started -= instance.OnReload;
             @Reload.performed -= instance.OnReload;
             @Reload.canceled -= instance.OnReload;
+            @Aim.started -= instance.OnAim;
+            @Aim.performed -= instance.OnAim;
+            @Aim.canceled -= instance.OnAim;
+            @weaponSwitch.started -= instance.OnWeaponSwitch;
+            @weaponSwitch.performed -= instance.OnWeaponSwitch;
+            @weaponSwitch.canceled -= instance.OnWeaponSwitch;
         }
 
         public void RemoveCallbacks(IWeaponActions instance)
@@ -597,12 +665,14 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
     private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
     private readonly InputAction m_UI_MouseLock;
     private readonly InputAction m_UI_Esc;
+    private readonly InputAction m_UI_Stats;
     public struct UIActions
     {
         private @PlayerControlls m_Wrapper;
         public UIActions(@PlayerControlls wrapper) { m_Wrapper = wrapper; }
         public InputAction @MouseLock => m_Wrapper.m_UI_MouseLock;
         public InputAction @Esc => m_Wrapper.m_UI_Esc;
+        public InputAction @Stats => m_Wrapper.m_UI_Stats;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -618,6 +688,9 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
             @Esc.started += instance.OnEsc;
             @Esc.performed += instance.OnEsc;
             @Esc.canceled += instance.OnEsc;
+            @Stats.started += instance.OnStats;
+            @Stats.performed += instance.OnStats;
+            @Stats.canceled += instance.OnStats;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
@@ -628,6 +701,9 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
             @Esc.started -= instance.OnEsc;
             @Esc.performed -= instance.OnEsc;
             @Esc.canceled -= instance.OnEsc;
+            @Stats.started -= instance.OnStats;
+            @Stats.performed -= instance.OnStats;
+            @Stats.canceled -= instance.OnStats;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -750,11 +826,14 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
     {
         void OnShoot(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
+        void OnAim(InputAction.CallbackContext context);
+        void OnWeaponSwitch(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
         void OnMouseLock(InputAction.CallbackContext context);
         void OnEsc(InputAction.CallbackContext context);
+        void OnStats(InputAction.CallbackContext context);
     }
     public interface IAdminActions
     {
