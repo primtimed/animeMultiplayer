@@ -16,7 +16,43 @@ MonoBehaviour:
   _ammo: 30
   _fireRate: 0.1
   _reloadSpeed: 3
-  _weaponSpretAmount: 2
-  _damage: 1
+  _weaponSpretAmount: 0.5
+  _damage: 20
+  _recoil:
+  - {x: 1, y: 0}
+  - {x: 0, y: 1}
+  - {x: 0, y: 1}
+  - {x: 1, y: 0}
+  - {x: 0, y: 1}
+  - {x: 1, y: 0}
+  - {x: 1, y: 0}
+  - {x: 0, y: 1}
+  - {x: 1, y: 0}
+  - {x: 1, y: 0}
+  - {x: 0, y: 1}
+  - {x: 1, y: 0}
+  - {x: 1, y: 0}
+  - {x: 0, y: 1}
+  - {x: 0, y: 1}
+  - {x: 0, y: 1}
+  - {x: 1, y: 0}
+  - {x: 0, y: 1}
+  - {x: 1, y: 0}
+  - {x: 1, y: 0}
+  - {x: 0, y: 1}
+  - {x: 1, y: 0}
+  - {x: 1, y: 0}
+  - {x: 0, y: 1}
+  - {x: 1, y: 0}
+  - {x: 0, y: 1}
+  - {x: 1, y: 0}
+  - {x: 1, y: 0}
+  - {x: 1, y: 0}
+  - {x: 1, y: 0}
   _weaponType: 0
-  _fireMode: 2
+  _fireMode: 1
+  _gun: {fileID: 7760640521157878228, guid: cea748a5e89f8964a9b585ede516dcf7, type: 3}
+  _gunPNG: {fileID: 2800000, guid: d7da44e65419d314a8660407f3764cfd, type: 3}
+  _burstDelay: 0
+  _zoom: 1
+  _scoop: {fileID: 0}

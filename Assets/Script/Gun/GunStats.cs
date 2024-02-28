@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public enum FireMode
@@ -25,6 +26,20 @@ public class GunStats : ScriptableObject
     public float _weaponSpretAmount;
     public float _damage;
 
+    [Header("")]
+    public Vector2 []_recoil;
+
+    [Header("")]
     public WeaponType _weaponType;
     public FireMode _fireMode;
+
+    [Header("")]
+    public GameObject _gun;
+    public Texture _gunPNG;
+
+    [Header("")]
+
+    [ConditionalHide("_fireMode", 2)] public float _burstDelay;
+    [ConditionalHide("_weaponType", 1)] public float _zoom;
+    [ConditionalHide("_weaponType", 1)] public Texture _scoop;
 }

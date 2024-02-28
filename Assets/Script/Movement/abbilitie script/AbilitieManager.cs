@@ -43,16 +43,23 @@ public class AbilitieManager : NetworkBehaviour
 
     private void OnDisable()
     {
-        _abbilitieKey1.Disable();
+        _abbilitieKey1.started -= _abbilitie.Start;
+        _abbilitieKey1.canceled -= _abbilitie.Stop;
     }
 
     private void LateUpdate()
     {
-        _abbilitie.LateUpdate();
+        if (_abbilitie)
+        {
+            _abbilitie.LateUpdate();
+        }
     }
 
     private void Update()
     {
-        _abbilitie.Update();
+        if (_abbilitie)
+        {
+            _abbilitie.Update();
+        }
     }
 }

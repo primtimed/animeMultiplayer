@@ -22,7 +22,7 @@ public class Dash : BaseAbillitie
 
     public void Start()
     {
-        
+        Screen.SetResolution(1920, 1080, true);
     }
 
     public override void Open(GameObject player, AbilitieManager manager, GameObject NetworkManager, GameObject keep)
@@ -58,7 +58,7 @@ public class Dash : BaseAbillitie
     {
         if (!_player._back._dash)
         {
-            _timer -= Time.unscaledDeltaTime;
+            _timer -= Time.deltaTime;
         }
 
         _gameUI._time = _timer;

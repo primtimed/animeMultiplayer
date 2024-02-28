@@ -42,7 +42,7 @@ public class GameUI : MonoBehaviour
     public class StatsSettings
     {
         [SerializeField] public GameObject _UI;
-        [SerializeField] public TextMeshProUGUI _killUI, _deadUI;
+        [SerializeField] public TextMeshProUGUI _killUI, _deadUI, _kdrUI;
     }
 
     PlayerStats _playerStats;
@@ -66,7 +66,8 @@ public class GameUI : MonoBehaviour
     public void SetKillDead()
     {
         _stats._killUI.text = _playerStats._Kills.ToString() + " Kills";
-        _stats._deadUI.text = _playerStats._Deads.ToString() + " Deads";
+        _stats._deadUI.text = _playerStats._deads.ToString() + " Deads";
+        _stats._kdrUI.text = _playerStats._kdr.ToString("f2") + " KDR";
     }
 
     void Stats(InputAction.CallbackContext context)

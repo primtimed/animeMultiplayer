@@ -11,12 +11,12 @@ using UnityEngine.UI;
 [CreateAssetMenu(fileName = "Grapplinghook", menuName = "Grapplinghook")]
 public class GrapplingHook : BaseAbillitie
 {
+    public Texture _icon;
+
     [Header("MainSettings")]
     public float _maxDistance;
     public float _aimAssist;
     public float _spring;
-    public float _jumpBoost;
-    public float _jumpTime;
 
     [Header("")]
     public LayerMask _whatIsGrappleable;
@@ -32,11 +32,11 @@ public class GrapplingHook : BaseAbillitie
     Transform _camera;
 
     Movement _movement;
+    GameUI _gameUI;
     PlayerControlls _input;
-    InputAction _grappling, _jump;
+    InputAction _grappling;
 
     Vector3 _currentGrapplePosition;
-    bool _grappleJump;
 
     Image _crosseair;
 
@@ -55,16 +55,34 @@ public class GrapplingHook : BaseAbillitie
         _lr = _gunBarrel.GetComponent<LineRenderer>();
         _movement = _player.GetComponent<Movement>();
         _camera = _player.GetComponentInChildren<Camera>().gameObject.transform;
+        _gameUI = player.GetComponent<GameUI>();
 
         _crosseair = _player.GetComponentInChildren<Image>();
 
         _lr.positionCount = 0;
+
+        _gameUI._abbilIcon.texture = _icon;
     }
 
     void Start() { }
 
+    public override void Update()
+    {
+        if (_movement)
+        {
+            if (!_movement._back._grappling)
+            {
+                _timer -= Time.deltaTime;
+            }
+        }
+
+        _gameUI._time = _timer;
+    }
+
     public override void LateUpdate()
     {
+        if (!_movement) { return; }
+
         RaycastHit hit1;
 
         if (Physics.SphereCast(_camera.position, _aimAssist, _camera.forward, out hit1, _maxDistance, _whatIsGrappleable))
@@ -77,7 +95,6 @@ public class GrapplingHook : BaseAbillitie
             _crosseair.color = Color.red;
         }
 
-        _timer -= Time.unscaledDeltaTime;
         GrapplingSlide();
 
         DrawRope();
@@ -87,10 +104,8 @@ public class GrapplingHook : BaseAbillitie
     public override void Start(InputAction.CallbackContext context)
     {
         RaycastHit hit;
-        if (Physics.SphereCast(_camera.position, _aimAssist, _camera.forward, out hit, _maxDistance, _whatIsGrappleable))
+        if (Physics.SphereCast(_camera.position, _aimAssist, _camera.forward, out hit, _maxDistance, _whatIsGrappleable) && _timer <= 0)
         {
-            _grappleJump = true;
-
             _currentGrapplePosition = _gunBarrel.transform.position;
 
             _grapplePoint = hit.point;
@@ -113,12 +128,15 @@ public class GrapplingHook : BaseAbillitie
 
     public override void Stop(InputAction.CallbackContext context)
     {
-        _lr.positionCount = 0;
-        _gunBarrel.transform.rotation = new quaternion(0,0,0,0);
-        _movement._back._grappling = false;
-        _timer = _cooldown;
+        if (_movement._back._grappling)
+        {
+            _lr.positionCount = 0;
+            _gunBarrel.transform.rotation = new quaternion(0, 0, 0, 0);
+            _movement._back._grappling = false;
+            _timer = _cooldown;
 
-        Destroy(_joint);
+            Destroy(_joint);
+        }
     }
 
     void GrapplingSlide()
@@ -162,16 +180,5 @@ public class GrapplingHook : BaseAbillitie
     Vector3 GetGrapplePoint()
     {
         return _grapplePoint;
-    }
-
-    void Jump(InputAction.CallbackContext context)
-    {
-        if (_grappleJump && !_movement._back._grappling)
-        {
-            _grappleJump = false;
-
-            _movement._back._rb.AddForce(_player.transform.up * _jumpBoost, ForceMode.Impulse);
-            _movement._back._rb.AddForce(_player.transform.forward * _jumpBoost, ForceMode.Impulse);
-        }
     }
 }

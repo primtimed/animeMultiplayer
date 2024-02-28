@@ -20,6 +20,7 @@ public class Movement : MonoBehaviour
     [Header("Main Settings")]
     public float _speedAcceleration;
     public float _sensetivitie;
+    [HideInInspector] public float _gameSens;
 
     [Header("")]
     public bool _canJump;
@@ -49,7 +50,7 @@ public class Movement : MonoBehaviour
     PlayerControlls _input;
     InputAction _move, _mouse, _sprint, _jump, _slide, _croush;
 
-    float _x, _y;
+    [HideInInspector] public float _x, _y;
     float _moveSpeed;
     float _wallRunCameraTilt;
     float _timer;
@@ -106,6 +107,11 @@ public class Movement : MonoBehaviour
     void OnDisable()
     {
         _input.Disable();
+    }
+
+    private void Start()
+    {
+        _gameSens = _sensetivitie;
     }
 
     void Update()
@@ -174,8 +180,8 @@ public class Movement : MonoBehaviour
     //camera rotation
     void Rotate(Vector2 _rotateV2)
     {
-        float _xB = _rotateV2.x * _sensetivitie;
-        float _yB = _rotateV2.y * _sensetivitie;
+        float _xB = _rotateV2.x * _gameSens;
+        float _yB = _rotateV2.y * _gameSens;
 
         _x += _xB;
         _y -= _yB;

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -17,9 +18,11 @@ public class PlayerStats : NetworkBehaviour
     public Team _team;
 
     public float _hp;
-    public float _HpNow;
+    public float _hpNow;
     public float _Kills;
-    public float _Deads;
+    public float _deads;
+
+    public float _kdr;
 
     bool _dead;
 
@@ -27,6 +30,7 @@ public class PlayerStats : NetworkBehaviour
     Rigidbody _rb;
     Collider _coll;
     MeshRenderer _mash;
+    BaseGun _gun;
 
     GameUI _gameUI;
 
@@ -37,27 +41,33 @@ public class PlayerStats : NetworkBehaviour
 
     private void Start()
     {
-        _HpNow = _hp;
+        _hpNow = _hp;
 
         _movement = GetComponent<Movement>();
         _rb = GetComponent<Rigidbody>();
         _coll = GetComponent<Collider>();
         _mash = GetComponentInChildren<MeshRenderer>();
+        _gun = GetComponentInChildren<BaseGun>();
 
         _gameUI = GetComponent<GameUI>();
     }
 
     private void Update()
     {
-        _gameUI._hpSlider.value = _hp;
-        _gameUI._hpText.text = _hp.ToString("f0");
+        _gameUI._hpSlider.value = _hpNow;
+        _gameUI._hpText.text = _hpNow.ToString("f0");
     }
 
 
-    [ServerRpc]
+   [ServerRpc]
     public void TakeDamageServerRpc(float damage)
     {
-        _HpNow -= damage;
+        _hpNow -= damage;
+
+        if (_hpNow < 0)
+        {
+            DeadServerRpc();
+        }
     }
 
 
@@ -78,35 +88,40 @@ public class PlayerStats : NetworkBehaviour
             _rb.velocity = new Vector3(0, 0, 0);
             _mash.enabled = false;
             _coll.enabled = false;
+            _gun.gameObject.SetActive(false);
 
-            _Deads += 1;
+            _deads += 1;
 
-            _gameUI.SetKillDead();
-            StartCoroutine(Respawn());
+            _kdr = _Kills / _deads;
+
+            //if (IsOwner)
+            //{
+            //    _gameUI.SetKillDead();
+            //}
 
             _dead = true;
+
+            transform.position = Vector3.zero;
+
+            _hpNow = _hp;
+
+            _movement._speedAcceleration = 4000;
+            _movement._canJump = true;
+            _rb.useGravity = true;
+            _mash.enabled = true;
+            _coll.enabled = true;
+            _gun.gameObject.SetActive(true);
+
+            _dead = false;
         }
     }
 
-    IEnumerator Respawn()
-    {
-        yield return new WaitForSecondsRealtime(5);
-
-        transform.position = Vector3.zero;
-
-        _HpNow = _hp;
-
-        _movement._speedAcceleration = 4000;
-        _movement._canJump = true;
-        _rb.useGravity = true;
-        _mash.enabled = true;
-        _coll.enabled = true;
-
-        _dead = false;
-    }
 
     void Kill()
     {
         _Kills += 1;
+
+        _kdr = _Kills / _deads;
+        _gameUI.SetKillDead();
     }
 }

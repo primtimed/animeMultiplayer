@@ -45,7 +45,7 @@ public class OwnerCheck : NetworkBehaviour
             _movement.enabled = true;
 
             _gameUI.SetActive(true);
-            GameObject.Find("Keep").GetComponent<PlayerTeam>().TeamPickerServerRpc(gameObject.GetComponent<PlayerStats>()._playerID);
+            //GameObject.Find("Keep").GetComponent<PlayerTeam>().TeamPickerServerRpc(gameObject.GetComponent<PlayerStats>()._playerID);
         }
     }
 }                 

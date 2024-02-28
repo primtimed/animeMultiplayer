@@ -1,6 +1,12 @@
+using JetBrains.Annotations;
+using System;
 using System.Collections;
+using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class BaseGun : MonoBehaviour
 {
@@ -8,17 +14,30 @@ public class BaseGun : MonoBehaviour
     InputAction _shoot, _aim, _reload;
 
     Camera _cam;
+    Movement _move;
     RaycastHit _hit;
     Vector3 _bloom;
 
     public GunStats _gun;
 
     int _gunAmmo;
+    int _recoilInt;
     bool _shootBool, _aimBool, _reloadding;
     float _timer;
+    float fov;
 
-    public LayerMask _players;
+    public LayerMask _player;
     public GameObject _hitEffect;
+
+    public UI _UI = new UI();
+
+    [Serializable]
+    public class UI
+    {
+        [SerializeField] public RawImage _image;
+        [SerializeField] public RawImage _scope;
+        [SerializeField] public TextMeshProUGUI _ammo;
+    }
 
     private void Awake()
     {
@@ -53,12 +72,24 @@ public class BaseGun : MonoBehaviour
         _reload.started -= Reload;
     }
 
-    private void Start()
+    public void Start()
     {
         _cam = GetComponentInParent<Camera>();
+        _move = GetComponentInParent<Movement>();
 
         _gunAmmo = _gun._ammo;
+
+        Instantiate(_gun._gun, transform);
+
+        _UI._image.texture = _gun._gunPNG;
+        _UI._ammo.text = _gunAmmo.ToString() + " / " + _gun._ammo.ToString();
+
+        if (!GetComponentInParent<OwnerCheck>()._isOwner)
+        {
+            enabled = false;
+        }
     }
+
 
     private void Shoot(InputAction.CallbackContext context)
     {
@@ -70,24 +101,30 @@ public class BaseGun : MonoBehaviour
         else
         {
             _shootBool = false;
+
+            _recoilInt = 0;
         }
     }
-
+    
     private void Aim(InputAction.CallbackContext context)
     {
         if (_gun._weaponType == WeaponType.Sniper)
         {
             if (context.started)
             {
-                Debug.Log("AimIn");
+                fov = _cam.fieldOfView;
 
+                _cam.fieldOfView = _cam.fieldOfView / _gun._zoom;
+                _move._gameSens = _move._sensetivitie / _gun._zoom;
+                _UI._scope.gameObject.SetActive(true);
                 _aimBool = true;
             }
 
             else
             {
-                Debug.Log("AimOut");
-
+                _cam.fieldOfView = fov;
+                _move._gameSens = _move._sensetivitie;
+                _UI._scope.gameObject.SetActive(false);
                 _aimBool = false;
             }
         }
@@ -100,12 +137,13 @@ public class BaseGun : MonoBehaviour
 
     IEnumerator ReloadingIENUM()
     {
-        if (!_reloadding)
+        if (!_reloadding && _gunAmmo != _gun._ammo)
         {
             _reloadding = true;
             yield return new WaitForSecondsRealtime(_gun._reloadSpeed);
 
             _gunAmmo = _gun._ammo;
+            _UI._ammo.text = _gunAmmo.ToString() + " / " + _gun._ammo.ToString();
             _reloadding = false;
         }
     }
@@ -119,50 +157,120 @@ public class BaseGun : MonoBehaviour
             if (_gun._weaponType == WeaponType.Shotgun)
             {
                 Shotgun();
+
+                return;
             }
 
             else if (_gun._fireMode == FireMode.Auto)
             {
                 Auto();
+
+                return;
             }
 
             else if (_gun._fireMode == FireMode.Burst)
             {
-                Burst();
+                StartCoroutine(Burst());
+
+                return;
             }
 
             else if (_gun._fireMode == FireMode.Single)
             {
                 Single();
+
+                return;
             }
         }
     }
 
     private void Auto()
     {
-        Debug.Log("Shoot");
+        if (_aimBool)
+        {
+            _bloom = _cam.transform.forward;
+        }
 
-        Bloom();
+        else
+        {
+            Bloom();
+        }
+
         Shooting();
+        Recoil();
         _gunAmmo -= 1;
+        _recoilInt += 1;
 
         _timer = 0;
+
+        _UI._ammo.text = _gunAmmo.ToString() + " / " + _gun._ammo.ToString();
     }
 
-    private void Burst()
+    IEnumerator Burst()
     {
-        Bloom();
-        Shooting();
-        _gunAmmo -= 1;
-        Bloom();
-        Shooting();
-        _gunAmmo -= 1;
-        Bloom();
-        Shooting();
-        _gunAmmo -= 1;
-
         _timer = 0;
         _shootBool = false;
+
+        if (_gunAmmo > 0)
+        {
+            if (_aimBool)
+            {
+                _bloom = _cam.transform.forward;
+            }
+
+            else
+            {
+                Bloom();
+            }
+
+            _recoilInt += 1;
+            Shooting();
+            Recoil();
+            _gunAmmo -= 1;
+            yield return new WaitForSeconds(_gun._burstDelay);
+        }
+
+        if (_gunAmmo > 0)
+        {
+            if (_aimBool)
+            {
+                _bloom = _cam.transform.forward;
+            }
+
+            else
+            {
+                Bloom();
+            }
+
+            _recoilInt += 1;
+            Shooting();
+            Recoil();
+            _gunAmmo -= 1;
+            yield return new WaitForSeconds(_gun._burstDelay);
+        }
+
+        if (_gunAmmo > 0)
+        {
+            if (_aimBool)
+            {
+                _bloom = _cam.transform.forward;
+            }
+
+            else
+            {
+                Bloom();
+            }
+
+            _recoilInt += 1;
+            Shooting();
+            Recoil();
+            _gunAmmo -= 1;
+            yield return new WaitForSeconds(_gun._burstDelay);
+        }
+
+
+        _UI._ammo.text = _gunAmmo.ToString() + " / " + _gun._ammo.ToString();
+
     }
 
     private void Single()
@@ -178,9 +286,14 @@ public class BaseGun : MonoBehaviour
         }
 
         Shooting();
+        Recoil();
+
         _gunAmmo -= 1;
 
         _timer = 0;
+
+        _UI._ammo.text = _gunAmmo.ToString() + " / " + _gun._ammo.ToString();
+
         _shootBool = false;
     }
 
@@ -203,7 +316,14 @@ public class BaseGun : MonoBehaviour
         _gunAmmo -= 1;
 
         _timer = 0;
-        _shootBool = false;
+        Recoil();
+
+        _UI._ammo.text = _gunAmmo.ToString() + " / " + _gun._ammo.ToString();
+
+        if (_gun._fireMode != FireMode.Auto)
+        {
+            _shootBool = false;
+        }
     }
 
     private void Bloom()
@@ -215,16 +335,38 @@ public class BaseGun : MonoBehaviour
         _bloom.Normalize();
     }
 
+    private void Recoil()
+    {
+        _move._x -= _gun._recoil[_recoilInt].x / 3;
+        _move._y -= _gun._recoil[_recoilInt].y / 3;
+    }
+
     private void Shooting()
     {
+        Shake();
+
         if (Physics.Raycast(_cam.transform.position, _bloom, out _hit, Mathf.Infinity))
         {
-            Instantiate(_hitEffect, _hit.point, transform.rotation);
 
-            if (_hit.transform.gameObject.layer == _players)
+            if (_hit.transform.GetComponent<PlayerStats>())
             {
+                Debug.LogWarning(_hit.transform.gameObject.name);
                 _hit.transform.GetComponent<PlayerStats>().TakeDamageServerRpc(_gun._damage);
             }
+
+            Instantiate(_hitEffect, _hit.point, transform.rotation);
         }
+    }
+
+    private Quaternion target, rotationX, rotationY;
+
+    public void Shake()
+    {
+        rotationX = Quaternion.AngleAxis(100, Vector3.right);
+        rotationY = Quaternion.AngleAxis(100, Vector3.up);
+
+        target = rotationX * rotationY;
+
+        transform.localRotation = Quaternion.Slerp(transform.localRotation, target, 5 * Time.deltaTime);
     }
 }

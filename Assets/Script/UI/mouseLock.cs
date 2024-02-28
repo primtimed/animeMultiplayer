@@ -1,10 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Interactions;
-using UnityEngine.SceneManagement;
-using UnityEngine.Windows;
 
 public class mouseLock : MonoBehaviour
 {

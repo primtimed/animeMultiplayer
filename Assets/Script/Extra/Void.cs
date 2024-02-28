@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class Void : NetworkBehaviour
 {
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        other.GetComponent<PlayerStats>().DeadServerRpc();
+        other.gameObject.GetComponent<PlayerStats>().DeadServerRpc();
     }
 }

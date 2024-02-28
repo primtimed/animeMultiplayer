@@ -38,3 +38,21 @@
 [0226/102031.997:ERROR:gpu_init.cc(523)] Passthrough is not supported, GL is disabled, ANGLE is 
 [0226/134732.292:WARNING:value_store_frontend.cc(47)] Reading mhjfbmdgcfjbbpaeojofohoefgiehjai.alarms from  failed: IO error: .../LOCK: File currently in use. (ChromeMethodBFE: 15::LockFile::2)
 [0226/134930.517:ERROR:gpu_init.cc(523)] Passthrough is not supported, GL is disabled, ANGLE is 
+[0227/102054.117:ERROR:gpu_init.cc(523)] Passthrough is not supported, GL is disabled, ANGLE is 
+[0227/185614.404:WARNING:dns_config_service_win.cc(583)] Failed to read DnsConfig.
+[0227/185614.406:WARNING:dns_config_service_win.cc(583)] Failed to read DnsConfig.
+[0227/185619.414:WARNING:dns_config_service_win.cc(583)] Failed to read DnsConfig.
+[0227/185619.414:WARNING:dns_config_service_win.cc(583)] Failed to read DnsConfig.
+[0227/185622.452:WARNING:dns_config_service_win.cc(583)] Failed to read DnsConfig.
+[0227/185622.489:WARNING:dns_config_service_win.cc(583)] Failed to read DnsConfig.
+[0227/185622.492:WARNING:dns_config_service_win.cc(583)] Failed to read DnsConfig.
+[0227/185627.506:WARNING:dns_config_service_win.cc(583)] Failed to read DnsConfig.
+[0227/185627.508:WARNING:dns_config_service_win.cc(583)] Failed to read DnsConfig.
+[0227/185801.167:ERROR:gpu_init.cc(523)] Passthrough is not supported, GL is disabled, ANGLE is 
+[0227/204856.176:WARNING:dns_config_service_win.cc(583)] Failed to read DnsConfig.
+[0228/102721.110:ERROR:gpu_init.cc(523)] Passthrough is not supported, GL is disabled, ANGLE is 
+[0228/123718.914:ERROR:gpu_init.cc(523)] Passthrough is not supported, GL is disabled, ANGLE is 
+[0228/125502.351:WARNING:dns_config_service_win.cc(583)] Failed to read DnsConfig.
+[0228/125502.358:WARNING:dns_config_service_win.cc(583)] Failed to read DnsConfig.
+[0228/125502.394:WARNING:dns_config_service_win.cc(583)] Failed to read DnsConfig.
+[0228/125502.397:WARNING:dns_config_service_win.cc(583)] Failed to read DnsConfig.
