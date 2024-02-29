@@ -24,7 +24,7 @@ public class PlayerStats : NetworkBehaviour
 
     public float _kdr;
 
-    bool _dead;
+    [HideInInspector] public bool _dead;
 
     Movement _movement;
     Rigidbody _rb;
@@ -82,6 +82,9 @@ public class PlayerStats : NetworkBehaviour
     {
         if(!_dead)
         {
+            _dead = true;
+            _hpNow = _hp;
+
             _movement._speedAcceleration = 0;
             _movement._canJump = false;
             _rb.useGravity = false;
@@ -99,13 +102,11 @@ public class PlayerStats : NetworkBehaviour
             //    _gameUI.SetKillDead();
             //}
 
-            _dead = true;
 
             transform.position = Vector3.zero;
 
-            _hpNow = _hp;
 
-            _movement._speedAcceleration = 4000;
+            _movement._speedAcceleration = 40000;
             _movement._canJump = true;
             _rb.useGravity = true;
             _mash.enabled = true;

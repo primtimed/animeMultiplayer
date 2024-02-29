@@ -223,9 +223,9 @@ public class BaseGun : MonoBehaviour
                 Bloom();
             }
 
+            Recoil();
             _recoilInt += 1;
             Shooting();
-            Recoil();
             _gunAmmo -= 1;
             yield return new WaitForSeconds(_gun._burstDelay);
         }
@@ -242,9 +242,9 @@ public class BaseGun : MonoBehaviour
                 Bloom();
             }
 
+            Recoil();
             _recoilInt += 1;
             Shooting();
-            Recoil();
             _gunAmmo -= 1;
             yield return new WaitForSeconds(_gun._burstDelay);
         }
@@ -261,9 +261,9 @@ public class BaseGun : MonoBehaviour
                 Bloom();
             }
 
+            Recoil();
             _recoilInt += 1;
             Shooting();
-            Recoil();
             _gunAmmo -= 1;
             yield return new WaitForSeconds(_gun._burstDelay);
         }
@@ -348,7 +348,7 @@ public class BaseGun : MonoBehaviour
         if (Physics.Raycast(_cam.transform.position, _bloom, out _hit, Mathf.Infinity))
         {
 
-            if (_hit.transform.GetComponent<PlayerStats>())
+            if (_hit.transform.GetComponent<PlayerStats>() && !_hit.transform.GetComponent<PlayerStats>()._dead)
             {
                 Debug.LogWarning(_hit.transform.gameObject.name);
                 _hit.transform.GetComponent<PlayerStats>().TakeDamageServerRpc(_gun._damage);

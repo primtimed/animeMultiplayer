@@ -215,17 +215,17 @@ public class Movement : MonoBehaviour
             {
                 _jumping = true;
 
-                _back._rb.AddForce(transform.up * (_jumpHight * 1.0f), ForceMode.Impulse);
-
                 if (_wallrunL)
                 {
-                    _back._rb.AddForce(transform.right * (_jumpHight), ForceMode.Impulse);
+                    _back._rb.AddForce(transform.right * (_jumpHight * 2f), ForceMode.Impulse);
                 }
 
                 else if (_wallrunR)
                 {
-                    _back._rb.AddForce(-transform.right * (_jumpHight), ForceMode.Impulse);
+                    _back._rb.AddForce(-transform.right * (_jumpHight * 2f), ForceMode.Impulse);
                 }
+
+                _back._rb.AddForce(transform.up * (_jumpHight * 1.5f), ForceMode.Impulse);
 
                 StartCoroutine(JumpTime());
 
