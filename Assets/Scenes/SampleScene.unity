@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.03432197, g: 0.07924773, b: 0.044925716, a: 1}
+  m_IndirectSpecularColor: {r: 0.035887484, g: 0.07924751, b: 0.043360025, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -442,7 +442,7 @@ MonoBehaviour:
   ConnectionData:
     Address: 192.168.1.1
     Port: 7777
-    ServerListenAddress: 0.0.0.0
+    ServerListenAddress: 192.168.1.1
   DebugSimulator:
     PacketDelayMS: 0
     PacketJitterMS: 0

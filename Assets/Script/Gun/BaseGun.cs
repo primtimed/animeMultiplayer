@@ -20,6 +20,7 @@ public class BaseGun : NetworkBehaviour
     Vector3 _bloom;
 
     public GunStats _gun;
+    //public NetworkVariable<GameObject> _gunP = new NetworkVariable<GameObject>();
 
     int _gunAmmo;
     int _recoilInt;
@@ -79,6 +80,8 @@ public class BaseGun : NetworkBehaviour
         _move = GetComponentInParent<Movement>();
 
         _gunAmmo = _gun._ammo;
+
+        //_gunP.Value = _gun._gun;
 
         Instantiate(_gun._gun, transform);
 
