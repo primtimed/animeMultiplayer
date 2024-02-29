@@ -3320,10 +3320,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a5ff229d536f4144a7d9fe09a461ebe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerID: 0
-  _team: 0
+  _playerID:
+    m_InternalValue: 0
+  _team:
+    m_InternalValue: 0
   _hp: 100
-  _hpNow: 0
+  _hpNow:
+    m_InternalValue: 0
   _Kills: 0
   _deads: 0
   _kdr: 0
@@ -3364,7 +3367,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spectator: 0
-  _speedAcceleration: 40000
+  _speedAcceleration: 100000
   _sensetivitie: 10
   _gameSens: 0
   _canJump: 1
@@ -3396,7 +3399,7 @@ MonoBehaviour:
   _feet: {fileID: 77705864714159547}
   _x: 0
   _y: 0
-  _passive: 2
+  _passive: 0
 --- !u!114 &-5786966818253616177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3409,7 +3412,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4311af58737c47b4986245b0eafe77e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _abbilitie: {fileID: 11400000, guid: 846fbb462f4f6ad489657a5b5f63bda7, type: 2}
+  _abbilitie: {fileID: 11400000, guid: 486543687228c4d4dba39d5554298cff, type: 2}
   _passive: {fileID: 11400000, guid: 05a6cf73df0f0034a94705941eb55150, type: 2}
   _graplingLoc: {fileID: 7141685132647290228}
 --- !u!136 &3634251212907852487

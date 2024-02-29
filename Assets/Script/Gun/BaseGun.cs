@@ -3,12 +3,13 @@ using System;
 using System.Collections;
 using TMPro;
 using Unity.Mathematics;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-public class BaseGun : MonoBehaviour
+public class BaseGun : NetworkBehaviour
 {
     PlayerControlls _input;
     InputAction _shoot, _aim, _reload;
@@ -140,6 +141,9 @@ public class BaseGun : MonoBehaviour
         if (!_reloadding && _gunAmmo != _gun._ammo)
         {
             _reloadding = true;
+
+            _recoilInt = 0;
+
             yield return new WaitForSecondsRealtime(_gun._reloadSpeed);
 
             _gunAmmo = _gun._ammo;
@@ -351,6 +355,7 @@ public class BaseGun : MonoBehaviour
             if (_hit.transform.GetComponent<PlayerStats>() && !_hit.transform.GetComponent<PlayerStats>()._dead)
             {
                 Debug.LogWarning(_hit.transform.gameObject.name);
+
                 _hit.transform.GetComponent<PlayerStats>().TakeDamageServerRpc(_gun._damage);
             }
 

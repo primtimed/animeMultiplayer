@@ -17,7 +17,7 @@ public class AbilitieManager : NetworkBehaviour
     GameObject _network;
     GameObject _keep;
 
-    public void start()
+    public void startX()
     {
         _input = new PlayerControlls();
 
@@ -25,10 +25,10 @@ public class AbilitieManager : NetworkBehaviour
         _keep = GameObject.Find("Keep");
 
 
-        onenable();
+        OnEnableX();
     }
 
-    private void onenable ()
+    private void OnEnableX()
     {
         _input.Enable();
 

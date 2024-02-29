@@ -37,7 +37,7 @@ public class OwnerCheck : NetworkBehaviour
             _isOwner = true;
 
             //_abilitieManager.enabled = true;
-            _abilitieManager.start();
+            _abilitieManager.startX();
             _gameUi.enabled = true;
             _camer.enabled = true;
             _miniMap.enabled = true;

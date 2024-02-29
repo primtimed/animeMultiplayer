@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -14,11 +15,11 @@ public enum Team
 
 public class PlayerStats : NetworkBehaviour
 {
-    public int _playerID;
-    public Team _team;
+    public NetworkVariable<int> _playerID = new NetworkVariable<int>();
+    public NetworkVariable<Team> _team = new NetworkVariable<Team>();
 
     public float _hp;
-    public float _hpNow;
+    public NetworkVariable<float> _hpNow = new NetworkVariable<float>();
     public float _Kills;
     public float _deads;
 
@@ -34,14 +35,12 @@ public class PlayerStats : NetworkBehaviour
 
     GameUI _gameUI;
 
-    private void Awake()
-    {
-        _playerID = SystemInfo.graphicsDeviceVendorID;
-    }
-
     private void Start()
     {
-        _hpNow = _hp;
+        //_playerID.Value = SystemInfo.graphicsDeviceID;
+        _playerID.Value = SystemInfo.graphicsDeviceID;
+
+        _hpNow.Value = _hp;
 
         _movement = GetComponent<Movement>();
         _rb = GetComponent<Rigidbody>();
@@ -54,22 +53,22 @@ public class PlayerStats : NetworkBehaviour
 
     private void Update()
     {
-        _gameUI._hpSlider.value = _hpNow;
-        _gameUI._hpText.text = _hpNow.ToString("f0");
+        _gameUI._hpSlider.value = _hpNow.Value;
+        _gameUI._hpText.text = _hpNow.Value.ToString("f0");
     }
 
 
-   [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     public void TakeDamageServerRpc(float damage)
     {
-        _hpNow -= damage;
+        _hpNow.Value -= damage;
+        Debug.Log(damage);
 
-        if (_hpNow < 0)
+        if (_hpNow.Value <= 0)
         {
             DeadServerRpc();
         }
     }
-
 
     [ServerRpc]
     void NoPlayerServerRpc()
@@ -83,7 +82,7 @@ public class PlayerStats : NetworkBehaviour
         if(!_dead)
         {
             _dead = true;
-            _hpNow = _hp;
+            _hpNow.Value = _hp;
 
             _movement._speedAcceleration = 0;
             _movement._canJump = false;
@@ -97,12 +96,13 @@ public class PlayerStats : NetworkBehaviour
 
             _kdr = _Kills / _deads;
 
-            //if (IsOwner)
-            //{
-            //    _gameUI.SetKillDead();
-            //}
+            if (IsLocalPlayer)
+            {
+                _gameUI.SetKillDead();
+            }
 
 
+            //word niet gedaan op host 
             transform.position = Vector3.zero;
 
 
