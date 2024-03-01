@@ -245,6 +245,24 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""weapon 1"",
+                    ""type"": ""Button"",
+                    ""id"": ""66207dae-6d89-4bd6-a01c-c045b36710de"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""weapon 2"",
+                    ""type"": ""Button"",
+                    ""id"": ""efcf2fdd-df5e-42c5-8c55-921504777672"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -289,6 +307,39 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""weaponSwitch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b5656c7e-cf38-42e4-a146-f1af3005442b"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""weaponSwitch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e0c2128c-3548-4023-b7ed-8f2c0cb3acb2"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""weapon 1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""92829225-710c-42de-b04c-e68dac0c8f71"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""weapon 2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -435,6 +486,8 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
         m_Weapon_Reload = m_Weapon.FindAction("Reload", throwIfNotFound: true);
         m_Weapon_Aim = m_Weapon.FindAction("Aim", throwIfNotFound: true);
         m_Weapon_weaponSwitch = m_Weapon.FindAction("weaponSwitch", throwIfNotFound: true);
+        m_Weapon_weapon1 = m_Weapon.FindAction("weapon 1", throwIfNotFound: true);
+        m_Weapon_weapon2 = m_Weapon.FindAction("weapon 2", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_MouseLock = m_UI.FindAction("Mouse Lock", throwIfNotFound: true);
@@ -597,6 +650,8 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Weapon_Reload;
     private readonly InputAction m_Weapon_Aim;
     private readonly InputAction m_Weapon_weaponSwitch;
+    private readonly InputAction m_Weapon_weapon1;
+    private readonly InputAction m_Weapon_weapon2;
     public struct WeaponActions
     {
         private @PlayerControlls m_Wrapper;
@@ -605,6 +660,8 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
         public InputAction @Reload => m_Wrapper.m_Weapon_Reload;
         public InputAction @Aim => m_Wrapper.m_Weapon_Aim;
         public InputAction @weaponSwitch => m_Wrapper.m_Weapon_weaponSwitch;
+        public InputAction @weapon1 => m_Wrapper.m_Weapon_weapon1;
+        public InputAction @weapon2 => m_Wrapper.m_Weapon_weapon2;
         public InputActionMap Get() { return m_Wrapper.m_Weapon; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -626,6 +683,12 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
             @weaponSwitch.started += instance.OnWeaponSwitch;
             @weaponSwitch.performed += instance.OnWeaponSwitch;
             @weaponSwitch.canceled += instance.OnWeaponSwitch;
+            @weapon1.started += instance.OnWeapon1;
+            @weapon1.performed += instance.OnWeapon1;
+            @weapon1.canceled += instance.OnWeapon1;
+            @weapon2.started += instance.OnWeapon2;
+            @weapon2.performed += instance.OnWeapon2;
+            @weapon2.canceled += instance.OnWeapon2;
         }
 
         private void UnregisterCallbacks(IWeaponActions instance)
@@ -642,6 +705,12 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
             @weaponSwitch.started -= instance.OnWeaponSwitch;
             @weaponSwitch.performed -= instance.OnWeaponSwitch;
             @weaponSwitch.canceled -= instance.OnWeaponSwitch;
+            @weapon1.started -= instance.OnWeapon1;
+            @weapon1.performed -= instance.OnWeapon1;
+            @weapon1.canceled -= instance.OnWeapon1;
+            @weapon2.started -= instance.OnWeapon2;
+            @weapon2.performed -= instance.OnWeapon2;
+            @weapon2.canceled -= instance.OnWeapon2;
         }
 
         public void RemoveCallbacks(IWeaponActions instance)
@@ -828,6 +897,8 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
         void OnReload(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);
         void OnWeaponSwitch(InputAction.CallbackContext context);
+        void OnWeapon1(InputAction.CallbackContext context);
+        void OnWeapon2(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

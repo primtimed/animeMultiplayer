@@ -15,15 +15,17 @@ MonoBehaviour:
   _name: Sniper
   _ammo: 5
   _fireRate: 1
-  _reloadSpeed: 3
+  _reloadSpeed: 2
   _weaponSpretAmount: 5
-  _damage: 99
+  _damage: 101
   _recoil:
   - {x: -2, y: 5}
   _weaponType: 1
   _fireMode: 0
   _gun: {fileID: 4805215114551457845, guid: 665f6146aa405084eb25a8280ab30fb1, type: 3}
   _gunPNG: {fileID: 2800000, guid: 680751c540568a4488569f6a611efcba, type: 3}
+  _hitEffect: {fileID: 7276296530774455120, guid: b7654e059a7b9b641b8d4d08c09263c2,
+    type: 3}
   _burstDelay: 0
   _zoom: 4
   _scoop: {fileID: 2800000, guid: b90dab1ac7785fa4292da7c4c87cede4, type: 3}

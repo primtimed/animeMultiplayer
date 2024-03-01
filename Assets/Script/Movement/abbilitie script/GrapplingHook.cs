@@ -156,6 +156,7 @@ public class GrapplingHook : BaseAbillitie
         if (!_joint) return;
 
         _currentGrapplePosition = Vector3.Lerp(_currentGrapplePosition, _grapplePoint, Time.deltaTime * 8f);
+        _movement._back._rb.drag = 0;
 
         _lr.SetPosition(0, _gunBarrel.transform.position);
         _lr.SetPosition(1, _currentGrapplePosition);

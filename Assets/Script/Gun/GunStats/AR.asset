@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: AR
   m_EditorClassIdentifier: 
   _name: AR
-  _ammo: 29
+  _ammo: 30
   _fireRate: 0.1
-  _reloadSpeed: 3
+  _reloadSpeed: 2
   _weaponSpretAmount: 0.5
-  _damage: 20
+  _damage: 17
   _recoil:
   - {x: 1, y: 0}
   - {x: 0, y: 1}
@@ -53,6 +53,8 @@ MonoBehaviour:
   _fireMode: 1
   _gun: {fileID: 7760640521157878228, guid: cea748a5e89f8964a9b585ede516dcf7, type: 3}
   _gunPNG: {fileID: 2800000, guid: d7da44e65419d314a8660407f3764cfd, type: 3}
+  _hitEffect: {fileID: 7276296530774455120, guid: b7654e059a7b9b641b8d4d08c09263c2,
+    type: 3}
   _burstDelay: 0
   _zoom: 1
   _scoop: {fileID: 0}

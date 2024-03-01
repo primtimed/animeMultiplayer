@@ -19,6 +19,8 @@ public class PlayerStats : NetworkBehaviour
     public NetworkVariable<int> _playerID = new NetworkVariable<int>();
     public NetworkVariable<Team> _team = new NetworkVariable<Team>();
 
+    public MatchStats _match;
+
     public float _hp;
     public NetworkVariable<float> _hpNow = new NetworkVariable<float>();
     public float _Kills;
@@ -49,15 +51,35 @@ public class PlayerStats : NetworkBehaviour
         _mash = GetComponentInChildren<MeshRenderer>();
         _gun = GetComponentInChildren<BaseGun>();
 
-        _gameUI = GetComponent<GameUI>();
+        _match = GameObject.Find("Keep").GetComponent<MatchStats>();
+
+        if (IsLocalPlayer)
+        {
+            _gameUI = GetComponent<GameUI>();
+        }
 
         _team.Value = Random.value < .5 ? Team.Team1 : Team.Team2;
+
+        if(_match._team1.Value.Count <= _match._team2.Value.Count)
+        {
+            _team.Value = Team.Team1;
+            _match._team1.Value.Add(gameObject);
+        }
+
+        else
+        {
+            _team.Value = Team.Team2;
+            _match._team2.Value.Add(gameObject);
+        }
     }
 
     private void Update()
     {
-        _gameUI._hpSlider.value = _hpNow.Value;
-        _gameUI._hpText.text = _hpNow.Value.ToString("f0");
+        if(IsLocalPlayer)
+        {
+            _gameUI._hpSlider.value = _hpNow.Value;
+            _gameUI._hpText.text = _hpNow.Value.ToString("f0");
+        }
     }
 
 
@@ -65,11 +87,19 @@ public class PlayerStats : NetworkBehaviour
     public void TakeDamageServerRpc(float damage)
     {
         _hpNow.Value -= damage;
-        Debug.Log(damage);
 
         if (_hpNow.Value <= 0)
         {
             DeadServerRpc();
+        }
+    }
+
+    [ClientRpc]
+    public void TakeDamageClientRpc(float damage)
+    {
+        if (!IsHost)
+        {
+            _hpNow.Value -= damage;
         }
     }
 
@@ -96,6 +126,7 @@ public class PlayerStats : NetworkBehaviour
             _gun.gameObject.SetActive(false);
 
             _deads += 1;
+            SetMatchServerRpc();
 
             _kdr = _Kills / _deads;
 
@@ -104,11 +135,7 @@ public class PlayerStats : NetworkBehaviour
                 _gameUI.SetKillDead();
             }
 
-
-            //word niet gedaan op host 
             SetSpawnClientRpc();
-            //transform.position = Vector3.zero;
-
 
             _movement._speedAcceleration = 40000;
             _movement._canJump = true;
@@ -126,7 +153,41 @@ public class PlayerStats : NetworkBehaviour
     {
         int _int = Random.Range(0, GameObject.Find("Spawns").GetComponent<Respawn>()._spawns.Length);
         transform.position = GameObject.Find("Spawns").GetComponent<Respawn>()._spawns[_int].position;
-        //transform.position = Vector3.zero;
+
+        _hpNow.Value = _hp;
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void SetMatchServerRpc()
+    {
+        if(_team.Value == Team.Team1)
+        {
+            _match._team2Points.Value += 1;
+        }
+
+        else if (_team.Value == Team.Team2)
+        {
+            _match._team1Points.Value += 1;
+        }
+
+        SetMatchClientRpc();
+    }
+
+    [ClientRpc]
+    public void SetMatchClientRpc()
+    {
+        if(!IsHost)
+        {
+            if (_team.Value == Team.Team1)
+            {
+                _match._team2Points.Value += 1;
+            }
+
+            else if (_team.Value == Team.Team2)
+            {
+                _match._team1Points.Value += 1;
+            }
+        }
     }
 
 

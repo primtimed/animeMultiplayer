@@ -28,9 +28,6 @@ public class BaseGun : NetworkBehaviour
     float _timer;
     float fov;
 
-    public LayerMask _player;
-    public GameObject _hitEffect;
-
     public UI _UI = new UI();
 
     [Serializable]
@@ -39,6 +36,9 @@ public class BaseGun : NetworkBehaviour
         [SerializeField] public RawImage _image;
         [SerializeField] public RawImage _scope;
         [SerializeField] public TextMeshProUGUI _ammo;
+
+        [SerializeField] public GameObject _reload;
+        [SerializeField] public GameObject _teamMate;
     }
 
     private void Awake()
@@ -61,6 +61,8 @@ public class BaseGun : NetworkBehaviour
         _aim.canceled += Aim;
 
         _reload.started += Reload;
+
+        _UI._ammo.text = _gunAmmo.ToString() + " / " + _gun._ammo.ToString();
     }
 
     private void OnDisable()
@@ -144,6 +146,7 @@ public class BaseGun : NetworkBehaviour
         if (!_reloadding && _gunAmmo != _gun._ammo)
         {
             _reloadding = true;
+            _UI._reload.SetActive(true);
 
             _recoilInt = 0;
 
@@ -151,6 +154,7 @@ public class BaseGun : NetworkBehaviour
 
             _gunAmmo = _gun._ammo;
             _UI._ammo.text = _gunAmmo.ToString() + " / " + _gun._ammo.ToString();
+            _UI._reload.SetActive(false);
             _reloadding = false;
         }
     }
@@ -357,13 +361,26 @@ public class BaseGun : NetworkBehaviour
 
             if (_hit.transform.GetComponent<PlayerStats>() && !_hit.transform.GetComponent<PlayerStats>()._dead)
             {
-                Debug.LogWarning(_hit.transform.gameObject.name);
+                if (GetComponentInParent<PlayerStats>()._team.Value == _hit.transform.GetComponent<PlayerStats>()._team.Value)
+                {
+                    StartCoroutine(HitTeam());
+                }
 
-                _hit.transform.GetComponent<PlayerStats>().TakeDamageServerRpc(_gun._damage);
+                else
+                {
+                    _hit.transform.GetComponent<PlayerStats>().TakeDamageServerRpc(_gun._damage);
+                }
             }
 
-            Instantiate(_hitEffect, _hit.point, transform.rotation);
+            Instantiate(_gun._hitEffect, _hit.point, transform.rotation);
         }
+    }
+
+    public IEnumerator HitTeam()
+    {
+        _UI._teamMate.SetActive(true);
+        yield return new WaitForSeconds(1.5f);
+        _UI._teamMate.SetActive(false);
     }
 
     private Quaternion target, rotationX, rotationY;

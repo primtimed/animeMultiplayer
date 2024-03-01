@@ -23,10 +23,24 @@ public class GameUI : MonoBehaviour
     PlayerControlls _input;
     InputAction _statsButton;
 
+    MatchStats _matchStats;
+
+    [Header("")]
+
+    //GameStats
+
+    public Slider _team1Slider;
+    public TextMeshProUGUI _team1Text;
+
+    public Slider _team2Slider;
+    public TextMeshProUGUI _team2Text;
+
+
     private void Awake()
     {
         _input = new PlayerControlls();
     }
+
 
     private void OnEnable()
     {
@@ -51,6 +65,10 @@ public class GameUI : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody>();
         _playerStats = GetComponent<PlayerStats>();
+
+        _matchStats = GameObject.Find("Keep").GetComponent<MatchStats>();
+        _team1Slider.maxValue = _matchStats._winningPoints;
+        _team2Slider.maxValue = _matchStats._winningPoints;
 
         StartCoroutine(Speed());
     }
@@ -94,5 +112,11 @@ public class GameUI : MonoBehaviour
         {
             _abbilUI.text = null;
         }
+
+        _team1Slider.value = _matchStats._team1Points.Value;
+        _team1Text.text = _matchStats._team1Points.Value.ToString();
+
+        _team2Slider.value = _matchStats._team2Points.Value;
+        _team2Text.text = _matchStats._team2Points.Value.ToString();
     }
 }

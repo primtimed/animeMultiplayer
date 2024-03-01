@@ -12,7 +12,8 @@ public enum WeaponType
 {
     Standaard,
     Sniper,
-    Shotgun
+    Shotgun,
+    Pistol
 }
 
 [CreateAssetMenu(fileName = "GunStats", menuName = "GunStats")]
@@ -36,6 +37,7 @@ public class GunStats : ScriptableObject
     [Header("")]
     public GameObject _gun;
     public Texture _gunPNG;
+    public GameObject _hitEffect;
 
     [Header("")]
 
