@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AR
   m_EditorClassIdentifier: 
   _name: AR
-  _ammo: 30
+  _ammo: 29
   _fireRate: 0.1
   _reloadSpeed: 3
   _weaponSpretAmount: 0.5

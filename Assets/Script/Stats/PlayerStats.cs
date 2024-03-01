@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Unity.Netcode;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public enum Team
 {
@@ -49,6 +50,8 @@ public class PlayerStats : NetworkBehaviour
         _gun = GetComponentInChildren<BaseGun>();
 
         _gameUI = GetComponent<GameUI>();
+
+        _team.Value = Random.value < .5 ? Team.Team1 : Team.Team2;
     }
 
     private void Update()
@@ -103,7 +106,8 @@ public class PlayerStats : NetworkBehaviour
 
 
             //word niet gedaan op host 
-            transform.position = Vector3.zero;
+            SetSpawnClientRpc();
+            //transform.position = Vector3.zero;
 
 
             _movement._speedAcceleration = 40000;
@@ -115,6 +119,14 @@ public class PlayerStats : NetworkBehaviour
 
             _dead = false;
         }
+    }
+
+    [ClientRpc]
+    public void SetSpawnClientRpc()
+    {
+        int _int = Random.Range(0, GameObject.Find("Spawns").GetComponent<Respawn>()._spawns.Length);
+        transform.position = GameObject.Find("Spawns").GetComponent<Respawn>()._spawns[_int].position;
+        //transform.position = Vector3.zero;
     }
 
 

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ShotGun
   m_EditorClassIdentifier: 
   _name: shotgun
-  _ammo: 16
+  _ammo: 13
   _fireRate: 1
   _reloadSpeed: 3
   _weaponSpretAmount: 5

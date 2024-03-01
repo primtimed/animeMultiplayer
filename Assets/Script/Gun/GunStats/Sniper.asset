@@ -17,7 +17,7 @@ MonoBehaviour:
   _fireRate: 1
   _reloadSpeed: 3
   _weaponSpretAmount: 5
-  _damage: 101
+  _damage: 99
   _recoil:
   - {x: -2, y: 5}
   _weaponType: 1
