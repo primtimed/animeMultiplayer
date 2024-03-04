@@ -117,7 +117,7 @@ public class Movement : MonoBehaviour
     void Update()
     {
         Move(_move.ReadValue<Vector2>());
-        Rotate(_mouse.ReadValue<Vector2>() * Time.deltaTime);
+        Rotate(_mouse.ReadValue<Vector2>() * Time.smoothDeltaTime);
 
         Grounded();
         WallRunInput();

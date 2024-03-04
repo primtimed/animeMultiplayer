@@ -43,6 +43,8 @@ public class BaseGun : NetworkBehaviour
 
     private void Awake()
     {
+        _UI._image.texture = _gun._gunPNG;
+
         _input = new PlayerControlls();
     }
 
@@ -62,7 +64,11 @@ public class BaseGun : NetworkBehaviour
 
         _reload.started += Reload;
 
+        _gunAmmo = _gun._ammo;
         _UI._ammo.text = _gunAmmo.ToString() + " / " + _gun._ammo.ToString();
+        _UI._reload.SetActive(false);
+        _UI._teamMate.SetActive(false);
+        _reloadding = false;
     }
 
     private void OnDisable()
@@ -86,9 +92,6 @@ public class BaseGun : NetworkBehaviour
         //_gunP.Value = _gun._gun;
 
         Instantiate(_gun._gun, transform);
-
-        _UI._image.texture = _gun._gunPNG;
-        _UI._ammo.text = _gunAmmo.ToString() + " / " + _gun._ammo.ToString();
 
         if (!GetComponentInParent<OwnerCheck>()._isOwner)
         {
@@ -392,6 +395,6 @@ public class BaseGun : NetworkBehaviour
 
         target = rotationX * rotationY;
 
-        transform.localRotation = Quaternion.Slerp(transform.localRotation, target, 5 * Time.deltaTime);
+        transform.localRotation = Quaternion.Slerp(transform.localRotation, target, _gun._weaponFlick * Time.deltaTime);
     }
 }

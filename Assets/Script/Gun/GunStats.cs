@@ -29,6 +29,7 @@ public class GunStats : ScriptableObject
 
     [Header("")]
     public Vector2 []_recoil;
+    public float _weaponFlick;
 
     [Header("")]
     public WeaponType _weaponType;

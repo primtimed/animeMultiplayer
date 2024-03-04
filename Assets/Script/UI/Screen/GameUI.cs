@@ -35,6 +35,8 @@ public class GameUI : MonoBehaviour
     public Slider _team2Slider;
     public TextMeshProUGUI _team2Text;
 
+    public TextMeshProUGUI _gameID;
+
 
     private void Awake()
     {
@@ -67,6 +69,9 @@ public class GameUI : MonoBehaviour
         _playerStats = GetComponent<PlayerStats>();
 
         _matchStats = GameObject.Find("Keep").GetComponent<MatchStats>();
+
+        _gameID.text = _matchStats._gameID;
+
         _team1Slider.maxValue = _matchStats._winningPoints;
         _team2Slider.maxValue = _matchStats._winningPoints;
 

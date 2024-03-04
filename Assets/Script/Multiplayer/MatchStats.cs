@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class MatchStats : MonoBehaviour
 {
+    public string _gameID;
     public int _winningPoints;
 
     public NetworkVariable<int> _team1Points = new NetworkVariable<int>();

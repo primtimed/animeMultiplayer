@@ -19,7 +19,7 @@ public class PlayerStats : NetworkBehaviour
     public NetworkVariable<int> _playerID = new NetworkVariable<int>();
     public NetworkVariable<Team> _team = new NetworkVariable<Team>();
 
-    public MatchStats _match;
+    MatchStats _match;
 
     public float _hp;
     public NetworkVariable<float> _hpNow = new NetworkVariable<float>();
@@ -115,7 +115,6 @@ public class PlayerStats : NetworkBehaviour
         if(!_dead)
         {
             _dead = true;
-            _hpNow.Value = _hp;
 
             _movement._speedAcceleration = 0;
             _movement._canJump = false;
@@ -145,6 +144,7 @@ public class PlayerStats : NetworkBehaviour
             _gun.gameObject.SetActive(true);
 
             _dead = false;
+            _hpNow.Value = _hp;
         }
     }
 

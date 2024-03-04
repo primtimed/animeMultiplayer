@@ -145,7 +145,7 @@ public class GrapplingHook : BaseAbillitie
 
         if (_movement._back._grapplingSlide && _speed.magnitude < _movement._sprintSpeed)
         {
-            _movement._speedAcceleration = 4000;
+            _movement._speedAcceleration = 100000;
             _movement._back._grapplingSlide = false;
         }
     }
