@@ -135,6 +135,25 @@ public class BaseGun : NetworkBehaviour
                 _aimBool = false;
             }
         }
+
+        else
+        {
+            if (context.started)
+            {
+                fov = _cam.fieldOfView;
+
+                _cam.fieldOfView = _cam.fieldOfView / 1.1f;
+                _move._gameSens = _move._sensetivitie / 1.1f;
+                _aimBool = true;
+            }
+
+            else
+            {
+                _cam.fieldOfView = fov;
+                _move._gameSens = _move._sensetivitie;
+                _aimBool = false;
+            }
+        }
     }
 
     private void Reload(InputAction.CallbackContext context)
@@ -340,11 +359,23 @@ public class BaseGun : NetworkBehaviour
 
     private void Bloom()
     {
-        _bloom = _cam.transform.position + _cam.transform.forward * 100;
-        _bloom += Random.Range(-_gun._weaponSpretAmount, _gun._weaponSpretAmount) * _cam.transform.up;
-        _bloom += Random.Range(-_gun._weaponSpretAmount, _gun._weaponSpretAmount) * _cam.transform.right;
-        _bloom -= _cam.transform.position;
-        _bloom.Normalize();
+        if (!_aimBool)
+        {
+            _bloom = _cam.transform.position + _cam.transform.forward * 100;
+            _bloom += Random.Range(-_gun._weaponSpretAmount, _gun._weaponSpretAmount) * _cam.transform.up;
+            _bloom += Random.Range(-_gun._weaponSpretAmount, _gun._weaponSpretAmount) * _cam.transform.right;
+            _bloom -= _cam.transform.position;
+            _bloom.Normalize();
+        }
+
+        else
+        {
+            _bloom = _cam.transform.position + _cam.transform.forward * 100;
+            _bloom += Random.Range(-_gun._weaponSpretAmount, _gun._weaponSpretAmount / 1.4f) * _cam.transform.up;
+            _bloom += Random.Range(-_gun._weaponSpretAmount, _gun._weaponSpretAmount / 1.4f) * _cam.transform.right;
+            _bloom -= _cam.transform.position;
+            _bloom.Normalize();
+        }
     }
 
     private void Recoil()

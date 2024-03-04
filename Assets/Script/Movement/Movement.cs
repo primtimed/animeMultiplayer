@@ -366,7 +366,10 @@ public class Movement : MonoBehaviour
         _back._rb.useGravity = false;
         _wallrunning = true;
 
-        _back._rb.AddForce(transform.forward * _wallrunSpeed);
+        Vector3 _speed = new Vector3(_back._rb.velocity.x, 0, _back._rb.velocity.z);
+        float _WallSpeed = math.lerp(_speed.magnitude, _wallrunSpeed, 5);
+
+        _back._rb.AddForce(transform.forward * _WallSpeed);
 
         SpeedControle();
 
