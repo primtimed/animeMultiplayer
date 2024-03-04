@@ -1,9 +1,6 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
 using Unity.Mathematics;
-using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -135,9 +132,9 @@ public class Movement : MonoBehaviour
             if (_grounded && !_slidding || _jumping || _climming)
             {
                 Vector3 _moveDirection = (_back._center.transform.forward * _moveV2.y + _back._center.transform.right * _moveV2.x) * Time.deltaTime;
-                _moveDirection = new Vector3 (_moveDirection.x, 0, _moveDirection.z);
+                _moveDirection = new Vector3(_moveDirection.x, 0, _moveDirection.z);
 
-                if(_climming)
+                if (_climming)
                 {
                     _moveDirection = _moveDirection / 1.5f;
                 }
@@ -263,7 +260,7 @@ public class Movement : MonoBehaviour
             _timer = 0;
         }
 
-        else if ( !_wallrunning)
+        else if (!_wallrunning)
         {
             _back._rb.velocity += new Vector3(0, -0.05f, 0);
             _grounded = false;

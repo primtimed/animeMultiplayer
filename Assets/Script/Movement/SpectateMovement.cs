@@ -1,12 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Unity.Mathematics;
 using UnityEngine.InputSystem;
-using UnityEngine.ProBuilder;
-using UnityEngine.Windows;
-using UnityEngine.EventSystems;
-using TMPro;
 
 public class SpectateMovement : MonoBehaviour
 {
@@ -56,12 +49,12 @@ public class SpectateMovement : MonoBehaviour
 
     void Update()
     {
-        if(_flyUp)
+        if (_flyUp)
         {
             _rb.AddForce(Vector3.up * _speedAcceleration);
         }
 
-        if(_fluDown)
+        if (_fluDown)
         {
             _rb.AddForce(-Vector3.up * _speedAcceleration);
 

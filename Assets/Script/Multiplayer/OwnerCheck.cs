@@ -1,6 +1,4 @@
-using System.Collections;
 using Unity.Netcode;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class OwnerCheck : NetworkBehaviour
@@ -48,4 +46,4 @@ public class OwnerCheck : NetworkBehaviour
             //GameObject.Find("Keep").GetComponent<PlayerTeam>().TeamPickerServerRpc(gameObject.GetComponent<PlayerStats>()._playerID);
         }
     }
-}                 
+}

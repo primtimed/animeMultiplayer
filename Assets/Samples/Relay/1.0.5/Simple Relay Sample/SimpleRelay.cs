@@ -1,12 +1,12 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using Unity.Services.Authentication;
+using Unity.Services.Core;
 using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
 using UnityEngine;
 using UnityEngine.UI;
-using Unity.Services.Core;
-using Unity.Services.Authentication;
-using System.Collections.Generic;
-using System.Linq;
 
 /// <summary>
 /// A simple sample showing how to use the Relay Allocation package. As the host, you can authenticate, request a relay allocation, get a join code and join the allocation.
@@ -65,7 +65,7 @@ public class SimpleRelay : MonoBehaviour
         PlayerIdText.text = playerId;
         RegionsDropdown.interactable = regions.Count > 0;
         RegionsDropdown.options?.Clear();
-        RegionsDropdown.AddOptions(new List<string> {autoSelectRegionName});  // index 0 is always auto-select (use QoS)
+        RegionsDropdown.AddOptions(new List<string> { autoSelectRegionName });  // index 0 is always auto-select (use QoS)
         RegionsDropdown.AddOptions(regionOptions);
         if (!String.IsNullOrEmpty(allocationRegion))
         {

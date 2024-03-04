@@ -49,6 +49,7 @@ MonoBehaviour:
   - {x: 1, y: 0}
   - {x: 1, y: 0}
   - {x: 1, y: 0}
+  _weaponFlick: 5
   _weaponType: 0
   _fireMode: 1
   _gun: {fileID: 7760640521157878228, guid: cea748a5e89f8964a9b585ede516dcf7, type: 3}

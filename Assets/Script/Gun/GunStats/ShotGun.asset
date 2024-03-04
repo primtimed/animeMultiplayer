@@ -20,6 +20,7 @@ MonoBehaviour:
   _damage: 19
   _recoil:
   - {x: 2, y: 4}
+  _weaponFlick: 8
   _weaponType: 2
   _fireMode: 0
   _gun: {fileID: 199023552529132276, guid: ff51537bc54e9bd438412f820af46d95, type: 3}

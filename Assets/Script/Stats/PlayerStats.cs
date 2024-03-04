@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Unity.Netcode;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -60,7 +56,7 @@ public class PlayerStats : NetworkBehaviour
 
         _team.Value = Random.value < .5 ? Team.Team1 : Team.Team2;
 
-        if(_match._team1.Value.Count <= _match._team2.Value.Count)
+        if (_match._team1.Value.Count <= _match._team2.Value.Count)
         {
             _team.Value = Team.Team1;
             _match._team1.Value.Add(gameObject);
@@ -75,7 +71,7 @@ public class PlayerStats : NetworkBehaviour
 
     private void Update()
     {
-        if(IsLocalPlayer)
+        if (IsLocalPlayer)
         {
             _gameUI._hpSlider.value = _hpNow.Value;
             _gameUI._hpText.text = _hpNow.Value.ToString("f0");
@@ -106,13 +102,13 @@ public class PlayerStats : NetworkBehaviour
     [ServerRpc]
     void NoPlayerServerRpc()
     {
-        
+
     }
 
     [ServerRpc]
     public void DeadServerRpc()
     {
-        if(!_dead)
+        if (!_dead)
         {
             _dead = true;
 
@@ -160,7 +156,7 @@ public class PlayerStats : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void SetMatchServerRpc()
     {
-        if(_team.Value == Team.Team1)
+        if (_team.Value == Team.Team1)
         {
             _match._team2Points.Value += 1;
         }
@@ -176,7 +172,7 @@ public class PlayerStats : NetworkBehaviour
     [ClientRpc]
     public void SetMatchClientRpc()
     {
-        if(!IsHost)
+        if (!IsHost)
         {
             if (_team.Value == Team.Team1)
             {

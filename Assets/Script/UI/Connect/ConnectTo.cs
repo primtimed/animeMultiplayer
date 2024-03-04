@@ -1,14 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using Unity.Netcode;
+using Unity.Netcode.Transports.UTP;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
-using Unity.Services.Relay.Models;
 using Unity.Services.Relay;
+using Unity.Services.Relay.Models;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
-using Unity.Netcode.Transports.UTP;
 
 public class ConnectTo : MonoBehaviour
 {
@@ -38,7 +35,8 @@ public class ConnectTo : MonoBehaviour
     private async void Start()
     {
         await UnityServices.InitializeAsync();
-        AuthenticationService.Instance.SignedIn += () => {
+        AuthenticationService.Instance.SignedIn += () =>
+        {
             Debug.Log("Signed in " + AuthenticationService.Instance.PlayerId);
         };
         await AuthenticationService.Instance.SignInAnonymouslyAsync();

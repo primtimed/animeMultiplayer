@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public enum FireMode
@@ -28,7 +27,7 @@ public class GunStats : ScriptableObject
     public float _damage;
 
     [Header("")]
-    public Vector2 []_recoil;
+    public Vector2[] _recoil;
     public float _weaponFlick;
 
     [Header("")]

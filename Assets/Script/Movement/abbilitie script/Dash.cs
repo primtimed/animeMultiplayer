@@ -1,10 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "Dash", menuName = "Dash")]
 public class Dash : BaseAbillitie
@@ -35,7 +31,7 @@ public class Dash : BaseAbillitie
 
     public override async void Start(InputAction.CallbackContext context)
     {
-        if(_timer <= 0 && !_player._back._dash)
+        if (_timer <= 0 && !_player._back._dash)
         {
             _player._back._dash = true;
 
@@ -48,7 +44,7 @@ public class Dash : BaseAbillitie
             _player._back._dash = false;
         }
     }
-                                                                                                                                                    
+
     public override void Stop(InputAction.CallbackContext context)
     {
 

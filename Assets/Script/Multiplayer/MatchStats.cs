@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
@@ -16,7 +15,7 @@ public class MatchStats : MonoBehaviour
 
     private void Update()
     {
-        if(_team1Points.Value >= _winningPoints)
+        if (_team1Points.Value >= _winningPoints)
         {
             Debug.Log("team 1 wins");
         }

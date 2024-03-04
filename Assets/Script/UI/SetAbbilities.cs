@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SetAbbilities : MonoBehaviour
@@ -11,7 +9,7 @@ public class SetAbbilities : MonoBehaviour
         _player.GetComponent<AbilitieManager>()._abbilitie = abbilitie;
     }
 
-    public void SetPassive(BasePassive  passive)
+    public void SetPassive(BasePassive passive)
     {
         _player.GetComponent<AbilitieManager>()._passive = passive;
     }

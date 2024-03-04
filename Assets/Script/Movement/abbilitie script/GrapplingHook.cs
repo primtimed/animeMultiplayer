@@ -1,9 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Unity.Mathematics;
-using Unity.Netcode;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -47,7 +42,7 @@ public class GrapplingHook : BaseAbillitie
     {
         _player = player;
 
-        if(!_gunBarrel)
+        if (!_gunBarrel)
         {
             _gunBarrel = Instantiate(_gun, manager._graplingLoc);
         }

@@ -203,7 +203,7 @@ public class SimpleRelayUtp : MonoBehaviour
         HostPlayerIdText.text = playerId;
         RegionsDropdown.interactable = regions.Count > 0;
         RegionsDropdown.options?.Clear();
-        RegionsDropdown.AddOptions(new List<string> {autoSelectRegionName});  // index 0 is always auto-select (use QoS)
+        RegionsDropdown.AddOptions(new List<string> { autoSelectRegionName });  // index 0 is always auto-select (use QoS)
         RegionsDropdown.AddOptions(regionOptions);
         if (!String.IsNullOrEmpty(hostAllocation?.Region))
         {

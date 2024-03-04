@@ -1,8 +1,6 @@
-using JetBrains.Annotations;
 using System;
 using System.Collections;
 using TMPro;
-using Unity.Mathematics;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -114,7 +112,7 @@ public class BaseGun : NetworkBehaviour
             _recoilInt = 0;
         }
     }
-    
+
     private void Aim(InputAction.CallbackContext context)
     {
         if (_gun._weaponType == WeaponType.Sniper)
