@@ -13,7 +13,7 @@ public enum Team
 
 public class PlayerStats : NetworkBehaviour
 {
-    public NetworkVariable<int> _playerID = new NetworkVariable<int>();
+    public int _playerID;
     public NetworkVariable<Team> _team = new NetworkVariable<Team>();
 
     MatchStats _match;
@@ -35,10 +35,12 @@ public class PlayerStats : NetworkBehaviour
 
     GameUI _gameUI;
 
+    public Material _team1, _team2;
+
     private void Start()
     {
         //_playerID.Value = SystemInfo.graphicsDeviceID;
-        _playerID.Value = SystemInfo.graphicsDeviceID;
+        _playerID = SystemInfo.graphicsDeviceID;
 
         _hpNow.Value = _hp;
 
@@ -59,6 +61,16 @@ public class PlayerStats : NetworkBehaviour
     public void SetTeam(TeamSellect team)
     {
         _team.Value = team._team;
+
+        if(_team.Value == Team.Team1)
+        {
+            GetComponentInChildren<MeshRenderer>().material = _team1;
+        }
+
+        else if (_team.Value == Team.Team2)
+        {
+            GetComponentInChildren<MeshRenderer>().material = _team2;
+        }
     }
 
     private void Update()

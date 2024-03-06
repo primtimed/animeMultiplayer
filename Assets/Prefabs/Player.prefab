@@ -848,8 +848,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a5ff229d536f4144a7d9fe09a461ebe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerID:
-    m_InternalValue: 0
+  _playerID: 0
   _team:
     m_InternalValue: 0
   _hp: 100
@@ -859,6 +858,8 @@ MonoBehaviour:
   _deads: 0
   _kdr: 0
   _dead: 0
+  _team1: {fileID: 2100000, guid: ec1a1a8882192454fa21d9067ead3a9e, type: 2}
+  _team2: {fileID: 2100000, guid: b9fe3ffb535ee1741b0d18fa886d340c, type: 2}
 --- !u!114 &4505699864578686652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1210,6 +1211,21 @@ PrefabInstance:
       propertyPath: m_Texture
       value: 
       objectReference: {fileID: 2800000, guid: fa76470640e751c42916efc3b9bdff9d, type: 3}
+    - target: {fileID: 884883163022910610, guid: 6a0c3922bf6077949ab936b599251bf9,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.6811328
+      objectReference: {fileID: 0}
+    - target: {fileID: 884883163022910610, guid: 6a0c3922bf6077949ab936b599251bf9,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 884883163022910610, guid: 6a0c3922bf6077949ab936b599251bf9,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1058268270383039236, guid: 6a0c3922bf6077949ab936b599251bf9,
         type: 3}
       propertyPath: m_text
@@ -1817,6 +1833,21 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3796228069644843625, guid: 6a0c3922bf6077949ab936b599251bf9,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.9218221
+      objectReference: {fileID: 0}
+    - target: {fileID: 3796228069644843625, guid: 6a0c3922bf6077949ab936b599251bf9,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3796228069644843625, guid: 6a0c3922bf6077949ab936b599251bf9,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3915884341772161861, guid: 6a0c3922bf6077949ab936b599251bf9,
         type: 3}
       propertyPath: m_IsActive
@@ -2342,6 +2373,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 4953313894865271323}
+    - target: {fileID: 6470432017540013150, guid: 6a0c3922bf6077949ab936b599251bf9,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetTeam
+      objectReference: {fileID: 0}
     - target: {fileID: 6565605610928555890, guid: 6a0c3922bf6077949ab936b599251bf9,
         type: 3}
       propertyPath: m_AnchorMax.y
