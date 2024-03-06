@@ -16,10 +16,7 @@ public class Dash : BaseAbillitie
     Movement _player;
     GameUI _gameUI;
 
-    public void Start()
-    {
-        Screen.SetResolution(1920, 1080, true);
-    }
+    void Start() { }
 
     public override void Open(GameObject player, AbilitieManager manager, GameObject NetworkManager, GameObject keep)
     {
@@ -35,7 +32,7 @@ public class Dash : BaseAbillitie
         {
             _player._back._dash = true;
 
-            Vector3 _dashDirection = _player.transform.forward * _player._back._move.y + _player.transform.right * _player._back._move.x;
+            Vector3 _dashDirection = _player.transform.forward;
             _player._back._rb.AddForce(_dashDirection * _dashSpeed);
 
             await Task.Delay(250);
@@ -52,9 +49,12 @@ public class Dash : BaseAbillitie
 
     public override void Update()
     {
-        if (!_player._back._dash)
+        if (_player)
         {
-            _timer -= Time.deltaTime;
+            if (!_player._back._dash)
+            {
+                _timer -= Time.deltaTime;
+            }
         }
 
         _gameUI._time = _timer;

@@ -15,28 +15,43 @@ public class AbilitieManager : NetworkBehaviour
     GameObject _network;
     GameObject _keep;
 
-    public void startX()
+    private void Awake()
     {
         _input = new PlayerControlls();
+    }
 
+    public void SetAbbilities(BaseAbillitie abbilitie)
+    {
+        _abbilitie = abbilitie;
+    }
+
+    public void SetPassive(BasePassive passive)
+    {
+        _passive = passive;
+    }
+
+    public void startX()
+    {
         _network = gameObject;
         _keep = GameObject.Find("Keep");
 
+        _abbilitie.Open(gameObject, this, _network, _keep);
+        _passive.Open(gameObject);
 
-        OnEnableX();
+        OnEnable();
     }
 
-    private void OnEnableX()
+    private void OnEnable()
     {
         _input.Enable();
 
         _abbilitieKey1 = _input.Abbilities._1;
 
-        _abbilitieKey1.started += _abbilitie.Start;
-        _abbilitieKey1.canceled += _abbilitie.Stop;
-
-        _abbilitie.Open(gameObject, this, _network, _keep);
-        _passive.Open(gameObject);
+        if (_abbilitie)
+        {
+            _abbilitieKey1.started += _abbilitie.Start;
+            _abbilitieKey1.canceled += _abbilitie.Stop;
+        }
     }
 
     private void OnDisable()

@@ -5,7 +5,7 @@ public class OwnerCheck : NetworkBehaviour
 {
     public bool _isOwner;
 
-    public GameObject _gameUI;
+    public GameObject _gameUI, _gameui2;
 
     public AbilitieManager _abilitieManager;
     public GameUI _gameUi;
@@ -28,6 +28,7 @@ public class OwnerCheck : NetworkBehaviour
             _movement.enabled = false;
 
             _gameUI.SetActive(false);
+            _gameui2.SetActive(false);
         }
 
         else
@@ -35,14 +36,15 @@ public class OwnerCheck : NetworkBehaviour
             _isOwner = true;
 
             //_abilitieManager.enabled = true;
-            _abilitieManager.startX();
+            //_abilitieManager.startX();
             _gameUi.enabled = true;
             _camer.enabled = true;
             _miniMap.enabled = true;
             _audioListener.enabled = true;
-            _movement.enabled = true;
+            //_movement.enabled = true;
 
             _gameUI.SetActive(true);
+            _gameui2.SetActive(true);
             //GameObject.Find("Keep").GetComponent<PlayerTeam>().TeamPickerServerRpc(gameObject.GetComponent<PlayerStats>()._playerID);
         }
     }

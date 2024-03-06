@@ -233,8 +233,7 @@ public class Movement : MonoBehaviour
             {
                 Vector3 _moveDirection = (_back._center.transform.forward * _back._move.y + _back._center.transform.right * _back._move.x) * Time.deltaTime;
                 _moveDirection = new Vector3(_moveDirection.x, 0, _moveDirection.z);
-                _back._rb.AddForce(_moveDirection * _speedAcceleration * _back._rb.velocity.magnitude);
-
+                _back._rb.AddForce(_moveDirection * _speedAcceleration / 10 * _back._rb.velocity.magnitude);
                 _back._rb.AddForce(transform.up * _jumpHight, ForceMode.Impulse);
 
                 _dubbleJump = false;

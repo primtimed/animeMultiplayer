@@ -46,7 +46,7 @@ public class ConnectTo : MonoBehaviour
     {
         try
         {
-            Allocation allocation = await RelayService.Instance.CreateAllocationAsync(3);
+            Allocation allocation = await RelayService.Instance.CreateAllocationAsync(99);
             string joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
             _ui.SetActive(false);
 

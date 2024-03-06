@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using TMPro;
 using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -25,6 +26,7 @@ public class BaseGun : NetworkBehaviour
     bool _shootBool, _aimBool, _reloadding;
     float _timer;
     float fov;
+    WeaponType _weaponType;
 
     public UI _UI = new UI();
 
@@ -41,12 +43,15 @@ public class BaseGun : NetworkBehaviour
 
     private void Awake()
     {
-        _UI._image.texture = _gun._gunPNG;
-
         _input = new PlayerControlls();
     }
 
     private void OnEnable()
+    {
+        OnEnables();
+    }
+
+    private void OnEnables()
     {
         _input.Enable();
 
@@ -62,8 +67,11 @@ public class BaseGun : NetworkBehaviour
 
         _reload.started += Reload;
 
-        _gunAmmo = _gun._ammo;
-        _UI._ammo.text = _gunAmmo.ToString() + " / " + _gun._ammo.ToString();
+        if (_gun)
+        {
+            _UI._ammo.text = _gunAmmo.ToString() + " / " + _gun._ammo.ToString();
+        }
+
         _UI._reload.SetActive(false);
         _UI._teamMate.SetActive(false);
         _reloadding = false;
@@ -80,14 +88,34 @@ public class BaseGun : NetworkBehaviour
         _reload.started -= Reload;
     }
 
-    public void Start()
+    public void SetGun(GunStats gun)
+    {
+        _gun = gun;
+    }
+
+    private void Start()
     {
         _cam = GetComponentInParent<Camera>();
+        fov = _cam.fieldOfView;
         _move = GetComponentInParent<Movement>();
 
-        _gunAmmo = _gun._ammo;
+        if (_gun != null )
+        {
+            _gunAmmo = _gun._ammo;
+            _UI._image.texture = _gun._gunPNG;
+            _weaponType = _gun._weaponType;
 
-        //_gunP.Value = _gun._gun;
+            Instantiate(_gun._gun, transform);
+        }
+    }
+
+    public void StartX()
+    {
+        OnEnables();
+
+        _gunAmmo = _gun._ammo;
+        _UI._image.texture = _gun._gunPNG;
+        _weaponType = _gun._weaponType;
 
         Instantiate(_gun._gun, transform);
 
@@ -115,12 +143,10 @@ public class BaseGun : NetworkBehaviour
 
     private void Aim(InputAction.CallbackContext context)
     {
-        if (_gun._weaponType == WeaponType.Sniper)
+        if (this._gun._weaponType == WeaponType.Sniper)
         {
             if (context.started)
             {
-                fov = _cam.fieldOfView;
-
                 _cam.fieldOfView = _cam.fieldOfView / _gun._zoom;
                 _move._gameSens = _move._sensetivitie / _gun._zoom;
                 _UI._scope.gameObject.SetActive(true);
@@ -140,8 +166,6 @@ public class BaseGun : NetworkBehaviour
         {
             if (context.started)
             {
-                fov = _cam.fieldOfView;
-
                 _cam.fieldOfView = _cam.fieldOfView / 1.1f;
                 _move._gameSens = _move._sensetivitie / 1.1f;
                 _aimBool = true;
@@ -151,6 +175,7 @@ public class BaseGun : NetworkBehaviour
             {
                 _cam.fieldOfView = fov;
                 _move._gameSens = _move._sensetivitie;
+                _UI._scope.gameObject.SetActive(false);
                 _aimBool = false;
             }
         }
@@ -182,6 +207,8 @@ public class BaseGun : NetworkBehaviour
     private void Update()
     {
         _timer += Time.unscaledDeltaTime;
+
+        if (!_gun) return;
 
         if (_shootBool && _timer > _gun._fireRate && !_reloadding && _gunAmmo > 0)
         {

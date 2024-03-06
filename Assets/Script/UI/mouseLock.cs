@@ -24,12 +24,9 @@ public class mouseLock : MonoBehaviour
         _action.Disable();
     }
 
-    private void Start()
+    public void SetLock(bool lockstate)
     {
-        //Cursor.lockState = CursorLockMode.Locked;
-        //Cursor.visible = false;
-
-        //_isLocked = true;
+        _isLocked = lockstate;
     }
 
     public void Switch(InputAction.CallbackContext context)

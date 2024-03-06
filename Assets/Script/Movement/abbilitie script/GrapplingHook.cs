@@ -125,12 +125,12 @@ public class GrapplingHook : BaseAbillitie
     {
         if (_movement._back._grappling)
         {
+            Destroy(_player.GetComponent<SpringJoint>());
+
             _lr.positionCount = 0;
             _gunBarrel.transform.rotation = new quaternion(0, 0, 0, 0);
             _movement._back._grappling = false;
             _timer = _cooldown;
-
-            Destroy(_joint);
         }
     }
 

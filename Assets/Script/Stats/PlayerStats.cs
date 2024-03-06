@@ -7,7 +7,8 @@ public enum Team
     None,
     Team1,
     Team2,
-    Spectate
+    Spectate,
+    FreeForAll
 }
 
 public class PlayerStats : NetworkBehaviour
@@ -53,20 +54,11 @@ public class PlayerStats : NetworkBehaviour
         {
             _gameUI = GetComponent<GameUI>();
         }
+    }
 
-        _team.Value = Random.value < .5 ? Team.Team1 : Team.Team2;
-
-        if (_match._team1.Value.Count <= _match._team2.Value.Count)
-        {
-            _team.Value = Team.Team1;
-            _match._team1.Value.Add(gameObject);
-        }
-
-        else
-        {
-            _team.Value = Team.Team2;
-            _match._team2.Value.Add(gameObject);
-        }
+    public void SetTeam(TeamSellect team)
+    {
+        _team.Value = team._team;
     }
 
     private void Update()
