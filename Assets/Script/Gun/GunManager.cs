@@ -1,7 +1,9 @@
+using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class GunManager : MonoBehaviour
+public class GunManager : NetworkBehaviour
 {
     public GameObject _gun, _pistol;
 
@@ -35,12 +37,16 @@ public class GunManager : MonoBehaviour
 
     private void Gun(InputAction.CallbackContext context)
     {
+        if (!IsLocalPlayer) return;
+
         _gun.SetActive(true);
         _pistol.SetActive(false);
     }
 
     private void Pistol(InputAction.CallbackContext context)
     {
+        if (!IsLocalPlayer) return;
+
         _gun.SetActive(false);
         _pistol.SetActive(true);
     }

@@ -425,6 +425,8 @@ public class BaseGun : NetworkBehaviour
     GameObject _bullet;
     private void Shooting()
     {
+        if (!IsLocalPlayer) return;
+
         Shake();
 
         if (Physics.Raycast(_cam.transform.position, _bloom, out _hit, Mathf.Infinity))

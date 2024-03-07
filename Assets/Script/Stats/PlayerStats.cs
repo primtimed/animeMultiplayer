@@ -27,13 +27,15 @@ public class PlayerStats : NetworkBehaviour
 
     [HideInInspector] public bool _dead;
 
-    Movement _movement;
-    Rigidbody _rb;
-    Collider _coll;
-    MeshRenderer _mash;
-    BaseGun _gun;
+    [HideInInspector] public Movement _movement;
+    [HideInInspector] public Rigidbody _rb;
+    [HideInInspector] public Collider _coll;
+    [HideInInspector] public MeshRenderer _mash;
+    [HideInInspector] public BaseGun _gun;
 
     GameUI _gameUI;
+
+    public GameObject _deadUI;
 
     public Material _team1, _team2;
 
@@ -77,8 +79,8 @@ public class PlayerStats : NetworkBehaviour
     {
         if (IsLocalPlayer)
         {
-            _gameUI._hpSlider.value = _hpNow.Value;
-            _gameUI._hpText.text = _hpNow.Value.ToString("f0");
+            //_gameUI._hpSlider.value = _hpNow.Value;
+            //_gameUI._hpText.text = _hpNow.Value.ToString("f0");
         }
     }
 
@@ -88,12 +90,36 @@ public class PlayerStats : NetworkBehaviour
     {
         _hpNow.Value -= damage;
 
-        //TakeDamageClientRpc(damage);
-
         if (_hpNow.Value <= 0)
         {
-            DeadServerRpc();
+            //if (IsHost) { DeadClientRpc(); }
+
+            //DeadServerRpc();
+
+            Dead();
         }
+    }
+
+    void Dead()
+    {
+        _movement._speedAcceleration = 0;
+        _movement._canJump = false;
+        _rb.useGravity = false;
+        _rb.velocity = new Vector3(0, 0, 0);
+        _gun.gameObject.SetActive(false);
+
+        _deadUI.SetActive(true);
+    }
+
+    public void Alive()
+    {
+        _movement._speedAcceleration = 40000;
+        _movement._canJump = true;
+        _rb.useGravity = true;
+        _gun.gameObject.SetActive(true);
+
+        _dead = false;
+        _hpNow.Value = _hp;
     }
 
     [ClientRpc]
@@ -111,12 +137,14 @@ public class PlayerStats : NetworkBehaviour
 
     }
 
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     public void DeadServerRpc()
     {
-        if (!_dead)
+        if (IsLocalPlayer)
         {
             _dead = true;
+
+            Debug.Log("ServerRpc");
 
             _movement._speedAcceleration = 0;
             _movement._canJump = false;
@@ -126,28 +154,64 @@ public class PlayerStats : NetworkBehaviour
             _coll.enabled = false;
             _gun.gameObject.SetActive(false);
 
-            _deads += 1;
-            SetMatchServerRpc();
-
-            _kdr = _Kills / _deads;
-
-            if (IsLocalPlayer)
-            {
-                _gameUI.SetKillDead();
-            }
-
-            SetSpawnClientRpc();
-
-            _movement._speedAcceleration = 40000;
-            _movement._canJump = true;
-            _rb.useGravity = true;
-            _mash.enabled = true;
-            _coll.enabled = true;
-            _gun.gameObject.SetActive(true);
-
-            _dead = false;
-            _hpNow.Value = _hp;
+            _deadUI.SetActive(true);
         }
+    }
+
+    [ClientRpc]
+    public void DeadClientRpc()
+    {
+        if (IsLocalPlayer)
+        {
+            _dead = true;
+
+            Debug.Log("ClientRpc");
+
+            _movement._speedAcceleration = 0;
+            _movement._canJump = false;
+            _rb.useGravity = false;
+            _rb.velocity = new Vector3(0, 0, 0);
+            _mash.enabled = false;
+            _coll.enabled = false;
+            _gun.gameObject.SetActive(false);
+
+            _deadUI.SetActive(true);
+        }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void AliveServerRpc()
+    {
+        if (IsLocalPlayer)
+        {
+            _deadUI.SetActive(false);
+        }
+
+        _movement._speedAcceleration = 40000;
+        _movement._canJump = true;
+        _rb.useGravity = true;
+        _mash.enabled = true;
+        _coll.enabled = true;
+        _gun.gameObject.SetActive(true);
+
+        _dead = false;
+        _hpNow.Value = _hp;
+    }
+
+    [ClientRpc]
+    public void AliveClientRpc()
+    {
+        if (IsLocalPlayer)
+        {
+            _deadUI.SetActive(false);
+        }
+
+        _mash.enabled = true;
+        _coll.enabled = true;
+        _gun.gameObject.SetActive(true);
+
+        _dead = false;
+        _hpNow.Value = _hp;
     }
 
     [ClientRpc]

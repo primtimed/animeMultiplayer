@@ -69,9 +69,9 @@ public class GrapplingHook : BaseAbillitie
             {
                 _timer -= Time.deltaTime;
             }
-        }
 
-        _gameUI._time = _timer;
+            _gameUI._time = _timer;
+        }
     }
 
     public override void LateUpdate()
