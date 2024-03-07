@@ -88,6 +88,8 @@ public class PlayerStats : NetworkBehaviour
     {
         _hpNow.Value -= damage;
 
+        //TakeDamageClientRpc(damage);
+
         if (_hpNow.Value <= 0)
         {
             DeadServerRpc();

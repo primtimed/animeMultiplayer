@@ -27,6 +27,7 @@ MonoBehaviour:
   _gunPNG: {fileID: 2800000, guid: 1044b1302f5d17f4cb74d3f819051dc4, type: 3}
   _hitEffect: {fileID: 7276296530774455120, guid: b7654e059a7b9b641b8d4d08c09263c2,
     type: 3}
+  _flash: {fileID: 0}
   _burstDelay: 0
   _zoom: 0
   _scoop: {fileID: 0}

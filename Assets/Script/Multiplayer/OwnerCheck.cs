@@ -20,7 +20,6 @@ public class OwnerCheck : NetworkBehaviour
         {
             _isOwner = false;
 
-            //_abilitieManager.enabled = false;
             _gameUi.enabled = false;
             _camer.enabled = false;
             _miniMap.enabled = false;
@@ -35,17 +34,13 @@ public class OwnerCheck : NetworkBehaviour
         {
             _isOwner = true;
 
-            //_abilitieManager.enabled = true;
-            //_abilitieManager.startX();
             _gameUi.enabled = true;
             _camer.enabled = true;
             _miniMap.enabled = true;
             _audioListener.enabled = true;
-            //_movement.enabled = true;
 
             _gameUI.SetActive(true);
             _gameui2.SetActive(true);
-            //GameObject.Find("Keep").GetComponent<PlayerTeam>().TeamPickerServerRpc(gameObject.GetComponent<PlayerStats>()._playerID);
         }
     }
 }

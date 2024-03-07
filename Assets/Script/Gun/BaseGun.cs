@@ -29,6 +29,7 @@ public class BaseGun : NetworkBehaviour
     WeaponType _weaponType;
 
     public UI _UI = new UI();
+    public UX _UX = new UX();
 
     [Serializable]
     public class UI
@@ -39,6 +40,14 @@ public class BaseGun : NetworkBehaviour
 
         [SerializeField] public GameObject _reload;
         [SerializeField] public GameObject _teamMate;
+
+        [SerializeField] public GameObject _hit;
+    }
+
+    [Serializable]
+    public class UX
+    {
+        [SerializeField] public GameObject _hit;
     }
 
     private void Awake()
@@ -93,6 +102,7 @@ public class BaseGun : NetworkBehaviour
         _gun = gun;
     }
 
+    GameObject _mainGun;
     private void Start()
     {
         _cam = GetComponentInParent<Camera>();
@@ -105,7 +115,7 @@ public class BaseGun : NetworkBehaviour
             _UI._image.texture = _gun._gunPNG;
             _weaponType = _gun._weaponType;
 
-            Instantiate(_gun._gun, transform);
+            _mainGun = Instantiate(_gun._gun, transform);
         }
     }
 
@@ -117,7 +127,7 @@ public class BaseGun : NetworkBehaviour
         _UI._image.texture = _gun._gunPNG;
         _weaponType = _gun._weaponType;
 
-        Instantiate(_gun._gun, transform);
+        _mainGun = Instantiate(_gun._gun, transform);
 
         if (!GetComponentInParent<OwnerCheck>()._isOwner)
         {
@@ -411,6 +421,8 @@ public class BaseGun : NetworkBehaviour
         _move._y -= _gun._recoil[_recoilInt].y / 3;
     }
 
+
+    GameObject _bullet;
     private void Shooting()
     {
         Shake();
@@ -420,19 +432,39 @@ public class BaseGun : NetworkBehaviour
 
             if (_hit.transform.GetComponent<PlayerStats>() && !_hit.transform.GetComponent<PlayerStats>()._dead)
             {
-                if (GetComponentInParent<PlayerStats>()._team.Value == _hit.transform.GetComponent<PlayerStats>()._team.Value)
-                {
-                    StartCoroutine(HitTeam());
-                }
+                //if (GetComponentInParent<PlayerStats>()._team.Value != _hit.transform.GetComponent<PlayerStats>()._team.Value || (GetComponentInParent<PlayerStats>()._team.Value == Team.FreeForAll))
+                //{
+                //    _hit.transform.GetComponent<PlayerStats>().TakeDamageServerRpc(_gun._damage);
+                //    StartCoroutine(Hit());
+                //}
 
-                else
-                {
-                    _hit.transform.GetComponent<PlayerStats>().TakeDamageServerRpc(_gun._damage);
-                }
+                //else
+                //{
+                //    StartCoroutine(HitTeam());
+                //}
+
+                _hit.transform.GetComponent<PlayerStats>().TakeDamageServerRpc(_gun._damage);
+                StartCoroutine(Hit());
             }
 
-            Instantiate(_gun._hitEffect, _hit.point, transform.rotation);
+            StartCoroutine(Shot());
+            _bullet = Instantiate(_gun._hitEffect, _hit.point, transform.rotation);
+            _bullet.GetComponent<Bullet>().SetTrail(_mainGun.GetComponentInChildren<BarrelLoc>().transform);
         }
+    }
+
+    IEnumerator Hit()
+    {
+        _UI._hit.SetActive(true);
+
+        yield return new WaitForSeconds(.2f);
+
+        _UI._hit.SetActive(false);
+    }
+
+    IEnumerator Shot()
+    {
+        yield return new WaitForSeconds(.2f);
     }
 
     public IEnumerator HitTeam()
@@ -442,7 +474,7 @@ public class BaseGun : NetworkBehaviour
         _UI._teamMate.SetActive(false);
     }
 
-    private Quaternion target, rotationX, rotationY;
+    Quaternion target, rotationX, rotationY;
 
     public void Shake()
     {
