@@ -396,11 +396,24 @@ public class BaseGun : NetworkBehaviour
 
     private void Bloom()
     {
-        if (!_aimBool)
+        float Weaponspret = (_move._back._rb.velocity.magnitude / 12) * -_gun._weaponSpretAmount;
+
+        if(_gun._weaponType == WeaponType.Shotgun)
         {
             _bloom = _cam.transform.position + _cam.transform.forward * 100;
             _bloom += Random.Range(-_gun._weaponSpretAmount, _gun._weaponSpretAmount) * _cam.transform.up;
             _bloom += Random.Range(-_gun._weaponSpretAmount, _gun._weaponSpretAmount) * _cam.transform.right;
+            _bloom -= _cam.transform.position;
+            _bloom.Normalize();
+
+            return;
+        }
+
+        if (!_aimBool)
+        {
+            _bloom = _cam.transform.position + _cam.transform.forward * 100;
+            _bloom += Random.Range(-Weaponspret, Weaponspret) * _cam.transform.up;
+            _bloom += Random.Range(-Weaponspret, Weaponspret) * _cam.transform.right;
             _bloom -= _cam.transform.position;
             _bloom.Normalize();
         }
@@ -408,8 +421,8 @@ public class BaseGun : NetworkBehaviour
         else
         {
             _bloom = _cam.transform.position + _cam.transform.forward * 100;
-            _bloom += Random.Range(-_gun._weaponSpretAmount, _gun._weaponSpretAmount / 1.4f) * _cam.transform.up;
-            _bloom += Random.Range(-_gun._weaponSpretAmount, _gun._weaponSpretAmount / 1.4f) * _cam.transform.right;
+            _bloom += Random.Range(-Weaponspret, Weaponspret / 1.4f) * _cam.transform.up;
+            _bloom += Random.Range(-Weaponspret, Weaponspret / 1.4f) * _cam.transform.right;
             _bloom -= _cam.transform.position;
             _bloom.Normalize();
         }

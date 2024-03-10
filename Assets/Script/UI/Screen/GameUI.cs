@@ -117,6 +117,9 @@ public class GameUI : MonoBehaviour
             _abbilUI.text = null;
         }
 
+        _hpSlider.value = _playerStats._hp;
+        _hpText.text = _playerStats._hp.ToString();
+
         _team1Slider.value = _matchStats._team1Points.Value;
         _team1Text.text = _matchStats._team1Points.Value.ToString();
 

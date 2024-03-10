@@ -5,6 +5,6 @@ public class Void : NetworkBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        other.gameObject.GetComponent<PlayerStats>().DeadServerRpc();
+        //other.gameObject.GetComponent<PlayerStats>().DeadServerRpc();
     }
 }

@@ -57,6 +57,9 @@ public class Dash : BaseAbillitie
             }
         }
 
-        _gameUI._time = _timer;
+        if (_gameUI)
+        {
+            _gameUI._time = _timer;
+        }
     }
 }
