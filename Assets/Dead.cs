@@ -35,8 +35,9 @@ public class Dead : MonoBehaviour
 
     void Respawn(InputAction.CallbackContext context)
     {
+        GetComponentInParent<PlayerStats>()._dead = false;
+        GetComponentInParent<PlayerStats>()._hpNow.Value = 100;
         GetComponentInParent<PlayerStats>().Alive();
-        GetComponentInParent<PlayerStats>().SetSpawnClientRpc();
 
         gameObject.SetActive(false);
     }

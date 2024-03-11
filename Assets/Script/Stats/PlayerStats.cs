@@ -25,7 +25,7 @@ public class PlayerStats : NetworkBehaviour
 
     public float _kdr;
 
-    [HideInInspector] public bool _dead;
+    public bool _dead;
 
     [HideInInspector] public Movement _movement;
     [HideInInspector] public Rigidbody _rb;
@@ -35,53 +35,33 @@ public class PlayerStats : NetworkBehaviour
 
     GameUI _gameUI;
 
-    public GameObject _deadUI;
-
     public Material _team1, _team2;
 
     private void Start()
     {
-        //_playerID.Value = SystemInfo.graphicsDeviceID;
-        _playerID = SystemInfo.graphicsDeviceID;
-
         _hpNow.Value = _hp;
-
-        _movement = GetComponent<Movement>();
-        _rb = GetComponent<Rigidbody>();
-        _coll = GetComponent<Collider>();
-        _mash = GetComponentInChildren<MeshRenderer>();
-        _gun = GetComponentInChildren<BaseGun>();
-
-        _match = GameObject.Find("Keep").GetComponent<MatchStats>();
 
         if (IsLocalPlayer)
         {
             _gameUI = GetComponent<GameUI>();
+
+            _playerID = SystemInfo.graphicsDeviceID;
+
+            _movement = GetComponent<Movement>();
+            _rb = GetComponent<Rigidbody>();
+            _coll = GetComponent<Collider>();
+            _mash = GetComponentInChildren<MeshRenderer>();
+            _gun = GetComponentInChildren<BaseGun>();
+
+            _match = GameObject.Find("Keep").GetComponent<MatchStats>();
         }
     }
 
     public void SetTeam(TeamSellect team)
     {
-        _team.Value = team._team;
+        Debug.Log(team.ToString());
 
-        if(_team.Value == Team.Team1)
-        {
-            GetComponentInChildren<MeshRenderer>().material = _team1;
-        }
-
-        else if (_team.Value == Team.Team2)
-        {
-            GetComponentInChildren<MeshRenderer>().material = _team2;
-        }
-    }
-
-    private void Update()
-    {
-        if (IsLocalPlayer)
-        {
-            //_gameUI._hpSlider.value = _hpNow.Value;
-            //_gameUI._hpText.text = _hpNow.Value.ToString("f0");
-        }
+        //_team.Value = team._team;
     }
 
 
@@ -90,178 +70,56 @@ public class PlayerStats : NetworkBehaviour
     {
         _hpNow.Value -= damage;
 
-        if (_hpNow.Value <= 0)
+        Debug.LogWarning(damage.ToString());
+    }
+
+    private void Update()
+    {
+        Debug.Log(_hpNow.Value);
+        Debug.Log(_dead);
+
+        if (_hpNow.Value <= 0 && !_dead)
         {
-            //if (IsHost) { DeadClientRpc(); }
-
-            //DeadServerRpc();
-
             Dead();
         }
     }
 
+
     void Dead()
     {
-        _movement._speedAcceleration = 0;
-        _movement._canJump = false;
-        _rb.useGravity = false;
-        _rb.velocity = new Vector3(0, 0, 0);
-        _gun.gameObject.SetActive(false);
+        Debug.Log("dead");
 
-        _deadUI.SetActive(true);
+        if(IsLocalPlayer)
+        {
+            Debug.Log("dead2");
+
+            _dead = true;
+
+            _movement._speedAcceleration = 0;
+            _movement._canJump = false;
+            _rb.useGravity = false;
+            _rb.velocity = new Vector3(0, 0, 0);
+            _gun.gameObject.SetActive(false);
+
+            _gameUI._deadUI.SetActive(true);
+        }
     }
 
     public void Alive()
     {
-        _movement._speedAcceleration = 40000;
-        _movement._canJump = true;
-        _rb.useGravity = true;
-        _gun.gameObject.SetActive(true);
-
-        _dead = false;
-        _hpNow.Value = _hp;
-    }
-
-    [ClientRpc]
-    public void TakeDamageClientRpc(float damage)
-    {
-        if (!IsHost)
-        {
-            _hpNow.Value -= damage;
-        }
-    }
-
-    [ServerRpc]
-    void NoPlayerServerRpc()
-    {
-
-    }
-
-    [ServerRpc(RequireOwnership = false)]
-    public void DeadServerRpc()
-    {
         if (IsLocalPlayer)
         {
-            _dead = true;
+            _hpNow.Value = _hp;
+            _dead = false;
 
-            Debug.Log("ServerRpc");
+            _movement._speedAcceleration = 40000;
+            _movement._canJump = true;
+            _rb.useGravity = true;
+            _gun.gameObject.SetActive(true);
 
-            _movement._speedAcceleration = 0;
-            _movement._canJump = false;
-            _rb.useGravity = false;
-            _rb.velocity = new Vector3(0, 0, 0);
-            _mash.enabled = false;
-            _coll.enabled = false;
-            _gun.gameObject.SetActive(false);
 
-            _deadUI.SetActive(true);
+            int _int = Random.Range(0, GameObject.Find("Spawns").GetComponent<Respawn>()._spawns.Length);
+            transform.position = GameObject.Find("Spawns").GetComponent<Respawn>()._spawns[_int].position;
         }
-    }
-
-    [ClientRpc]
-    public void DeadClientRpc()
-    {
-        if (IsLocalPlayer)
-        {
-            _dead = true;
-
-            Debug.Log("ClientRpc");
-
-            _movement._speedAcceleration = 0;
-            _movement._canJump = false;
-            _rb.useGravity = false;
-            _rb.velocity = new Vector3(0, 0, 0);
-            _mash.enabled = false;
-            _coll.enabled = false;
-            _gun.gameObject.SetActive(false);
-
-            _deadUI.SetActive(true);
-        }
-    }
-
-    [ServerRpc(RequireOwnership = false)]
-    public void AliveServerRpc()
-    {
-        if (IsLocalPlayer)
-        {
-            _deadUI.SetActive(false);
-        }
-
-        _movement._speedAcceleration = 40000;
-        _movement._canJump = true;
-        _rb.useGravity = true;
-        _mash.enabled = true;
-        _coll.enabled = true;
-        _gun.gameObject.SetActive(true);
-
-        _dead = false;
-        _hpNow.Value = _hp;
-    }
-
-    [ClientRpc]
-    public void AliveClientRpc()
-    {
-        if (IsLocalPlayer)
-        {
-            _deadUI.SetActive(false);
-        }
-
-        _mash.enabled = true;
-        _coll.enabled = true;
-        _gun.gameObject.SetActive(true);
-
-        _dead = false;
-        _hpNow.Value = _hp;
-    }
-
-    [ClientRpc]
-    public void SetSpawnClientRpc()
-    {
-        int _int = Random.Range(0, GameObject.Find("Spawns").GetComponent<Respawn>()._spawns.Length);
-        transform.position = GameObject.Find("Spawns").GetComponent<Respawn>()._spawns[_int].position;
-
-        _hpNow.Value = _hp;
-    }
-
-    [ServerRpc(RequireOwnership = false)]
-    public void SetMatchServerRpc()
-    {
-        if (_team.Value == Team.Team1)
-        {
-            _match._team2Points.Value += 1;
-        }
-
-        else if (_team.Value == Team.Team2)
-        {
-            _match._team1Points.Value += 1;
-        }
-
-        SetMatchClientRpc();
-    }
-
-    [ClientRpc]
-    public void SetMatchClientRpc()
-    {
-        if (!IsHost)
-        {
-            if (_team.Value == Team.Team1)
-            {
-                _match._team2Points.Value += 1;
-            }
-
-            else if (_team.Value == Team.Team2)
-            {
-                _match._team1Points.Value += 1;
-            }
-        }
-    }
-
-
-    void Kill()
-    {
-        _Kills += 1;
-
-        _kdr = _Kills / _deads;
-        _gameUI.SetKillDead();
     }
 }

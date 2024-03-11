@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public enum Passive
@@ -52,7 +53,7 @@ public class Movement : MonoBehaviour
     float _wallRunCameraTilt;
     float _timer;
 
-    bool _grounded, _sprinting, _jumping, _slidding, _chroushing, _wallrunning;
+    [HideInInspector] public bool _grounded, _sprinting, _jumping, _slidding, _chroushing, _wallrunning;
     bool _wallrunL, _wallrunR, _climming, _slideDelay;
 
     [Serializable]
@@ -64,6 +65,7 @@ public class Movement : MonoBehaviour
         [SerializeField] public bool _grappling, _dash, _grapplingSlide;
 
         public Vector2 _move;
+        public Vector2 _rot;
     }
 
     public Passive _passive;
@@ -195,36 +197,31 @@ public class Movement : MonoBehaviour
 
     void Jump(InputAction.CallbackContext context)
     {
-
-        if (_canJump)
+        if (_canJump && !_jumping)
         {
-            if (_grounded & !_jumping)
-            {
-                _jumping = true;
+            _jumping = true;
+            StartCoroutine(JumpTime());
 
+            if (_grounded)
+            {
                 _back._rb.AddForce(transform.up * _jumpHight, ForceMode.Impulse);
-                StartCoroutine(JumpTime());
 
                 return;
             }
 
-            if (_wallrunning && !_jumping)
+            if (_wallrunning)
             {
-                _jumping = true;
-
                 if (_wallrunL)
                 {
-                    _back._rb.AddForce(transform.right * (_jumpHight * 2f), ForceMode.Impulse);
+                    _back._rb.AddForce(transform.right * (_jumpHight * 2.5f), ForceMode.Impulse);
                 }
 
                 else if (_wallrunR)
                 {
-                    _back._rb.AddForce(-transform.right * (_jumpHight * 2f), ForceMode.Impulse);
+                    _back._rb.AddForce(-transform.right * (_jumpHight * 2.5f), ForceMode.Impulse);
                 }
 
                 _back._rb.AddForce(transform.up * (_jumpHight * 1.5f), ForceMode.Impulse);
-
-                StartCoroutine(JumpTime());
 
                 return;
             }
@@ -257,17 +254,19 @@ public class Movement : MonoBehaviour
             _grounded = true;
             _dubbleJump = true;
             _timer = 0;
+            return;
         }
 
-        else if (!_wallrunning)
+        else
         {
-            _back._rb.velocity += new Vector3(0, -0.05f, 0);
-            _grounded = false;
-        }
+            if (_back._move.y > 0 && !_back._grappling)
+            {
+                Vector3 _strafeDiraction = (_back._rb.transform.forward * _back._move.y * 2500 + _back._rb.transform.right * _back._move.x * 1000) * Time.deltaTime;
+                _strafeDiraction = new Vector3(_strafeDiraction.x, _back._rb.velocity.y, _strafeDiraction.z);
+                _back._rb.velocity = _strafeDiraction;
+            }
 
-        else if (!_back._grappling)
-        {
-            _back._rb.velocity += new Vector3(0, -0.02f, 0);
+            _back._rb.velocity += new Vector3(0, -0.1f, 0);
             _grounded = false;
         }
     }

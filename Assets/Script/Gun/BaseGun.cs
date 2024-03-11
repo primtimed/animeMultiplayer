@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using TMPro;
+using Unity.Mathematics;
 using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -153,7 +154,7 @@ public class BaseGun : NetworkBehaviour
 
     private void Aim(InputAction.CallbackContext context)
     {
-        if (this._gun._weaponType == WeaponType.Sniper)
+        if (_gun._weaponType == WeaponType.Sniper)
         {
             if (context.started)
             {
@@ -430,6 +431,12 @@ public class BaseGun : NetworkBehaviour
 
     private void Recoil()
     {
+        //float recoilX = Mathf.Lerp(_move._x, _move._x - _gun._recoil[_recoilInt].x / 3, 1);
+        //float recoilY = Mathf.Lerp(_move._y, _move._y - _gun._recoil[_recoilInt].x / 3, 1);
+
+        //_move._x -= recoilX;
+        //_move._y -= recoilX;
+
         _move._x -= _gun._recoil[_recoilInt].x / 3;
         _move._y -= _gun._recoil[_recoilInt].y / 3;
     }
@@ -459,6 +466,7 @@ public class BaseGun : NetworkBehaviour
                 //}
 
                 _hit.transform.GetComponent<PlayerStats>().TakeDamageServerRpc(_gun._damage);
+
                 StartCoroutine(Hit());
             }
 
@@ -472,7 +480,7 @@ public class BaseGun : NetworkBehaviour
     {
         _UI._hit.SetActive(true);
 
-        yield return new WaitForSeconds(.2f);
+        yield return new WaitForSeconds(.1f);
 
         _UI._hit.SetActive(false);
     }

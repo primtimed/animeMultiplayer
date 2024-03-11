@@ -32,10 +32,19 @@ public class Dash : BaseAbillitie
         {
             _player._back._dash = true;
 
-            Vector3 _dashDirection = _player.transform.forward;
-            _player._back._rb.AddForce(_dashDirection * _dashSpeed);
+            if (!_player._grounded)
+            {
+                Vector3 _dashDirection = _player.transform.forward;
+                _player._back._rb.AddForce(_dashDirection * _dashSpeed * 1000, ForceMode.Force);
+            }
 
-            await Task.Delay(250);
+            else
+            {
+                Vector3 _dashDirection = _player.transform.forward;
+                _player._back._rb.AddForce(_dashDirection * _dashSpeed, ForceMode.Force);
+            }
+
+            await Task.Delay(500);
 
             _timer = _cooldown;
             _player._back._dash = false;
