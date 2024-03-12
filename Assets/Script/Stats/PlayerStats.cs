@@ -1,4 +1,5 @@
 using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -84,42 +85,42 @@ public class PlayerStats : NetworkBehaviour
         }
     }
 
-
     void Dead()
     {
-        Debug.Log("dead");
-
-        if(IsLocalPlayer)
+        if (_hpNow.Value <= 0)
         {
-            Debug.Log("dead2");
-
             _dead = true;
+
+            _gameUI._deadUI.SetActive(true);
 
             _movement._speedAcceleration = 0;
             _movement._canJump = false;
             _rb.useGravity = false;
             _rb.velocity = new Vector3(0, 0, 0);
             _gun.gameObject.SetActive(false);
-
-            _gameUI._deadUI.SetActive(true);
         }
     }
 
     public void Alive()
     {
-        if (IsLocalPlayer)
-        {
-            _hpNow.Value = _hp;
-            _dead = false;
+        SetHpServerRpc();
 
-            _movement._speedAcceleration = 40000;
-            _movement._canJump = true;
-            _rb.useGravity = true;
-            _gun.gameObject.SetActive(true);
+        _dead = false;
+        _gun.gameObject.SetActive(true);
+
+        _movement._speedAcceleration = 40000;
+        _movement._canJump = true;
+        _rb.useGravity = true;
 
 
-            int _int = Random.Range(0, GameObject.Find("Spawns").GetComponent<Respawn>()._spawns.Length);
-            transform.position = GameObject.Find("Spawns").GetComponent<Respawn>()._spawns[_int].position;
-        }
+        int _int = Random.Range(0, GameObject.Find("Spawns").GetComponent<Respawn>()._spawns.Length);
+        transform.position = GameObject.Find("Spawns").GetComponent<Respawn>()._spawns[_int].position;
+    }
+
+
+    [ServerRpc(RequireOwnership = false)]
+    void SetHpServerRpc()
+    {
+        _hpNow.Value = _hp;
     }
 }

@@ -452,7 +452,7 @@ public class BaseGun : NetworkBehaviour
         if (Physics.Raycast(_cam.transform.position, _bloom, out _hit, Mathf.Infinity))
         {
 
-            if (_hit.transform.GetComponent<PlayerStats>() && !_hit.transform.GetComponent<PlayerStats>()._dead)
+            if (_hit.transform.GetComponent<PlayerStats>())
             {
                 //if (GetComponentInParent<PlayerStats>()._team.Value != _hit.transform.GetComponent<PlayerStats>()._team.Value || (GetComponentInParent<PlayerStats>()._team.Value == Team.FreeForAll))
                 //{
