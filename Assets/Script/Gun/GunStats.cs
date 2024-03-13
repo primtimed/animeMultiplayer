@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public enum FireMode
@@ -48,6 +49,7 @@ public class GunStats : ScriptableObject
 
     public UX _UX = new UX();
 
+    [Serializable]
     public class UX
     {
         public AudioSource _shoot;

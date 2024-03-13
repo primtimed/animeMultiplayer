@@ -31,3 +31,7 @@ MonoBehaviour:
   _burstDelay: 0
   _zoom: 4
   _scoop: {fileID: 2800000, guid: b90dab1ac7785fa4292da7c4c87cede4, type: 3}
+  _UX:
+    _shoot: {fileID: 9143881959711176506, guid: b9b0eb0bf1b9e1447bc7eac3962e354d,
+      type: 3}
+    _reload: {fileID: 0}
