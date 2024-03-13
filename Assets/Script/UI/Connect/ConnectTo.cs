@@ -8,7 +8,7 @@ using Unity.Services.Lobbies;
 using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
 using UnityEngine;
-using Unity.VisualScripting;
+using Unity.Networking.Transport.Relay;
 
 public class ConnectTo : MonoBehaviour
 {
@@ -52,18 +52,29 @@ public class ConnectTo : MonoBehaviour
         FindLobby();
     }
 
+    private void Update()
+    {
+        //FindLobby();
+    }
+
     public async void CreateRelay()
     {
         try
         {
-            CreateLobbyOptions options = new CreateLobbyOptions {IsPrivate = _privete };
+            //Lobby
+            CreateLobbyOptions optionsCreate = new CreateLobbyOptions { IsPrivate = _privete };
+            Lobby lobbyCreate = await LobbyService.Instance.CreateLobbyAsync(name, _maxPlayers, optionsCreate);
 
-            Lobby lobby = await LobbyService.Instance.CreateLobbyAsync(_name, _maxPlayers, options);
-            Debug.Log(lobby.LobbyCode);
+            //RPC
+            Allocation allocation = await RelayService.Instance.CreateAllocationAsync(99);
+            string joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
+            RelayServerData serverData = new RelayServerData(allocation, "dtls");
+
+            NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(serverData);
+            NetworkManager.Singleton.StartHost();
 
             _ui.SetActive(false);
-            SetGameID(lobby.LobbyCode);
-            NetworkManager.Singleton.StartHost();
+            SetGameID(joinCode);
         }
         catch (RelayServiceException e)
         {
@@ -75,9 +86,12 @@ public class ConnectTo : MonoBehaviour
         try
         {
             Debug.Log("Joining Relay with " + joinCode);
-            await Lobbies.Instance.JoinLobbyByCodeAsync(joinCode.text);
-            _ui.SetActive(false);
 
+            JoinAllocation allocation = await RelayService.Instance.JoinAllocationAsync(joinCode.text);
+            RelayServerData serverData = new RelayServerData(allocation, "dtls");
+            NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(serverData);
+
+            _ui.SetActive(false);
             SetGameID(joinCode.text);
             NetworkManager.Singleton.StartClient();
         }
@@ -92,10 +106,13 @@ public class ConnectTo : MonoBehaviour
         try
         {
             Debug.Log("Joining Relay with " + joinCode);
-            await Lobbies.Instance.JoinLobbyByIdAsync(joinCode);
-            _ui.SetActive(false);
 
-            SetGameID("");
+            JoinAllocation allocation = await RelayService.Instance.JoinAllocationAsync(joinCode);
+            RelayServerData serverData = new RelayServerData(allocation, "dtls");
+            NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(serverData);
+
+            _ui.SetActive(false);
+            SetGameID(joinCode);
             NetworkManager.Singleton.StartClient();
         }
         catch (RelayServiceException e)
@@ -111,7 +128,6 @@ public class ConnectTo : MonoBehaviour
         foreach (Lobby lobby in _lobby.Results)
         {
             GameObject _ui = Instantiate(_publicServer, _publicUI.transform);
-            Debug.LogError(lobby.LobbyCode);
             _ui.GetComponent<ServerIn>().SetServerSettings(lobby.Name, lobby.Players.Count, lobby.MaxPlayers, lobby.Id);
         }
     }

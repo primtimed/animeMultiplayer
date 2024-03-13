@@ -26,7 +26,7 @@ public class GameUI : MonoBehaviour
 
     [Header("")]
 
-    [HideInInspector] public GameObject _deadUI;
+    public GameObject _deadUI;
 
     public Slider _team1Slider;
     public TextMeshProUGUI _team1Text;
@@ -68,7 +68,6 @@ public class GameUI : MonoBehaviour
         _playerStats = GetComponent<PlayerStats>();
 
         _matchStats = GameObject.Find("Keep").GetComponent<MatchStats>();
-        _deadUI = GetComponentInChildren<Dead>().gameObject;
         _deadUI.SetActive(false);
 
         _gameID.text = _matchStats._gameID;

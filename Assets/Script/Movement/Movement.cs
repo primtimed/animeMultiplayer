@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Unity.Mathematics;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -11,7 +12,7 @@ public enum Passive
     WallRun,
     DubbleJump
 }
-public class Movement : MonoBehaviour
+public class Movement : NetworkBehaviour
 {
     public bool _spectator;
 
@@ -115,6 +116,8 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
+        if (!IsLocalPlayer) return;
+
         Move(_move.ReadValue<Vector2>());
         Rotate(_mouse.ReadValue<Vector2>() * Time.smoothDeltaTime);
 
@@ -197,6 +200,8 @@ public class Movement : MonoBehaviour
 
     void Jump(InputAction.CallbackContext context)
     {
+        if (!IsLocalPlayer) return;
+
         if (_canJump && !_jumping)
         {
             _jumping = true;

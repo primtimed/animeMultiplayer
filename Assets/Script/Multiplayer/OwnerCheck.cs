@@ -24,7 +24,7 @@ public class OwnerCheck : NetworkBehaviour
             _camer.enabled = false;
             _miniMap.enabled = false;
             _audioListener.enabled = false;
-            _movement.enabled = false;
+            //_movement.enabled = false;
 
             _gameUI.SetActive(false);
             _gameui2.SetActive(false);

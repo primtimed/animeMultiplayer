@@ -1,13 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using Unity.Netcode.Transports.UTP;
-using Unity.Netcode;
-using Unity.Services.Lobbies;
-using Unity.Services.Relay.Models;
-using Unity.Services.Relay;
 using UnityEngine;
-using static BaseGun;
 
 public class ServerIn : MonoBehaviour
 {
@@ -24,6 +16,6 @@ public class ServerIn : MonoBehaviour
 
     public void JoinLobby()
     {
-        GetComponentInParent<ConnectTo>().JoinRelayPublic(_code);
+        GetComponentInParent<ConnectTo>().JoinRelayPublic(_name.text);
     }
 }
