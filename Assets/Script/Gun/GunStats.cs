@@ -53,6 +53,7 @@ public class GunStats : ScriptableObject
     public class UX
     {
         public AudioSource _shoot;
+        public float _shotPitch = 1;
         public AudioSource _reload;
     }
 }

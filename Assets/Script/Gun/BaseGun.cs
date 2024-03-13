@@ -488,6 +488,7 @@ public class BaseGun : NetworkBehaviour
     void Shot()
     {
         var instance = Instantiate(_gun._UX._shoot, transform);
+        instance.GetComponent<AudioSource>().pitch = _gun._UX._shotPitch;
         var instanceNetworkObject = instance.GetComponent<NetworkObject>();
         instanceNetworkObject.Spawn();
     }
