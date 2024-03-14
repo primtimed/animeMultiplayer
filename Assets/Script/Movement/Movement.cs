@@ -42,7 +42,7 @@ public class Movement : NetworkBehaviour
 
     [Header("")]
     public BackSettings _back = new BackSettings();
-
+    
     public GameObject _orientation, _feet;
 
     //private
@@ -155,7 +155,7 @@ public class Movement : NetworkBehaviour
 
         else if (_grounded && !_jumping && !_back._grappling && !_slidding && !_wallrunning)
         {
-            _back._rb.velocity = new Vector3(0, 0, 0);
+            _back._rb.velocity = new Vector3(0, _back._rb.velocity.y, 0);
         }
     }
 

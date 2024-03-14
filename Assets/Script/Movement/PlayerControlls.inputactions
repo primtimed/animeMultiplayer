@@ -140,8 +140,30 @@
                 },
                 {
                     "name": "",
+                    "id": "dc94e4b8-bcda-4604-9d16-95d4d6a30110",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "6e35d0f1-17f9-41f9-bb1a-7e93ee8f36fa",
                     "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Sprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "728e8dd5-4d57-415a-bfa7-06d38a073a40",
+                    "path": "<Gamepad>/leftStickPress",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -155,6 +177,17 @@
                     "path": "<Mouse>/delta",
                     "interactions": "",
                     "processors": "",
+                    "groups": "",
+                    "action": "Rotation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "12507d86-de53-4fb0-8c3f-2646b9218ff0",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "ScaleVector2(x=10,y=10),StickDeadzone",
                     "groups": "",
                     "action": "Rotation",
                     "isComposite": false,
@@ -181,6 +214,61 @@
                     "action": "Croush",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "controler",
+                    "id": "1aadfb66-09d7-4f35-81d9-08a227d3a63f",
+                    "path": "2DVector(mode=1)",
+                    "interactions": "",
+                    "processors": "StickDeadzone",
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Up",
+                    "id": "13e5bf13-64f5-489a-9198-096937f2b3b5",
+                    "path": "<Gamepad>/leftStick/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "472d613a-15c5-46e1-b051-bf6a0d498c28",
+                    "path": "<Gamepad>/leftStick/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "36f6d858-31d4-4f6b-be8a-9f8d76f09586",
+                    "path": "<Gamepad>/leftStick/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Right",
+                    "id": "93141ae8-9445-4a69-8738-a9e5ddcf7c4f",
+                    "path": "<Gamepad>/leftStick/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         },
@@ -257,6 +345,17 @@
                 },
                 {
                     "name": "",
+                    "id": "a178dadf-d990-40d1-b0a2-c2ad542dcdbc",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Shoot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "5db0f84a-7f60-4bf0-b7c8-b853bd4515a9",
                     "path": "<Keyboard>/r",
                     "interactions": "",
@@ -268,8 +367,30 @@
                 },
                 {
                     "name": "",
+                    "id": "63462cc7-7e4c-4fb2-973d-c18e8eaedcd8",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Reload",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "fc143088-6319-4807-acac-6648d8c6f4ca",
                     "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Aim",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a4125daa-797d-492c-a188-e5a94f918807",
+                    "path": "<Gamepad>/leftTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -312,8 +433,30 @@
                 },
                 {
                     "name": "",
+                    "id": "0f72f96b-9f6f-461a-b995-e744713607d6",
+                    "path": "<Gamepad>/dpad/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "weapon 1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "92829225-710c-42de-b04c-e68dac0c8f71",
                     "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "weapon 2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5bbf34b1-990b-40c7-9a42-eefdce6aaa64",
+                    "path": "<Gamepad>/dpad/left",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -438,6 +581,17 @@
                     "name": "",
                     "id": "31c29ccb-d9bd-48f2-8890-7741fdb18b18",
                     "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3ba5ab99-f8de-4f78-b474-a1c28cc9bdd4",
+                    "path": "<Gamepad>/leftShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
