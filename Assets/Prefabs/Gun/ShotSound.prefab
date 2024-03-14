@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6689238854061112476}
   - component: {fileID: 9143881959711176506}
-  - component: {fileID: 8270538595625933680}
+  - component: {fileID: -3801663275756264934}
   - component: {fileID: 413164581456670653}
   m_Layer: 0
   m_Name: ShotSound
@@ -130,7 +130,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &8270538595625933680
+--- !u!114 &-3801663275756264934
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -139,10 +139,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3543306792914560877}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6fc3c53641367f4f91abf3ba02444bd, type: 3}
+  m_Script: {fileID: 11500000, guid: 5c539578047b5ed428283d903eec8ed9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _time: 2
+  _time: 1
 --- !u!114 &413164581456670653
 MonoBehaviour:
   m_ObjectHideFlags: 0

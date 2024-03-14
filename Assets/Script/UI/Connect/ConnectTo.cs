@@ -47,14 +47,10 @@ public class ConnectTo : MonoBehaviour
         {
             Debug.Log("Signed in " + AuthenticationService.Instance.PlayerId);
         };
+
         await AuthenticationService.Instance.SignInAnonymouslyAsync();
 
         FindLobby();
-    }
-
-    private void Update()
-    {
-        //FindLobby();
     }
 
     public async void CreateRelay()
@@ -63,10 +59,10 @@ public class ConnectTo : MonoBehaviour
         {
             //Lobby
             CreateLobbyOptions optionsCreate = new CreateLobbyOptions { IsPrivate = _privete };
-            Lobby lobbyCreate = await LobbyService.Instance.CreateLobbyAsync(name, _maxPlayers, optionsCreate);
+            Lobby lobbyCreate = await LobbyService.Instance.CreateLobbyAsync(_name, _maxPlayers, optionsCreate);
 
             //RPC
-            Allocation allocation = await RelayService.Instance.CreateAllocationAsync(99);
+            Allocation allocation = await RelayService.Instance.CreateAllocationAsync(_maxPlayers);
             string joinCode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
             RelayServerData serverData = new RelayServerData(allocation, "dtls");
 
@@ -74,7 +70,7 @@ public class ConnectTo : MonoBehaviour
             NetworkManager.Singleton.StartHost();
 
             _ui.SetActive(false);
-            SetGameID(joinCode);
+            SetGameID(lobbyCreate.LobbyCode);
         }
         catch (RelayServiceException e)
         {
@@ -85,9 +81,11 @@ public class ConnectTo : MonoBehaviour
     {
         try
         {
+            await Lobbies.Instance.JoinLobbyByIdAsync(joinCode.text);
+            JoinAllocation allocation = await RelayService.Instance.JoinAllocationAsync(joinCode.text);
+
             Debug.Log("Joining Relay with " + joinCode);
 
-            JoinAllocation allocation = await RelayService.Instance.JoinAllocationAsync(joinCode.text);
             RelayServerData serverData = new RelayServerData(allocation, "dtls");
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(serverData);
 

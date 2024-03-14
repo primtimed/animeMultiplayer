@@ -49,6 +49,7 @@ public class BaseGun : NetworkBehaviour
     public class UX
     {
         [SerializeField] public GameObject _hit;
+        [SerializeField] public GameObject _sound;
     }
 
     private void Awake()
@@ -194,6 +195,8 @@ public class BaseGun : NetworkBehaviour
 
     private void Reload(InputAction.CallbackContext context)
     {
+        if (!IsLocalPlayer) return;
+
         StartCoroutine(ReloadingIENUM());
     }
 
@@ -201,6 +204,8 @@ public class BaseGun : NetworkBehaviour
     {
         if (!_reloadding && _gunAmmo != _gun._ammo)
         {
+            Debug.LogWarning(_gun._name);
+
             _reloadding = true;
             _UI._reload.SetActive(true);
 
@@ -448,7 +453,7 @@ public class BaseGun : NetworkBehaviour
         if (!IsLocalPlayer) return;
 
         Shake();
-        Shot();
+        ShotServerRpc();
 
         if (Physics.Raycast(_cam.transform.position, _bloom, out _hit, Mathf.Infinity))
         {
@@ -485,10 +490,10 @@ public class BaseGun : NetworkBehaviour
         _UI._hit.SetActive(false);
     }
 
-    void Shot()
+    [ServerRpc]
+    void ShotServerRpc()
     {
-        var instance = Instantiate(_gun._UX._shoot, transform);
-        instance.GetComponent<AudioSource>().pitch = _gun._UX._shotPitch;
+        var instance = Instantiate(_UX._sound, transform);
         var instanceNetworkObject = instance.GetComponent<NetworkObject>();
         instanceNetworkObject.Spawn();
     }

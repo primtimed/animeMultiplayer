@@ -108,7 +108,7 @@ public class PlayerStats : NetworkBehaviour
         }
     }
 
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     void SetvisibleServerRpc(bool _bool)
     {
         _player.SetActive(_bool);
