@@ -10,8 +10,8 @@ public class MatchStats : MonoBehaviour
     public NetworkVariable<int> _team1Points;
     public NetworkVariable<int> _team2Points;
 
-    public NetworkVariable<List<GameObject>> _team1 = new NetworkVariable<List<GameObject>>();
-    public NetworkVariable<List<GameObject>> _team2 = new NetworkVariable<List<GameObject>>();
+    public NetworkVariable<List<GameObject>> _team1;
+    public NetworkVariable<List<GameObject>> _team2;
 
     private void Update()
     {

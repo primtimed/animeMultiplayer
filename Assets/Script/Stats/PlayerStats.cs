@@ -16,12 +16,12 @@ public enum Team
 public class PlayerStats : NetworkBehaviour
 {
     public int _playerID;
-    public NetworkVariable<Team> _team = new NetworkVariable<Team>();
+    public NetworkVariable<Team> _team;
 
     MatchStats _match;
 
     public float _hp;
-    public NetworkVariable<float> _hpNow = new NetworkVariable<float>();
+    public NetworkVariable<float> _hpNow;
     public float _Kills;
     public float _deads;
 
@@ -45,8 +45,6 @@ public class PlayerStats : NetworkBehaviour
 
         if (IsLocalPlayer)
         {
-            //_gameUI = GetComponent<GameUI>();
-
             _playerID = SystemInfo.graphicsDeviceID;
 
             _movement = GetComponent<Movement>();
@@ -62,7 +60,7 @@ public class PlayerStats : NetworkBehaviour
     {
         Debug.Log(team.ToString());
 
-        //_team.Value = team._team;
+        _team.Value = team._team;
     }
 
 
@@ -74,8 +72,24 @@ public class PlayerStats : NetworkBehaviour
         Debug.LogWarning(damage.ToString() + "Damage To ServerRpc");
     }
 
+    [ServerRpc(RequireOwnership = false)]
+    void SetCollorServerRpc()
+    {
+        if (_team.Value == Team.Team1 && _mash.material != _team1)
+        {
+            _mash.material = _team1;
+        }
+
+        else if (_team.Value == Team.Team2 && _mash.material != _team2)
+        {
+            _mash.material = _team2;
+        }
+    }
+
     private void Update()
     {
+        SetCollorServerRpc();
+
         if (_hpNow.Value <= 0)
         {
             _gameUI._deadUI.SetActive(true);
@@ -135,6 +149,16 @@ public class PlayerStats : NetworkBehaviour
 
     public void Alive()
     {
+        if(_team.Value == Team.Team1)
+        {
+            _match.AddPointServerRpc(1);
+        }
+
+        else if (_team.Value == Team.Team2)
+        {
+            _match.AddPointServerRpc(2);
+        }
+
         SetHpServerRpc();
 
         _dead = false;

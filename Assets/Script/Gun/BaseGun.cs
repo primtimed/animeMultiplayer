@@ -118,7 +118,10 @@ public class BaseGun : NetworkBehaviour
             _weaponType = _gun._weaponType;
 
             _mainGun = Instantiate(_gun._gun, transform);
+            var instanceNetworkObject = _mainGun.GetComponent<NetworkObject>();
+            instanceNetworkObject.Spawn();
         }
+
     }
 
     public void StartX()
@@ -130,6 +133,8 @@ public class BaseGun : NetworkBehaviour
         _weaponType = _gun._weaponType;
 
         _mainGun = Instantiate(_gun._gun, transform);
+        var instanceNetworkObject = _mainGun.GetComponent<NetworkObject>();
+        instanceNetworkObject.Spawn();
 
         if (!GetComponentInParent<OwnerCheck>()._isOwner)
         {
@@ -223,6 +228,7 @@ public class BaseGun : NetworkBehaviour
     private void Update()
     {
         _timer += Time.unscaledDeltaTime;
+
 
         if (!_gun) return;
 
@@ -460,18 +466,18 @@ public class BaseGun : NetworkBehaviour
 
             if (_hit.transform.GetComponent<PlayerStats>())
             {
-                //if (GetComponentInParent<PlayerStats>()._team.Value != _hit.transform.GetComponent<PlayerStats>()._team.Value || (GetComponentInParent<PlayerStats>()._team.Value == Team.FreeForAll))
-                //{
-                //    _hit.transform.GetComponent<PlayerStats>().TakeDamageServerRpc(_gun._damage);
-                //    StartCoroutine(Hit());
-                //}
+                if (GetComponentInParent<PlayerStats>()._team.Value != _hit.transform.GetComponent<PlayerStats>()._team.Value || GetComponentInParent<PlayerStats>()._team.Value == Team.FreeForAll)
+                {
+                    _hit.transform.GetComponent<PlayerStats>().TakeDamageServerRpc(_gun._damage);
+                    StartCoroutine(Hit());
+                }
 
-                //else
-                //{
-                //    StartCoroutine(HitTeam());
-                //}
+                else
+                {
+                    //StartCoroutine(HitTeam());
+                }
 
-                _hit.transform.GetComponent<PlayerStats>().TakeDamageServerRpc(_gun._damage);
+                //_hit.transform.GetComponent<PlayerStats>().TakeDamageServerRpc(_gun._damage);
 
                 StartCoroutine(Hit());
             }

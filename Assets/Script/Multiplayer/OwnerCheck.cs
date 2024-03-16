@@ -21,7 +21,7 @@ public class OwnerCheck : NetworkBehaviour
             _isOwner = false;
 
             _gameUi.enabled = false;
-            _camer.enabled = false;
+            _camer.depth -= 1;
             _miniMap.enabled = false;
             _audioListener.enabled = false;
             //_movement.enabled = false;

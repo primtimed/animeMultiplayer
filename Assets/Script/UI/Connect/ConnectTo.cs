@@ -58,8 +58,8 @@ public class ConnectTo : MonoBehaviour
         try
         {
             //Lobby
-            CreateLobbyOptions optionsCreate = new CreateLobbyOptions { IsPrivate = _privete };
-            Lobby lobbyCreate = await LobbyService.Instance.CreateLobbyAsync(_name, _maxPlayers, optionsCreate);
+            //CreateLobbyOptions optionsCreate = new CreateLobbyOptions { IsPrivate = _privete };
+            //Lobby lobbyCreate = await LobbyService.Instance.CreateLobbyAsync(_name, _maxPlayers, optionsCreate);
 
             //RPC
             Allocation allocation = await RelayService.Instance.CreateAllocationAsync(_maxPlayers);
@@ -70,7 +70,7 @@ public class ConnectTo : MonoBehaviour
             NetworkManager.Singleton.StartHost();
 
             _ui.SetActive(false);
-            SetGameID(lobbyCreate.LobbyCode);
+            SetGameID(joinCode);
         }
         catch (RelayServiceException e)
         {
@@ -81,7 +81,7 @@ public class ConnectTo : MonoBehaviour
     {
         try
         {
-            await Lobbies.Instance.JoinLobbyByIdAsync(joinCode.text);
+            //await Lobbies.Instance.JoinLobbyByIdAsync(joinCode.text);
             JoinAllocation allocation = await RelayService.Instance.JoinAllocationAsync(joinCode.text);
 
             Debug.Log("Joining Relay with " + joinCode);
