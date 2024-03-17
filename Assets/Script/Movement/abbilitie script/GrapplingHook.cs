@@ -28,8 +28,6 @@ public class GrapplingHook : BaseAbillitie
 
     Movement _movement;
     GameUI _gameUI;
-    PlayerControlls _input;
-    InputAction _grappling;
 
     Vector3 _currentGrapplePosition;
 

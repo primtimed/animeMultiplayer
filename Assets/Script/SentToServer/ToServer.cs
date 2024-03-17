@@ -21,8 +21,8 @@ public class ToServer : NetworkBehaviour
             Destroy(_spawnedWall);
         }
 
-        _spawnedWall = Instantiate(_wall._wall, _wall._player.position, _wall._player.rotation);
-        _spawnedWall.GetComponent<NetworkObject>().Spawn();
+        //_spawnedWall = Instantiate(_wall._wall, _wall._player.position, _wall._player.rotation);
+        //_spawnedWall.GetComponent<NetworkObject>().Spawn();
     }
 
     public void Test()

@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c0326ba61c271044afd653980dabee5, type: 3}
   m_Name: Wall
   m_EditorClassIdentifier: 
+  _icon: {fileID: 2800000, guid: 6acbb61621d490d44ad92f8a6c870bc8, type: 3}
   _wall: {fileID: 6455528728356834949, guid: a241f937ae5e8854b8c59dceb2cfc518, type: 3}
+  _cooldown: 1

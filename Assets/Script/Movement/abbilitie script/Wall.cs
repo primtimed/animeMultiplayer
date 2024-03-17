@@ -1,32 +1,51 @@
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 [CreateAssetMenu(fileName = "Wall", menuName = "Wall")]
 public class Wall : BaseAbillitie
 {
-    public Transform _player;
+    public Texture _icon;
+
+    Transform _player;
+    GameUI _gameUI;
 
     public GameObject _wall;
 
-    ToServer _serverV;
+    GameObject _spawnedObject;
+
+    public float _cooldown;
+    float _timer;
     public override void Open(GameObject player, AbilitieManager manager, GameObject NetworkManager, GameObject keep)
     {
         _player = player.transform;
-        _serverV = keep.AddComponent<ToServer>();
-        _serverV.OpenWall(this);
+        _gameUI = _player.GetComponent<GameUI>();
+
+        _gameUI._abbilIcon.texture = _icon;
     }
 
     void Start() { }
 
+    public override void Update()
+    {
+        if (_gameUI)
+        {
+            _timer -= Time.deltaTime;
+
+            _gameUI._time = _timer;
+        }
+    }
+
     public override void Start(InputAction.CallbackContext context)
     {
-        //alles werkt maar void word niet aangeroepen op een manier als join persoon
-        _serverV.spawnWallServerRpc();
-
-        if (_serverV)
+        if (_spawnedObject != null)
         {
-            Debug.Log(_serverV.gameObject.name);
+            Destroy(_spawnedObject);
         }
+
+        _spawnedObject = Instantiate(_wall, _player);
+        var instanceNetworkObject = _spawnedObject.GetComponent<NetworkObject>();
+        instanceNetworkObject.Spawn();
     }
 
     public override void Stop(InputAction.CallbackContext context)

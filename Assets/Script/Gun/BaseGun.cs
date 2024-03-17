@@ -26,7 +26,7 @@ public class BaseGun : NetworkBehaviour
     int _recoilInt;
     bool _shootBool, _aimBool, _reloadding;
     float _timer;
-    float fov;
+    float _fov;
     WeaponType _weaponType;
 
     public UI _UI = new UI();
@@ -108,7 +108,7 @@ public class BaseGun : NetworkBehaviour
     private void Start()
     {
         _cam = GetComponentInParent<Camera>();
-        fov = _cam.fieldOfView;
+        _fov = _cam.fieldOfView;
         _move = GetComponentInParent<Movement>();
 
         if (_gun != null )
@@ -172,7 +172,7 @@ public class BaseGun : NetworkBehaviour
 
             else
             {
-                _cam.fieldOfView = fov;
+                _cam.fieldOfView = _fov;
                 _move._gameSens = _move._sensetivitie;
                 _UI._scope.gameObject.SetActive(false);
                 _aimBool = false;
@@ -190,7 +190,7 @@ public class BaseGun : NetworkBehaviour
 
             else
             {
-                _cam.fieldOfView = fov;
+                _cam.fieldOfView = _fov;
                 _move._gameSens = _move._sensetivitie;
                 _UI._scope.gameObject.SetActive(false);
                 _aimBool = false;

@@ -12,8 +12,8 @@ public class AbilitieManager : NetworkBehaviour
 
     public Transform _graplingLoc;
 
-    GameObject _network;
-    GameObject _keep;
+    GameObject _network; // word niet gevonden
+    GameObject _keep; // word niet gevonden
 
     private void Awake()
     {
@@ -34,6 +34,8 @@ public class AbilitieManager : NetworkBehaviour
     {
         _network = gameObject;
         _keep = GameObject.Find("Keep");
+
+        Debug.LogError("AbilitieManager");
 
         _abbilitie.Open(gameObject, this, _network, _keep);
         _passive.Open(gameObject);

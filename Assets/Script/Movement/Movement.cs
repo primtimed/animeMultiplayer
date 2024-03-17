@@ -32,6 +32,7 @@ public class Movement : NetworkBehaviour
     public float _walkSpeed;
     [ConditionalHide("_canSprint")] public float _sprintSpeed;
     [ConditionalHide("_canJump")] public float _jumpHight;
+    public float maxSlopeAngle;
     public float _playerHight;
     [ConditionalHide("_canWallrun")] public float _wallrunSpeed;
     [ConditionalHide("_canWallrun")] public float _wallrunAngle;
@@ -128,20 +129,26 @@ public class Movement : NetworkBehaviour
     }
 
     //movement
+    Vector3 _moveDirection;
     void Move(Vector2 _moveV2)
     {
         _back._move = _moveV2;
 
         if (_moveV2.y != 0 || _moveV2.x != 0)
         {
-            if (_grounded && !_slidding || _jumping || _climming)
+            if (OnSlope())
             {
-                Vector3 _moveDirection = (_back._center.transform.forward * _moveV2.y + _back._center.transform.right * _moveV2.x) * Time.deltaTime;
+                _back._rb.AddForce(_moveDirection * _speedAcceleration);
+            }
+
+            else if (_grounded && !_slidding || _jumping || _climming)
+            {
+                _moveDirection = (_back._center.transform.forward * _moveV2.y + _back._center.transform.right * _moveV2.x) * Time.deltaTime;
                 _moveDirection = new Vector3(_moveDirection.x, 0, _moveDirection.z);
 
                 if (_climming)
                 {
-                    _moveDirection = _moveDirection / 1.5f;
+                    //_moveDirection = _moveDirection / 1.5f;
                 }
 
                 _back._rb.AddForce(_moveDirection * _speedAcceleration);
@@ -179,8 +186,27 @@ public class Movement : NetworkBehaviour
         }
     }
 
-    //camera rotation
-    void Rotate(Vector2 _rotateV2)
+    //slope 
+    RaycastHit hit;
+    private bool OnSlope()
+    {
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, _playerHight * 0.5f + 0.3f))
+        {
+            float angle = Vector3.Angle(Vector3.up, hit.normal);
+            return angle < maxSlopeAngle && angle != 0;
+        }
+
+        return false;
+    }
+        
+    private Vector3 GetSlopeMoveDirection()
+    {
+        return Vector3.ProjectOnPlane(_moveDirection, hit.normal).normalized;
+    }
+
+
+     //camera rotation
+     void Rotate(Vector2 _rotateV2)
     {
         float _xB = _rotateV2.x * _gameSens;
         float _yB = _rotateV2.y * _gameSens;
@@ -271,7 +297,7 @@ public class Movement : NetworkBehaviour
                 _back._rb.velocity = _strafeDiraction;
             }
 
-            _back._rb.velocity += new Vector3(0, -0.1f, 0);
+            _back._rb.velocity += new Vector3(0, -0.05f, 0);
             _grounded = false;
         }
     }
