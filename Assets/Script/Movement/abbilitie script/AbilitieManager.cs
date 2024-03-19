@@ -15,6 +15,9 @@ public class AbilitieManager : NetworkBehaviour
     GameObject _network; // word niet gevonden
     GameObject _keep; // word niet gevonden
 
+    public BaseAbillitie _baseAbillitie;
+    public BasePassive _basePassive;
+
     private void Awake()
     {
         _input = new PlayerControlls();
@@ -32,8 +35,16 @@ public class AbilitieManager : NetworkBehaviour
 
     public void startX()
     {
+
+
         _network = gameObject;
         _keep = GameObject.Find("Keep");
+
+        if (_abbilitie == null)
+        {
+            _abbilitie = _baseAbillitie;
+            _passive = _basePassive;
+        }
 
         Debug.LogError("AbilitieManager");
 

@@ -32,6 +32,8 @@ public class BaseGun : NetworkBehaviour
     public UI _UI = new UI();
     public UX _UX = new UX();
 
+    public GunStats _baseGun;
+
     [Serializable]
     public class UI
     {
@@ -126,6 +128,11 @@ public class BaseGun : NetworkBehaviour
 
     public void StartX()
     {
+
+        if(_gun == null)
+        {
+            _gun = _baseGun;
+        }
 
         _gunAmmo = _gun._ammo;
         _UI._image.texture = _gun._gunPNG;
@@ -477,15 +484,6 @@ public class BaseGun : NetworkBehaviour
                     _hit.transform.GetComponent<PlayerStats>().TakeDamageServerRpc(_gun._damage);
                     StartCoroutine(Hit());
                 }
-
-                else
-                {
-                    //StartCoroutine(HitTeam());
-                }
-
-                //_hit.transform.GetComponent<PlayerStats>().TakeDamageServerRpc(_gun._damage);
-
-                StartCoroutine(Hit());
             }
 
             _bullet = Instantiate(_gun._hitEffect, _hit.point, transform.rotation);

@@ -10,27 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0be3d7d7e0145cd4f8ea6d66bd0add3b, type: 3}
-  m_Name: Burst
+  m_Name: OneInTheChamber
   m_EditorClassIdentifier: 
-  _name: burst
-  _ammo: 26
-  _fireRate: 0.25
-  _reloadSpeed: 2
-  _weaponSpretAmount: 0.3
-  _damage: 23
+  _name: One In The Chamber
+  _ammo: 1
+  _fireRate: 1
+  _reloadSpeed: 5
+  _weaponSpretAmount: 0
+  _damage: 999
   _recoil:
-  - {x: 1, y: 0}
-  - {x: 0, y: 1}
-  - {x: -1, y: 1}
-  _weaponFlick: 5
+  - {x: 0, y: 0}
+  _weaponFlick: 0
   _weaponType: 0
-  _fireMode: 2
-  _gun: {fileID: 9011896132609632724, guid: 3b89007cda761f048871c17198138ddf, type: 3}
-  _gunPNG: {fileID: 2800000, guid: a67542298849aeb49bb56d2578bd7cf6, type: 3}
+  _fireMode: 0
+  _gun: {fileID: 4777070418287428037, guid: 892de77ca010c2940a538835f723c811, type: 3}
+  _gunPNG: {fileID: 2800000, guid: 1044b1302f5d17f4cb74d3f819051dc4, type: 3}
   _hitEffect: {fileID: 7276296530774455120, guid: b7654e059a7b9b641b8d4d08c09263c2,
     type: 3}
   _flash: {fileID: 0}
-  _burstDelay: 0.1
+  _burstDelay: 0
   _zoom: 0
   _scoop: {fileID: 0}
   _UX:

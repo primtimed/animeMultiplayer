@@ -134,7 +134,7 @@ public class GameUI : MonoBehaviour
 
      void Settings(InputAction.CallbackContext context)
     {
-        if (_settings.active)
+        if (_settings.activeSelf)
         {
             _settings.SetActive(false);
 

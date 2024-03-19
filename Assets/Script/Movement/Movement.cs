@@ -3,7 +3,6 @@ using System.Collections;
 using Unity.Mathematics;
 using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public enum Passive
@@ -43,7 +42,7 @@ public class Movement : NetworkBehaviour
 
     [Header("")]
     public BackSettings _back = new BackSettings();
-    
+
     public GameObject _orientation, _feet;
 
     //private
@@ -129,6 +128,7 @@ public class Movement : NetworkBehaviour
     }
 
     //movement
+    bool _wall;
     Vector3 _moveDirection;
     void Move(Vector2 _moveV2)
     {
@@ -146,12 +146,22 @@ public class Movement : NetworkBehaviour
                 _moveDirection = (_back._center.transform.forward * _moveV2.y + _back._center.transform.right * _moveV2.x) * Time.deltaTime;
                 _moveDirection = new Vector3(_moveDirection.x, 0, _moveDirection.z);
 
+                _wall = Physics.Raycast(_back._center.transform.position, _moveDirection, 1);
+
                 if (_climming)
                 {
                     //_moveDirection = _moveDirection / 1.5f;
                 }
 
-                _back._rb.AddForce(_moveDirection * _speedAcceleration);
+                if (!_wall)
+                {
+                    _back._rb.AddForce(_moveDirection * _speedAcceleration);
+                }
+
+                else
+                {
+                    _back._rb.velocity = Vector3.zero;
+                }
 
                 if (!_back._grappling || _grounded)
                 {
@@ -198,15 +208,15 @@ public class Movement : NetworkBehaviour
 
         return false;
     }
-        
+
     private Vector3 GetSlopeMoveDirection()
     {
         return Vector3.ProjectOnPlane(_moveDirection, hit.normal).normalized;
     }
 
 
-     //camera rotation
-     void Rotate(Vector2 _rotateV2)
+    //camera rotation
+    void Rotate(Vector2 _rotateV2)
     {
         float _xB = _rotateV2.x * _gameSens;
         float _yB = _rotateV2.y * _gameSens;
@@ -290,9 +300,9 @@ public class Movement : NetworkBehaviour
 
         else
         {
-            if (_back._move.y > 0 && !_back._grappling)
+            if (_back._move.y > 0 && !_back._grappling && !_wall)
             {
-                Vector3 _strafeDiraction = (_back._rb.transform.forward * _back._move.y * 2500 + _back._rb.transform.right * _back._move.x * 1000) * Time.deltaTime;
+                Vector3 _strafeDiraction = (_back._rb.transform.forward * _back._move.y * 2000 + _back._rb.transform.right * _back._move.x * 500) * Time.deltaTime;
                 _strafeDiraction = new Vector3(_strafeDiraction.x, _back._rb.velocity.y, _strafeDiraction.z);
                 _back._rb.velocity = _strafeDiraction;
             }

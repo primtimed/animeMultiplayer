@@ -16,7 +16,7 @@ public enum Team
 public class PlayerStats : NetworkBehaviour
 {
     public int _playerID;
-    public NetworkVariable<Team> _team;
+    public NetworkVariable<Team> _team = new NetworkVariable<Team>();
 
     MatchStats _match;
 
@@ -56,11 +56,22 @@ public class PlayerStats : NetworkBehaviour
         }
     }
 
-    public void SetTeam(TeamSellect team)
+    [ServerRpc]
+    public void SetTeam1ServerRpc()
     {
-        Debug.Log(team.ToString());
+        _team.Value = Team.Team1;
+    }
 
-        _team.Value = team._team;
+    [ServerRpc]
+    public void SetTeam2ServerRpc()
+    {
+        _team.Value = Team.Team2;
+    }
+
+    [ServerRpc]
+    public void SetTeamFreeServerRpc()
+    {
+        _team.Value = Team.FreeForAll;
     }
 
 

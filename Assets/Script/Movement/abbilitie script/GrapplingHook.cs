@@ -160,8 +160,8 @@ public class GrapplingHook : BaseAbillitie
 
         float distanceFromPoint = Vector3.Distance(_player.transform.position, _grapplePoint);
 
-        _joint.maxDistance = distanceFromPoint * .9f;
-        _joint.minDistance = distanceFromPoint * .0f;
+        _joint.maxDistance = distanceFromPoint * .8f;
+        _joint.minDistance = distanceFromPoint * .1f;
 
         _gunBarrel.transform.LookAt(_currentGrapplePosition);
     }
