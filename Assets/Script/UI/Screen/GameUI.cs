@@ -20,7 +20,7 @@ public class GameUI : MonoBehaviour
     public StatsSettings _stats = new StatsSettings();
 
     PlayerControlls _input;
-    InputAction _statsButton;
+    InputAction _statsButton, _settingsButton;
 
     MatchStats _matchStats;
 
@@ -36,6 +36,7 @@ public class GameUI : MonoBehaviour
 
     public TextMeshProUGUI _gameID;
 
+    public GameObject _settings;
 
     private void Awake()
     {
@@ -48,9 +49,12 @@ public class GameUI : MonoBehaviour
         _input.Enable();
 
         _statsButton = _input.UI.Stats;
+        _settingsButton = _input.UI.Esc;
 
         _statsButton.started += Stats;
         _statsButton.canceled += Stats;
+
+        _settingsButton.started += Settings;
     }
 
     [Serializable]
@@ -126,5 +130,28 @@ public class GameUI : MonoBehaviour
 
         _team2Slider.value = _matchStats._team2Points.Value;
         _team2Text.text = _matchStats._team2Points.Value.ToString();
+    }
+
+     void Settings(InputAction.CallbackContext context)
+    {
+        if (_settings.active)
+        {
+            _settings.SetActive(false);
+
+            GetComponent<Movement>().enabled = true;
+            GetComponent<AbilitieManager>().enabled = true;
+            GetComponentInChildren<BaseGun>().enabled = true;
+            GetComponentInChildren<mouseLock>().SetLock(true);
+        }
+
+        else
+        {
+            _settings.SetActive(true);
+
+            GetComponent<Movement>().enabled = false;
+            GetComponent<AbilitieManager>().enabled = false;
+            GetComponentInChildren<BaseGun>().enabled = false;
+            GetComponentInChildren<mouseLock>().SetLock(false);
+        }
     }
 }

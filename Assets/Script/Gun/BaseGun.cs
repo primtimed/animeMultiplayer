@@ -126,11 +126,17 @@ public class BaseGun : NetworkBehaviour
 
     public void StartX()
     {
-        OnEnables();
 
         _gunAmmo = _gun._ammo;
         _UI._image.texture = _gun._gunPNG;
         _weaponType = _gun._weaponType;
+
+        OnEnables();
+
+        if (_mainGun)
+        {
+            _mainGun.GetComponent<NetworkObject>().Despawn();
+        }
 
         _mainGun = Instantiate(_gun._gun, transform);
         var instanceNetworkObject = _mainGun.GetComponent<NetworkObject>();
