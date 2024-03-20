@@ -148,7 +148,7 @@ public class Movement : NetworkBehaviour
                 _moveDirection = (_back._center.transform.forward * _moveV2.y + _back._center.transform.right * _moveV2.x) * Time.deltaTime;
                 _moveDirection = new Vector3(_moveDirection.x, 0, _moveDirection.z);
 
-                _wall = Physics.Raycast(_back._center.transform.position, _moveDirection, 1);
+                _wall = Physics.Raycast(_back._center.transform.position, _moveDirection, 1.5f);
 
                 if (_climming)
                 {
@@ -306,7 +306,7 @@ public class Movement : NetworkBehaviour
         {
             if (_back._move.y > 0 && !_back._grappling && !_wall)
             {
-                Vector3 _strafeDiraction = (_back._rb.transform.forward * _back._move.y * 2000 + _back._rb.transform.right * _back._move.x * 500) * Time.deltaTime;
+                Vector3 _strafeDiraction = (_back._rb.transform.forward * _back._move.y * 1800 + _back._rb.transform.right * _back._move.x * 500) * Time.deltaTime;
                 _strafeDiraction = new Vector3(_strafeDiraction.x, _back._rb.velocity.y, _strafeDiraction.z);
                 _back._rb.velocity = _strafeDiraction;
             }

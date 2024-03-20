@@ -122,8 +122,9 @@ public class BaseGun : NetworkBehaviour
             _mainGun = Instantiate(_gun._gun, transform);
             var instanceNetworkObject = _mainGun.GetComponent<NetworkObject>();
             instanceNetworkObject.Spawn();
-        }
 
+            gameObject.SetActive(false);
+        }
     }
 
     public void StartX()
