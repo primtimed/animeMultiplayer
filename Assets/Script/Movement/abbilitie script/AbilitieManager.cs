@@ -12,8 +12,8 @@ public class AbilitieManager : NetworkBehaviour
 
     public Transform _graplingLoc;
 
-    GameObject _network; // word niet gevonden
-    GameObject _keep; // word niet gevonden
+    GameObject _network;
+    GameObject _keep;
 
     public BaseAbillitie _baseAbillitie;
     public BasePassive _basePassive;
@@ -45,8 +45,6 @@ public class AbilitieManager : NetworkBehaviour
             _abbilitie = _baseAbillitie;
             _passive = _basePassive;
         }
-
-        Debug.LogError("AbilitieManager");
 
         _abbilitie.Open(gameObject, this, _network, _keep);
         _passive.Open(gameObject);

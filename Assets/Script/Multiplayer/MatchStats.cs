@@ -13,6 +13,8 @@ public class MatchStats : MonoBehaviour
     public NetworkVariable<List<GameObject>> _team1;
     public NetworkVariable<List<GameObject>> _team2;
 
+    public NetworkVariable<bool> _freeForAll;
+
     private void Update()
     {
         if (_team1Points.Value >= _winningPoints)
@@ -26,7 +28,7 @@ public class MatchStats : MonoBehaviour
         }
     }
 
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     public void AddPointServerRpc(int team)
     {
         if(team == 1)

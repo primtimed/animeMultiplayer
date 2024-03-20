@@ -30,9 +30,7 @@ public class SpectateMovement : MonoBehaviour
 
         _move = _playerControlls.Movement.Movement;
         _mouse = _playerControlls.Movement.Rotation;
-        _sprint = _playerControlls.Movement.Sprint;
         _space = _playerControlls.Movement.Jump;
-        _croush = _playerControlls.Movement.Croush;
     }
 
     void OnDisable()

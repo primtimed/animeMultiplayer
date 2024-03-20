@@ -111,6 +111,8 @@ public class Movement : NetworkBehaviour
 
     private void Start()
     {
+        _sensetivitie = PlayerPrefs.GetFloat("Sens");
+
         _gameSens = _sensetivitie;
     }
 
