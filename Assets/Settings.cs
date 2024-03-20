@@ -1,13 +1,27 @@
-using UnityEngine.SceneManagement;
+using System;
 using Unity.Netcode;
-using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Settings : MonoBehaviour
 {
     public Movement _movement;
 
     public Slider _sensSlider;
+
+    public UI _ui = new UI();
+
+    [Serializable]
+    public class UI
+    {
+        [SerializeField] public GameObject _weapon;
+    }
+
+    void OnEnable()
+    {
+        _ui._weapon.SetActive(false);
+    }
 
     private void Awake()
     {
