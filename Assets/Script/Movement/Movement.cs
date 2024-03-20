@@ -292,6 +292,8 @@ public class Movement : NetworkBehaviour
     {
         RaycastHit hit;
 
+        if (_back._dash) return;
+
         if (Physics.SphereCast(_orientation.transform.position, .5f, -transform.up, out hit, _playerHight))
         {
             _grounded = true;

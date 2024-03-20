@@ -16,12 +16,18 @@ public class Dash : BaseAbillitie
     Movement _player;
     GameUI _gameUI;
 
+    Camera _cam;
+    float _fov;
+
     void Start() { }
 
     public override void Open(GameObject player, AbilitieManager manager, GameObject NetworkManager, GameObject keep)
     {
         _player = player.GetComponent<Movement>();
         _gameUI = player.GetComponent<GameUI>();
+        _cam = player.GetComponentInChildren<Camera>();
+
+        _fov = _cam.fieldOfView;
 
         _gameUI._abbilIcon.texture = _icon;
     }
@@ -35,10 +41,12 @@ public class Dash : BaseAbillitie
             Vector3 _dashDirection = _player.transform.forward * _dashSpeed;
             _player._back._rb.AddForce(_dashDirection, ForceMode.Impulse);
 
+            _cam.fieldOfView = _fov * 1.15f;
             await Task.Delay(200);
 
             _timer = _cooldown;
             _player._back._dash = false;
+            _cam.fieldOfView = _fov;
         }
     }
 
