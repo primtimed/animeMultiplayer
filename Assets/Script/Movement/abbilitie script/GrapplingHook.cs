@@ -26,6 +26,9 @@ public class GrapplingHook : BaseAbillitie
     Vector3 _grapplePoint;
     Transform _camera;
 
+    Camera _cam;
+    float _fov;
+
     Movement _movement;
     GameUI _gameUI;
 
@@ -46,13 +49,15 @@ public class GrapplingHook : BaseAbillitie
         }
 
         _lr = _gunBarrel.GetComponent<LineRenderer>();
-        _movement = _player.GetComponent<Movement>();
-        _camera = _player.GetComponentInChildren<Camera>().gameObject.transform;
+        _movement = player.GetComponent<Movement>();
+        _camera = player.GetComponentInChildren<Camera>().gameObject.transform;
         _gameUI = player.GetComponent<GameUI>();
 
-        _crosseair = _player.GetComponentInChildren<Image>();
+        _crosseair = player.GetComponentInChildren<Image>();
 
         _lr.positionCount = 0;
+        _cam = player.GetComponentInChildren<Camera>();
+        _fov = _cam.fieldOfView;
 
         _gameUI._abbilIcon.texture = _icon;
     }
@@ -129,6 +134,7 @@ public class GrapplingHook : BaseAbillitie
             _gunBarrel.transform.rotation = new quaternion(0, 0, 0, 0);
             _movement._back._grappling = false;
             _timer = _cooldown;
+            _cam.fieldOfView = _fov;
         }
     }
 
@@ -150,6 +156,11 @@ public class GrapplingHook : BaseAbillitie
 
         _currentGrapplePosition = Vector3.Lerp(_currentGrapplePosition, _grapplePoint, Time.deltaTime * 8f);
         _movement._back._rb.drag = 0;
+
+        if (_movement._back._rb.velocity.magnitude > 16)
+        {
+            _cam.fieldOfView = PlayerPrefs.GetFloat("FOV") + (_movement._back._rb.velocity.magnitude - 16);
+        }
 
         _lr.SetPosition(0, _gunBarrel.transform.position);
         _lr.SetPosition(1, _currentGrapplePosition);

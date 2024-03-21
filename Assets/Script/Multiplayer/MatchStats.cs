@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-public class MatchStats : MonoBehaviour
+public class MatchStats : NetworkBehaviour
 {
     public string _gameID;
     public int _winningPoints;

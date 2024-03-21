@@ -2,6 +2,7 @@ using System;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 using UnityEngine.UI;
 
 public class Settings : MonoBehaviour
@@ -16,6 +17,8 @@ public class Settings : MonoBehaviour
     public class UI
     {
         [SerializeField] public GameObject _weapon;
+
+        [SerializeField] public TextMeshProUGUI _fovI;
     }
 
     void OnEnable()
@@ -40,5 +43,13 @@ public class Settings : MonoBehaviour
         PlayerPrefs.SetFloat("Sens", slider.GetComponent<Slider>().value);
         _movement._sensetivitie = slider.GetComponent<Slider>().value;
         _movement._gameSens = slider.GetComponent<Slider>().value;
+    }
+
+    public void SetFOV(GameObject slider)
+    {
+        PlayerPrefs.SetFloat("FOV", slider.GetComponent<Slider>().value);
+        int FOV = (int)slider.GetComponent<Slider>().value;
+        _ui._fovI.text = FOV.ToString();
+        _movement._back._camera.GetComponent<Camera>().fieldOfView = slider.GetComponent<Slider>().value;
     }
 }

@@ -41,12 +41,12 @@ public class Dash : BaseAbillitie
             Vector3 _dashDirection = _player.transform.forward * _dashSpeed;
             _player._back._rb.AddForce(_dashDirection, ForceMode.Impulse);
 
-            _cam.fieldOfView = _fov * 1.15f;
+            _cam.fieldOfView = PlayerPrefs.GetFloat("FOV") * 1.15f;
             await Task.Delay(200);
 
             _timer = _cooldown;
             _player._back._dash = false;
-            _cam.fieldOfView = _fov;
+            _cam.fieldOfView = PlayerPrefs.GetFloat("FOV");
         }
     }
 

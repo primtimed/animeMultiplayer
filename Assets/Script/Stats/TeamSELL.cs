@@ -3,23 +3,38 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 
-public class TeamSELL : NetworkBehaviour
+public class TeamSELL : MonoBehaviour
 {
     public GameObject _freeForAll;
     public GameObject _teams;
 
+    MatchStats _match;
+
     private void Start()
     {
+        _match = GameObject.Find("Keep").GetComponent<MatchStats>();
+
         if (GetComponentInParent<OwnerCheck>().IsHost)
         {
             _freeForAll.SetActive(true);
-            GameObject.Find("Keep").GetComponent<MatchStats>()._freeForAll.Value = true;
         }
 
-        else if (GameObject.Find("Keep").GetComponent<MatchStats>()._freeForAll.Value == true)
+        else if (_match._freeForAll.Value == true)
         {
             _freeForAll.SetActive(true);
             _teams.SetActive(false);
         }
+    }
+
+    [ServerRpc]
+    public void FreeForAllServerRpc()
+    {
+        _match._freeForAll.Value = true;
+    }
+
+    [ServerRpc]
+    public void NotFreeForAllServerRpc()
+    {
+        _match._freeForAll.Value = false;
     }
 }

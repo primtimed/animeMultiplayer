@@ -120,8 +120,6 @@ public class BaseGun : NetworkBehaviour
             _weaponType = _gun._weaponType;
 
             _mainGun = Instantiate(_gun._gun, transform);
-            var instanceNetworkObject = _mainGun.GetComponent<NetworkObject>();
-            instanceNetworkObject.Spawn();
 
             gameObject.SetActive(false);
         }
@@ -147,8 +145,6 @@ public class BaseGun : NetworkBehaviour
         }
 
         _mainGun = Instantiate(_gun._gun, transform);
-        var instanceNetworkObject = _mainGun.GetComponent<NetworkObject>();
-        instanceNetworkObject.Spawn();
 
         if (!GetComponentInParent<OwnerCheck>()._isOwner)
         {
@@ -186,7 +182,7 @@ public class BaseGun : NetworkBehaviour
 
             else
             {
-                _cam.fieldOfView = _fov;
+                _cam.fieldOfView = PlayerPrefs.GetFloat("FOV");
                 _move._gameSens = _move._sensetivitie;
                 _UI._scope.gameObject.SetActive(false);
                 _aimBool = false;
@@ -204,7 +200,7 @@ public class BaseGun : NetworkBehaviour
 
             else
             {
-                _cam.fieldOfView = _fov;
+                _cam.fieldOfView = PlayerPrefs.GetFloat("FOV");
                 _move._gameSens = _move._sensetivitie;
                 _UI._scope.gameObject.SetActive(false);
                 _aimBool = false;

@@ -113,6 +113,8 @@ public class Movement : NetworkBehaviour
     {
         _sensetivitie = PlayerPrefs.GetFloat("Sens");
 
+        _back._camera.GetComponent<Camera>().fieldOfView = PlayerPrefs.GetFloat("FOV");
+
         _gameSens = _sensetivitie;
     }
 
