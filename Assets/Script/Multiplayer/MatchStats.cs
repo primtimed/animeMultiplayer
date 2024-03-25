@@ -10,9 +10,6 @@ public class MatchStats : NetworkBehaviour
     public NetworkVariable<int> _team1Points;
     public NetworkVariable<int> _team2Points;
 
-    public NetworkVariable<List<GameObject>> _team1;
-    public NetworkVariable<List<GameObject>> _team2;
-
     public NetworkVariable<bool> _freeForAll;
 
     private void Update()

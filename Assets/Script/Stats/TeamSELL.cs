@@ -10,9 +10,12 @@ public class TeamSELL : MonoBehaviour
 
     MatchStats _match;
 
+    NetworkBehaviour _network;
+
     private void Start()
     {
         _match = GameObject.Find("Keep").GetComponent<MatchStats>();
+        _network = GetComponentInParent<Movement>().GetComponent<NetworkBehaviour>();
 
         if (GetComponentInParent<OwnerCheck>().IsHost)
         {

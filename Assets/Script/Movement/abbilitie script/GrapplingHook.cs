@@ -134,7 +134,7 @@ public class GrapplingHook : BaseAbillitie
             _gunBarrel.transform.rotation = new quaternion(0, 0, 0, 0);
             _movement._back._grappling = false;
             _timer = _cooldown;
-            _cam.fieldOfView = _fov;
+            _cam.fieldOfView = PlayerPrefs.GetFloat("FOV");
         }
     }
 
@@ -159,7 +159,7 @@ public class GrapplingHook : BaseAbillitie
 
         if (_movement._back._rb.velocity.magnitude > 16)
         {
-            _cam.fieldOfView = PlayerPrefs.GetFloat("FOV") + (_movement._back._rb.velocity.magnitude - 16);
+            _cam.fieldOfView = PlayerPrefs.GetFloat("FOV") + ((_movement._back._rb.velocity.magnitude - 16) / 2);
         }
 
         _lr.SetPosition(0, _gunBarrel.transform.position);
