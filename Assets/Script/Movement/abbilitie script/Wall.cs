@@ -38,6 +38,12 @@ public class Wall : BaseAbillitie
 
     public override void Start(InputAction.CallbackContext context)
     {
+        SpawnServerRpc();
+    }
+
+    [ServerRpc]
+    void SpawnServerRpc()
+    {
         if (_spawnedObject != null)
         {
             Destroy(_spawnedObject);

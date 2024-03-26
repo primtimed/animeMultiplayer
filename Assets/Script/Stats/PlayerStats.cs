@@ -147,51 +147,14 @@ public class PlayerStats : NetworkBehaviour
         _player.SetActive(_bool);
     }
 
-    void Dead()
-    {
-        _dead = true;
-
-        _movement._speedAcceleration = 0;
-        _movement._canJump = false;
-        _rb.useGravity = false;
-        _rb.velocity = new Vector3(0, 0, 0);
-        _gun.gameObject.SetActive(false);
-    }
-
-    public void Alive()
-    {
-        if(_team.Value == Team.Team1)
-        {
-            _match.AddPointServerRpc(1);
-        }
-
-        else if (_team.Value == Team.Team2)
-        {
-            _match.AddPointServerRpc(2);
-        }
-
-        SetHpServerRpc();
-
-        _dead = false;
-
-        _movement._speedAcceleration = 40000;
-        _movement._canJump = true;
-        _rb.useGravity = true;
-
-        _gun.gameObject.SetActive(true);
-
-        int _int = Random.Range(0, GameObject.Find("Spawns").GetComponent<Respawn>()._spawns.Length);
-        transform.position = GameObject.Find("Spawns").GetComponent<Respawn>()._spawns[_int].position;
-    }
-
-
-
     [ServerRpc(RequireOwnership = false)]
     void SetHpServerRpc()
     {
         _hpNow.Value = _hp;
     }
 
+
+    // Respawn //
     PlayerControlls _input;
     InputAction _respawnButton;
 
@@ -220,6 +183,16 @@ public class PlayerStats : NetworkBehaviour
     {
         if (_hpNow.Value <= 0 && IsLocalPlayer)
         {
+            if (_team.Value == Team.Team1)
+            {
+                GameObject.Find("Keep").GetComponent<MatchStats>().AddPointServerRpc(1);
+            }
+
+            else if (_team.Value == Team.Team2)
+            {
+                GameObject.Find("Keep").GetComponent<MatchStats>().AddPointServerRpc(2);
+            }
+
             SetHpServerRpc();
 
             int _int = Random.Range(0, GameObject.Find("Spawns").GetComponent<Respawn>()._spawns.Length);
