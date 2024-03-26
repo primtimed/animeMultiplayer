@@ -23,12 +23,18 @@ public class Settings : MonoBehaviour
 
     void OnEnable()
     {
-        _ui._weapon.SetActive(false);
+        if (_ui._weapon)
+        {
+            _ui._weapon.SetActive(false);
+        }
     }
 
     private void Awake()
     {
-        _sensSlider.GetComponent<Slider>().value = _movement._sensetivitie;
+        if (_sensSlider)
+        {
+            _sensSlider.GetComponent<Slider>().value = _movement._sensetivitie;
+        }
     }
 
     public void ToMenu()

@@ -10,18 +10,20 @@ public class MatchStats : NetworkBehaviour
     public NetworkVariable<int> _team1Points;
     public NetworkVariable<int> _team2Points;
 
+    public NetworkVariable<Team> _teamWon;
+
     public NetworkVariable<bool> _freeForAll;
 
     private void Update()
     {
         if (_team1Points.Value >= _winningPoints)
         {
-            Debug.Log("team 1 wins");
+            _teamWon.Value = Team.Team1;
         }
 
         else if (_team2Points.Value >= _winningPoints)
         {
-            Debug.Log("team 2 wins");
+            _teamWon.Value = Team.Team2;
         }
     }
 

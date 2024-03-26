@@ -38,6 +38,9 @@ public class GameUI : MonoBehaviour
 
     public GameObject _settings;
 
+    [Header("EndGame")]
+    public GameObject _uiEnd;
+
     private void Awake()
     {
         _input = new PlayerControlls();

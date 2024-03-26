@@ -29,6 +29,8 @@ public class PlayerStats : NetworkBehaviour
 
     public bool _dead;
 
+    bool _endGame;
+
     [HideInInspector] public Movement _movement;
     [HideInInspector] public Rigidbody _rb;
     [HideInInspector] public Collider _coll;
@@ -83,8 +85,7 @@ public class PlayerStats : NetworkBehaviour
         Debug.LogWarning(damage.ToString() + "Damage To ServerRpc");
     }
 
-    [ServerRpc(RequireOwnership = false)]
-    void SetCollorServerRpc()
+    void SetCollor()
     {
         if (_team.Value == Team.Team1 && _mash.material != _team1)
         {
@@ -97,9 +98,31 @@ public class PlayerStats : NetworkBehaviour
         }
     }
 
+    public void GameEnd()
+    {
+        _endGame = true;
+
+        _gameUI._deadUI.SetActive(false);
+        _gameUI._uiEnd.SetActive(true);
+
+        GetComponent<Movement>()._speedAcceleration = 0;
+        GetComponent<Movement>()._canJump = false;
+        GetComponent<Rigidbody>().useGravity = false;
+        GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
+
+        _gun.SetActive(false);
+    }
+
     private void Update()
     {
-        SetCollorServerRpc();
+        SetCollor();
+
+        if(GameObject.Find("Keep").GetComponent<MatchStats>()._teamWon.Value != Team.None)
+        {
+            GameEnd();
+        }
+
+        if (_endGame) return;
 
         if (_hpNow.Value <= 0)
         {
@@ -181,7 +204,7 @@ public class PlayerStats : NetworkBehaviour
 
     void Respawn(InputAction.CallbackContext context)
     {
-        if (_hpNow.Value <= 0 && IsLocalPlayer)
+        if (_hpNow.Value <= 0 && IsLocalPlayer && _dead)
         {
             if (_team.Value == Team.Team1)
             {

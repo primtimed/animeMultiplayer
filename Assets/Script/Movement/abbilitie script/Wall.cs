@@ -38,7 +38,16 @@ public class Wall : BaseAbillitie
 
     public override void Start(InputAction.CallbackContext context)
     {
-        SpawnServerRpc();
+        if (_spawnedObject != null)
+        {
+            Destroy(_spawnedObject);
+        }
+
+        _spawnedObject = Instantiate(_wall, _player);
+        var instanceNetworkObject = _spawnedObject.GetComponent<NetworkObject>();
+        instanceNetworkObject.Spawn();
+
+        //SpawnServerRpc();
     }
 
     [ServerRpc]
