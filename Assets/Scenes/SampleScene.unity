@@ -375,8 +375,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c71ded38084ac4140a65a690b55c7ac7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _admin: 1
-  _console: {fileID: 132536, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
 --- !u!114 &172562303
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2278,6 +2276,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: a7d038d0d324feb4486c86b9fa2334d8, type: 2}
+    - target: {fileID: 832674897175998235, guid: 225c31915a94ef94aba008db891dddb2,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2e7d2b8ec7aa27249a9bc357b46b7ecb, type: 2}
     - target: {fileID: 881888265117016333, guid: 225c31915a94ef94aba008db891dddb2,
         type: 3}
       propertyPath: m_Layer
@@ -2634,7 +2637,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: e352d70b03c15e8479e78eec8cedd11b, type: 2}
+      objectReference: {fileID: 2100000, guid: 4c655b07805bb0449a25eb099e9a2d03, type: 2}
     - target: {fileID: 3670572627654517215, guid: 225c31915a94ef94aba008db891dddb2,
         type: 3}
       propertyPath: m_Layer
