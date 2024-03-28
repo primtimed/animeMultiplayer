@@ -141,7 +141,7 @@ public class BaseGun : NetworkBehaviour
 
         if (_mainGun)
         {
-            _mainGun.GetComponent<NetworkObject>().Despawn();
+            Destroy(_mainGun);
         }
 
         _mainGun = Instantiate(_gun._gun, transform);

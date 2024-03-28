@@ -998,7 +998,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 1343
+  m_VersionIndex: 1349
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -1063,7 +1063,7 @@ MeshRenderer:
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 2
+  m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -2115,11 +2115,13 @@ MonoBehaviour:
   _rb: {fileID: 0}
   _coll: {fileID: 0}
   _mash: {fileID: 0}
+  _mapMash: {fileID: 2415451457754627501}
   _gun: {fileID: 6672751749390216996}
   _player: {fileID: 2559766388918449710}
   _gameUI: {fileID: 4505699864578686652}
   _team1: {fileID: 2100000, guid: ec1a1a8882192454fa21d9067ead3a9e, type: 2}
   _team2: {fileID: 2100000, guid: b9fe3ffb535ee1741b0d18fa886d340c, type: 2}
+  _normal: {fileID: 0}
 --- !u!114 &4505699864578686652
 MonoBehaviour:
   m_ObjectHideFlags: 0

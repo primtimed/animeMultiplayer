@@ -35,15 +35,19 @@ public class PlayerStats : NetworkBehaviour
     [HideInInspector] public Rigidbody _rb;
     [HideInInspector] public Collider _coll;
     [HideInInspector] public MeshRenderer _mash;
+
+    public MeshRenderer _mapMash;
     public GameObject _gun, _player;
 
     public GameUI _gameUI;
 
-    public Material _team1, _team2;
+    public Material _team1, _team2, _normal;
 
     private void Start()
     {
         _hpNow.Value = _hp;
+
+        _mash = GetComponentInChildren<MeshRenderer>();
 
         if (IsLocalPlayer)
         {
@@ -52,7 +56,6 @@ public class PlayerStats : NetworkBehaviour
             _movement = GetComponent<Movement>();
             _rb = GetComponent<Rigidbody>();
             _coll = GetComponent<Collider>();
-            _mash = GetComponentInChildren<MeshRenderer>();
 
             _match = GameObject.Find("Keep").GetComponent<MatchStats>();
         }
@@ -87,14 +90,21 @@ public class PlayerStats : NetworkBehaviour
 
     void SetCollor()
     {
-        if (_team.Value == Team.Team1 && _mash.material != _team1)
+        if (_mash)
         {
-            _mash.material = _team1;
-        }
+            Debug.Log("Setcollor");
 
-        else if (_team.Value == Team.Team2 && _mash.material != _team2)
-        {
-            _mash.material = _team2;
+            if (_team.Value == Team.Team1 && _mash.material != _team1)
+            {
+                _mash.material = _team1;
+                _mapMash.material = _team1;
+            }
+
+            else if (_team.Value == Team.Team2 && _mash.material != _team2)
+            {
+                _mash.material = _team2;
+                _mapMash.material = _team2;
+            }
         }
     }
 
@@ -117,7 +127,7 @@ public class PlayerStats : NetworkBehaviour
     {
         SetCollor();
 
-        if(GameObject.Find("Keep").GetComponent<MatchStats>()._teamWon.Value != Team.None)
+        if (GameObject.Find("Keep").GetComponent<MatchStats>()._teamWon.Value != Team.None)
         {
             GameEnd();
         }
