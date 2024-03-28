@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: burst
   _ammo: 26
-  _fireRate: 0.25
+  _fireRate: 0.5
   _reloadSpeed: 2
   _weaponSpretAmount: 0.3
   _damage: 23

@@ -92,18 +92,22 @@ public class PlayerStats : NetworkBehaviour
     {
         if (_mash)
         {
-            Debug.Log("Setcollor");
-
-            if (_team.Value == Team.Team1 && _mash.material != _team1)
+            if (_team.Value == Team.Team1)
             {
                 _mash.material = _team1;
                 _mapMash.material = _team1;
             }
 
-            else if (_team.Value == Team.Team2 && _mash.material != _team2)
+            else if (_team.Value == Team.Team2)
             {
                 _mash.material = _team2;
                 _mapMash.material = _team2;
+            }
+
+            else
+            {
+                _mash.material = _normal;
+                _mapMash.material = _normal;
             }
         }
     }

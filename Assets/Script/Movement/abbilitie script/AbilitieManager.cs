@@ -54,21 +54,27 @@ public class AbilitieManager : NetworkBehaviour
 
     private void OnEnable()
     {
-        _input.Enable();
-
-        _abbilitieKey1 = _input.Abbilities._1;
-
-        if (_abbilitie)
+        if (IsLocalPlayer)
         {
-            _abbilitieKey1.started += _abbilitie.Start;
-            _abbilitieKey1.canceled += _abbilitie.Stop;
+            _input.Enable();
+
+            _abbilitieKey1 = _input.Abbilities._1;
+
+            if (_abbilitie)
+            {
+                _abbilitieKey1.started += _abbilitie.Start;
+                _abbilitieKey1.canceled += _abbilitie.Stop;
+            }
         }
     }
 
     private void OnDisable()
     {
-        _abbilitieKey1.started -= _abbilitie.Start;
-        _abbilitieKey1.canceled -= _abbilitie.Stop;
+        if (IsLocalPlayer)
+        {
+            _abbilitieKey1.started -= _abbilitie.Start;
+            _abbilitieKey1.canceled -= _abbilitie.Stop;
+        }
     }
 
     private void LateUpdate()
