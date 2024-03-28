@@ -112,6 +112,30 @@ public class PlayerStats : NetworkBehaviour
         }
     }
 
+    bool _spectaitCheck;
+    void Spectate()
+    {
+        if (_spectaitCheck != _movement._spectator)
+        {
+            _spectaitCheck = _movement._spectator;
+
+            if (_movement._spectator)
+            {
+                GetComponent<Rigidbody>().useGravity = false;
+                GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
+                _gun.SetActive(false);
+                GetComponent<AbilitieManager>().enabled = false;
+            }
+
+            else
+            {
+                GetComponent<Rigidbody>().useGravity = true;
+                _gun.SetActive(true);
+                GetComponent<AbilitieManager>().enabled = true;
+            }
+        }
+    }
+
     public void GameEnd()
     {
         _endGame = true;
@@ -130,6 +154,7 @@ public class PlayerStats : NetworkBehaviour
     private void Update()
     {
         SetCollor();
+        Spectate();
 
         if (GameObject.Find("Keep").GetComponent<MatchStats>()._teamWon.Value != Team.None)
         {
@@ -137,6 +162,8 @@ public class PlayerStats : NetworkBehaviour
         }
 
         if (_endGame) return;
+
+        if (_movement._spectator) return;
 
         if (_hpNow.Value <= 0)
         {

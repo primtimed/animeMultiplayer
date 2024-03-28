@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using Unity.Mathematics;
 using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -55,7 +56,7 @@ public class Movement : NetworkBehaviour
     float _timer;
 
     [HideInInspector] public bool _grounded, _sprinting, _jumping, _slidding, _chroushing, _wallrunning;
-    bool _wallrunL, _wallrunR, _climming, _slideDelay;
+    bool _wallrunL, _wallrunR, _climming, _slideDelay, _wall;
 
     [Serializable]
     public class BackSettings
@@ -126,9 +127,10 @@ public class Movement : NetworkBehaviour
         Rotate(_mouse.ReadValue<Vector2>() * Time.smoothDeltaTime);
 
         Grounded();
+        CrouchUpdate();
+        WallCheck();
         WallRunInput();
         WallclimeUpdate();
-        CrouchUpdate();
     }
 
     //movement
@@ -137,14 +139,14 @@ public class Movement : NetworkBehaviour
     {
         _back._move = _moveV2;
 
-        if (_moveV2.y != 0 || _moveV2.x != 0)
+        if (_moveV2.y != 0 || _moveV2.x != 0 && !_wall)
         {
             if (OnSlope())
             {
                 _back._rb.AddForce(_moveDirection * _speedAcceleration);
             }
 
-            else if (_grounded && !_slidding || _jumping || _climming)
+            else if (_grounded && !_slidding || _jumping || _climming || _spectator)
             {
                 _moveDirection = (_back._center.transform.forward * _moveV2.y + _back._center.transform.right * _moveV2.x) * Time.deltaTime;
                 _moveDirection = new Vector3(_moveDirection.x, 0, _moveDirection.z);
@@ -195,11 +197,6 @@ public class Movement : NetworkBehaviour
         }
 
         return false;
-    }
-
-    private Vector3 GetSlopeMoveDirection()
-    {
-        return Vector3.ProjectOnPlane(_moveDirection, hit.normal).normalized;
     }
 
 
@@ -279,6 +276,7 @@ public class Movement : NetworkBehaviour
         RaycastHit hit;
 
         if (_back._dash) return;
+        if (_spectator) return;
 
         if (Physics.SphereCast(_orientation.transform.position, .5f, -transform.up, out hit, _playerHight))
         {
@@ -290,9 +288,9 @@ public class Movement : NetworkBehaviour
 
         else
         {
-            if (_back._move.y > 0 && !_back._grappling)
+            if (_back._move.y > 0 && !_back._grappling && !_wall)
             {
-                Vector3 _strafeDiraction = (_back._rb.transform.forward * _back._move.y * 1000 + _back._rb.transform.right * _back._move.x * 1000) * Time.deltaTime;
+                Vector3 _strafeDiraction = (_back._rb.transform.forward * _back._move.y * 1000 + _back._rb.transform.right * _back._move.x * 200) * Time.deltaTime;
                 _strafeDiraction = new Vector3(_strafeDiraction.x, _back._rb.velocity.y, _strafeDiraction.z);
                 _back._rb.velocity = _strafeDiraction;
             }
@@ -300,6 +298,20 @@ public class Movement : NetworkBehaviour
             _back._rb.velocity += new Vector3(0, -0.05f, 0);
             _grounded = false;
         }
+    }
+
+    void WallCheck()
+    {
+        RaycastHit _wallhit;
+
+        Vector3 _diraction = (_back._rb.transform.forward * _back._move.y + _back._rb.transform.right * _back._move.x);
+
+        if (Physics.Raycast(transform.position, _diraction, out _wallhit, 1))
+        {
+            _wall = true;
+        }
+
+        else { _wall = false; }
     }
 
     //sprint
@@ -415,6 +427,8 @@ public class Movement : NetworkBehaviour
 
     void StopWallRun()
     {
+        if (_spectator) return;
+
         _back._rb.useGravity = true;
         _wallrunning = false;
     }

@@ -568,6 +568,15 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Spectate"",
+                    ""type"": ""Button"",
+                    ""id"": ""dc5efb39-e306-4267-ad9d-af791a94b954"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -579,6 +588,17 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Console"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d13469f0-9d7e-44be-b100-6bd3022d4d13"",
+                    ""path"": ""<Keyboard>/l"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Spectate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -650,6 +670,7 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
         // Admin
         m_Admin = asset.FindActionMap("Admin", throwIfNotFound: true);
         m_Admin_Console = m_Admin.FindAction("Console", throwIfNotFound: true);
+        m_Admin_Spectate = m_Admin.FindAction("Spectate", throwIfNotFound: true);
         // Abbilities
         m_Abbilities = asset.FindActionMap("Abbilities", throwIfNotFound: true);
         m_Abbilities__1 = m_Abbilities.FindAction("1", throwIfNotFound: true);
@@ -949,11 +970,13 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Admin;
     private List<IAdminActions> m_AdminActionsCallbackInterfaces = new List<IAdminActions>();
     private readonly InputAction m_Admin_Console;
+    private readonly InputAction m_Admin_Spectate;
     public struct AdminActions
     {
         private @PlayerControlls m_Wrapper;
         public AdminActions(@PlayerControlls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Console => m_Wrapper.m_Admin_Console;
+        public InputAction @Spectate => m_Wrapper.m_Admin_Spectate;
         public InputActionMap Get() { return m_Wrapper.m_Admin; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -966,6 +989,9 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
             @Console.started += instance.OnConsole;
             @Console.performed += instance.OnConsole;
             @Console.canceled += instance.OnConsole;
+            @Spectate.started += instance.OnSpectate;
+            @Spectate.performed += instance.OnSpectate;
+            @Spectate.canceled += instance.OnSpectate;
         }
 
         private void UnregisterCallbacks(IAdminActions instance)
@@ -973,6 +999,9 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
             @Console.started -= instance.OnConsole;
             @Console.performed -= instance.OnConsole;
             @Console.canceled -= instance.OnConsole;
+            @Spectate.started -= instance.OnSpectate;
+            @Spectate.performed -= instance.OnSpectate;
+            @Spectate.canceled -= instance.OnSpectate;
         }
 
         public void RemoveCallbacks(IAdminActions instance)
@@ -1063,6 +1092,7 @@ public partial class @PlayerControlls: IInputActionCollection2, IDisposable
     public interface IAdminActions
     {
         void OnConsole(InputAction.CallbackContext context);
+        void OnSpectate(InputAction.CallbackContext context);
     }
     public interface IAbbilitiesActions
     {

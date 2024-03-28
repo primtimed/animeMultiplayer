@@ -1071,7 +1071,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 1355
+  m_VersionIndex: 1361
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -1220,7 +1220,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 3489661055
+    m_Bits: 3623878783
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -2533,6 +2533,7 @@ GameObject:
   - component: {fileID: 3977466461844908912}
   - component: {fileID: 4231269416241547347}
   - component: {fileID: 6998826926129071440}
+  - component: {fileID: 2544909867450024917}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -2821,6 +2822,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaf20319edd944148bacef161a77bbc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2544909867450024917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7539220058224208344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c71ded38084ac4140a65a690b55c7ac7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _action:
+    m_Name: Action
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 6cefc8ee-abf3-4762-9a7b-02aa97ad7bbf
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 6cd68652-9e93-4228-8407-4f494178d7e9
+      m_Path: <Keyboard>/l
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Action
+      m_Flags: 0
+    m_Flags: 0
 --- !u!1 &7972351202344961874
 GameObject:
   m_ObjectHideFlags: 0

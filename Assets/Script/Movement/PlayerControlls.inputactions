@@ -546,6 +546,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Spectate",
+                    "type": "Button",
+                    "id": "dc5efb39-e306-4267-ad9d-af791a94b954",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -557,6 +566,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Console",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d13469f0-9d7e-44be-b100-6bd3022d4d13",
+                    "path": "<Keyboard>/l",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Spectate",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -3,22 +3,11 @@ using UnityEngine.InputSystem;
 
 public class Admin : MonoBehaviour
 {
-    public bool _admin;
-
-    GameObject _player;
-
-    [SerializeField] GameObject _console;
-
     PlayerControlls _input;
-    InputAction _commands;
+    InputAction _action;
 
     private void Awake()
     {
-        if (!_admin)
-        {
-            enabled = false;
-        }
-
         _input = new PlayerControlls();
     }
 
@@ -26,26 +15,40 @@ public class Admin : MonoBehaviour
     {
         _input.Enable();
 
-        _commands = _input.Admin.Console;
+        _action = _input.Admin.Spectate;
 
-        _commands.started += Console;
+        _action.started += lolll;
+
+        Debug.Log("sp0");
     }
 
     private void OnDisable()
     {
         _input.Disable();
+
+        _action.started -= lolll;
     }
 
-    private void Start()
+    void lolll(InputAction.CallbackContext context)
     {
-        Instantiate(_console);
-    }
+        Debug.Log("sp1");
 
-    void Console(InputAction.CallbackContext context)
-    {
-        if (GameObject.FindWithTag("Player").GetComponent<OwnerCheck>().IsOwner)
+        if (GetComponent<PlayerStats>().IsOwner == false) return;
+
+        Debug.Log("sp2");
+
+        if (GetComponent<Movement>()._spectator)
         {
-            _player = GameObject.FindWithTag("Player");
+            GetComponent<Movement>()._spectator = false;
+
+            Debug.Log("sp3");
+        }
+
+        else
+        {
+            GetComponent<Movement>()._spectator = true;
+
+            Debug.Log("sp4");
         }
     }
 }

@@ -18,6 +18,6 @@ MonoBehaviour:
   _spring: 15
   _whatIsGrappleable:
     serializedVersion: 2
-    m_Bits: 3221225536
+    m_Bits: 3355443264
   _gun: {fileID: 3632069814365642577, guid: 7483da1c978bfdb4f850cc17ed5d3d2a, type: 3}
   _cooldown: 5
