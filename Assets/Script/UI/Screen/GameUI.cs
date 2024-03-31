@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using TMPro;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -14,6 +15,9 @@ public class GameUI : MonoBehaviour
     //Health
     public Slider _hpSlider;
     public TextMeshProUGUI _hpText;
+
+    public RawImage _blood;
+    Color _bloodColor = Color.red;
 
     public float _time;
 
@@ -77,6 +81,9 @@ public class GameUI : MonoBehaviour
         _matchStats = GameObject.Find("Keep").GetComponent<MatchStats>();
         _deadUI.SetActive(false);
 
+        _bloodColor.a = 0;
+        _blood.color = _bloodColor;
+
         _gameID.text = _matchStats._gameID;
 
         _team1Slider.maxValue = _matchStats._winningPoints;
@@ -133,28 +140,56 @@ public class GameUI : MonoBehaviour
 
         _team2Slider.value = _matchStats._team2Points.Value;
         _team2Text.text = _matchStats._team2Points.Value.ToString();
+
+        if (_playerStats._hpNow.Value < 50)
+        {
+            float hpRotate = _playerStats._hpNow.Value;
+
+            _bloodColor.a = 1.1f / hpRotate;
+            _blood.color = _bloodColor;
+        }
+
+        else
+        {
+            _bloodColor.a = 0;
+            _blood.color = _bloodColor;
+        }
     }
 
+    [HideInInspector] public Movement _move;
+    [HideInInspector] public AbilitieManager _abil;
+    [HideInInspector] public BaseGun _gun;
+    [HideInInspector] public mouseLock _lock;
      void Settings(InputAction.CallbackContext context)
     {
         if (_settings.activeSelf)
         {
             _settings.SetActive(false);
 
-            GetComponent<Movement>().enabled = true;
-            GetComponent<AbilitieManager>().enabled = true;
-            GetComponentInChildren<BaseGun>().enabled = true;
-            GetComponentInChildren<mouseLock>().SetLock(true);
+            _move.enabled = true;
+
+            _abil.enabled = true;
+
+            _gun.enabled = true;
+
+            _lock.SetLock(true);
         }
 
         else
         {
             _settings.SetActive(true);
 
-            GetComponent<Movement>().enabled = false;
-            GetComponent<AbilitieManager>().enabled = false;
-            GetComponentInChildren<BaseGun>().enabled = false;
-            GetComponentInChildren<mouseLock>().SetLock(false);
+            _move = GetComponent<Movement>();
+            _move.enabled = false;
+
+            _abil = GetComponent<AbilitieManager>();
+            _abil.enabled = false;
+
+            _gun = GetComponentInChildren<BaseGun>();
+            _gun.enabled = false;
+
+            _lock = GetComponentInChildren<mouseLock>();
+            _lock.SetLock(false);
         }
     }
 }

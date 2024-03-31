@@ -58,4 +58,19 @@ public class Settings : MonoBehaviour
         _ui._fovI.text = FOV.ToString();
         _movement._back._camera.GetComponent<Camera>().fieldOfView = slider.GetComponent<Slider>().value;
     }
+
+    public void ToGame()
+    {
+        GameUI gameUI = GetComponentInParent<GameUI>();
+
+        gameUI._settings.SetActive(false);
+
+        gameUI._move.enabled = true;
+
+        gameUI._abil.enabled = true;
+
+        gameUI._gun.enabled = true;
+
+        gameUI._lock.SetLock(true);
+    }
 }
