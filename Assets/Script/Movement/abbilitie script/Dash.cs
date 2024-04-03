@@ -32,13 +32,16 @@ public class Dash : BaseAbillitie
         _gameUI._abbilIcon.texture = _icon;
     }
 
+    Vector3 moveDirection;
     public override async void Start(InputAction.CallbackContext context)
     {
         if (_timer <= 0 && !_player._back._dash)
         {
             _player._back._dash = true;
 
-            Vector3 _dashDirection = _player.transform.forward * _dashSpeed;
+            moveDirection = _player._back._center.transform.forward * _player._back._move.y + _player._back._center.transform.right * _player._back._move.x;
+
+            Vector3 _dashDirection = moveDirection * _dashSpeed;
             _player._back._rb.AddForce(_dashDirection, ForceMode.Impulse);
 
             _cam.fieldOfView = PlayerPrefs.GetFloat("FOV") * 1.15f;
