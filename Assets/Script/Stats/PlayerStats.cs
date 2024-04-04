@@ -15,7 +15,7 @@ public enum Team
 
 public class PlayerStats : NetworkBehaviour
 {
-    public int _playerID;
+    public NetworkVariable<int> _playerID = new NetworkVariable<int>();
     public NetworkVariable<Team> _team = new NetworkVariable<Team>();
 
     MatchStats _match;
@@ -54,7 +54,7 @@ public class PlayerStats : NetworkBehaviour
 
         if (IsLocalPlayer)
         {
-            _playerID = SystemInfo.graphicsDeviceID;
+            _playerID.Value = SystemInfo.graphicsDeviceID;
 
             _movement = GetComponent<Movement>();
             _rb = GetComponent<Rigidbody>();
@@ -68,18 +68,36 @@ public class PlayerStats : NetworkBehaviour
     public void SetTeam1ServerRpc()
     {
         _team.Value = Team.Team1;
+
+        //_match._team1.Add(_playerID.Value);
+        //_match._team2.Remove(_playerID.Value);
+
+        Debug.Log(_match._team1.Count);   
+        Debug.Log(_match._team2.Count);
     }
 
     [ServerRpc]
     public void SetTeam2ServerRpc()
     {
         _team.Value = Team.Team2;
+
+        //_match._team2.Add(_playerID.Value);
+        //_match._team1.Remove(_playerID.Value);
+        
+        Debug.Log(_match._team1.Count);
+        Debug.Log(_match._team2.Count);
     }
 
     [ServerRpc]
     public void SetTeamFreeServerRpc()
     {
         _team.Value = Team.FreeForAll;
+
+        //_match._team1.Add(_playerID.Value);
+        //_match._team2.Clear();
+
+        Debug.Log(_match._team1.Count);
+        Debug.Log(_match._team2.Count);
     }
 
 

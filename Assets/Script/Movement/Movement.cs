@@ -290,7 +290,7 @@ public class Movement : NetworkBehaviour
         {
             if (_back._move.y > 0 && !_back._grappling && !_wall)
             {
-                Vector3 _strafeDiraction = (_back._rb.transform.forward * _back._move.y * 10 + _back._rb.transform.right * _back._move.x * 10) * Time.deltaTime;
+                Vector3 _strafeDiraction = (_back._rb.transform.forward * _back._move.y * 15 + _back._rb.transform.right * _back._move.x * 20) * Time.deltaTime;
                 _strafeDiraction = new Vector3(_strafeDiraction.x, 0, _strafeDiraction.z);
                 _back._rb.velocity += _strafeDiraction;
             }
