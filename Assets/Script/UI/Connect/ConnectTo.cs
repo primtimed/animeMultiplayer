@@ -71,7 +71,9 @@ public class ConnectTo : NetworkBehaviour
 
             _ui.SetActive(false);
             SetGameID(joinCode);
-        }                                                                   
+
+            Destroy(gameObject);
+        }
         catch (RelayServiceException e)
         {
             Debug.Log(e);
@@ -91,6 +93,8 @@ public class ConnectTo : NetworkBehaviour
             _ui.SetActive(false);
             SetGameID(joinCode.text);
             Debug.Log("Joining Relay with " + joinCode.text);
+
+            Destroy(gameObject);
         }
         catch (RelayServiceException e)
         {
@@ -111,6 +115,8 @@ public class ConnectTo : NetworkBehaviour
             _ui.SetActive(false);
             SetGameID(joinCode);
             NetworkManager.Singleton.StartClient();
+
+            Destroy(gameObject);
         }
         catch (RelayServiceException e)
         {

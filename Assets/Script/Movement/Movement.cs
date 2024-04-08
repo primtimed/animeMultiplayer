@@ -112,6 +112,16 @@ public class Movement : NetworkBehaviour
 
     private void Start()
     {
+        if (PlayerPrefs.GetFloat("Sens") <= 1)
+        {
+            PlayerPrefs.SetFloat("Sens", 10);
+        }
+
+        if (PlayerPrefs.GetFloat("Fov") <= 40)
+        {
+            PlayerPrefs.SetFloat("Fov", 90);
+        }
+
         _sensetivitie = PlayerPrefs.GetFloat("Sens");
 
         _back._camera.GetComponent<Camera>().fieldOfView = PlayerPrefs.GetFloat("FOV");

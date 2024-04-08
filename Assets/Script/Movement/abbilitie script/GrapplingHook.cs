@@ -2,6 +2,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using Unity.Netcode;
 
 [CreateAssetMenu(fileName = "Grapplinghook", menuName = "Grapplinghook")]
 public class GrapplingHook : BaseAbillitie

@@ -9,12 +9,11 @@ public class DestroyServer : MonoBehaviour
 
     private void Start()
     {
-        Invoke("DestroyDelayServerRpc", _time);
+        Invoke("DestroyDelay", _time);
     }
 
-    [ServerRpc]
-    void DestroyDelayServerRpc()
+    void DestroyDelay()
     {
-        GetComponent<NetworkObject>().Despawn();
+        Destroy(gameObject);
     }
 }

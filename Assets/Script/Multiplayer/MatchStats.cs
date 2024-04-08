@@ -14,17 +14,14 @@ public class MatchStats : NetworkBehaviour
 
     public NetworkVariable<bool> _freeForAll;
 
-    public NetworkList<int> _team1;
-    public NetworkList<int> _team2;
-
     private void Update()
     {
-        if (_team1Points.Value >= _winningPoints)
+        if (_team1Points.Value >= 15)
         {
             _teamWon.Value = Team.Team1;
         }
 
-        else if (_team2Points.Value >= _winningPoints)
+        else if (_team2Points.Value >= 15)
         {
             _teamWon.Value = Team.Team2;
         }

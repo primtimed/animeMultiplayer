@@ -18,8 +18,6 @@ public class Admin : MonoBehaviour
         _action = _input.Admin.Spectate;
 
         _action.started += lolll;
-
-        Debug.Log("sp0");
     }
 
     private void OnDisable()
@@ -31,24 +29,18 @@ public class Admin : MonoBehaviour
 
     void lolll(InputAction.CallbackContext context)
     {
-        Debug.Log("sp1");
+        if (!GetComponent<PlayerStats>()) return;
 
         if (GetComponent<PlayerStats>().IsOwner == false) return;
-
-        Debug.Log("sp2");
 
         if (GetComponent<Movement>()._spectator)
         {
             GetComponent<Movement>()._spectator = false;
-
-            Debug.Log("sp3");
         }
 
         else
         {
             GetComponent<Movement>()._spectator = true;
-
-            Debug.Log("sp4");
         }
     }
 }

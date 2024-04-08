@@ -469,7 +469,9 @@ public class BaseGun : NetworkBehaviour
         if (!IsLocalPlayer) return;
 
         Shake();
-        ShotServerRpc();
+
+        Instantiate(_UX._sound, transform);
+        //ShotServerRpc();
 
         if (Physics.Raycast(_cam.transform.position, _bloom, out _hit, Mathf.Infinity))
         {
@@ -478,7 +480,10 @@ public class BaseGun : NetworkBehaviour
             {
                 if (GetComponentInParent<PlayerStats>()._team.Value != _hit.transform.GetComponent<PlayerStats>()._team.Value || GetComponentInParent<PlayerStats>()._team.Value == Team.FreeForAll)
                 {
-                    _hit.transform.GetComponent<PlayerStats>().TakeDamageServerRpc(_gun._damage);
+                    //_hit.transform.GetComponent<PlayerStats>().TakeDamageServerRpc(_gun._damage);
+
+                    TakeDamageServerRpc(_gun._damage);
+
                     StartCoroutine(Hit());
                 }
             }
@@ -486,6 +491,16 @@ public class BaseGun : NetworkBehaviour
             _bullet = Instantiate(_gun._hitEffect, _hit.point, transform.rotation);
             _bullet.GetComponent<Bullet>().SetTrail(_mainGun.GetComponentInChildren<BarrelLoc>().transform);
         }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void TakeDamageServerRpc(float damage)
+    {
+        _hit.transform.GetComponent<PlayerStats>()._hpNow.Value -= damage;
+
+        _hit.transform.GetComponent<PlayerStats>()._hpRegenTimer = 0;
+
+        Debug.LogWarning(damage.ToString() + "Damage     ServerRpc");
     }
 
     IEnumerator Hit()

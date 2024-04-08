@@ -15,7 +15,7 @@ public enum Team
 
 public class PlayerStats : NetworkBehaviour
 {
-    public NetworkVariable<int> _playerID = new NetworkVariable<int>();
+    public int _playerID;
     public NetworkVariable<Team> _team = new NetworkVariable<Team>();
 
     MatchStats _match;
@@ -30,7 +30,7 @@ public class PlayerStats : NetworkBehaviour
     public bool _dead;
 
     public float _hpRegenDelay;
-    float _hpRegenTimer;
+    [HideInInspector] public float _hpRegenTimer;
 
     bool _endGame;
 
@@ -48,13 +48,13 @@ public class PlayerStats : NetworkBehaviour
 
     private void Start()
     {
-        _hpNow.Value = _hp;
+        SetHpServerRpc();
 
-        _mash = GetComponentInChildren<MeshRenderer>();
+         _mash = GetComponentInChildren<MeshRenderer>();
 
         if (IsLocalPlayer)
         {
-            _playerID.Value = SystemInfo.graphicsDeviceID;
+            _playerID = SystemInfo.graphicsDeviceID;
 
             _movement = GetComponent<Movement>();
             _rb = GetComponent<Rigidbody>();
@@ -68,36 +68,18 @@ public class PlayerStats : NetworkBehaviour
     public void SetTeam1ServerRpc()
     {
         _team.Value = Team.Team1;
-
-        //_match._team1.Add(_playerID.Value);
-        //_match._team2.Remove(_playerID.Value);
-
-        Debug.Log(_match._team1.Count);   
-        Debug.Log(_match._team2.Count);
     }
 
     [ServerRpc]
     public void SetTeam2ServerRpc()
     {
         _team.Value = Team.Team2;
-
-        //_match._team2.Add(_playerID.Value);
-        //_match._team1.Remove(_playerID.Value);
-        
-        Debug.Log(_match._team1.Count);
-        Debug.Log(_match._team2.Count);
     }
 
     [ServerRpc]
     public void SetTeamFreeServerRpc()
     {
         _team.Value = Team.FreeForAll;
-
-        //_match._team1.Add(_playerID.Value);
-        //_match._team2.Clear();
-
-        Debug.Log(_match._team1.Count);
-        Debug.Log(_match._team2.Count);
     }
 
 
@@ -108,7 +90,7 @@ public class PlayerStats : NetworkBehaviour
 
         _hpRegenTimer = 0;
 
-        Debug.LogWarning(damage.ToString() + "Damage To ServerRpc");
+        Debug.LogWarning(damage.ToString() + "Damage     ServerRpc");
     }
 
     [ServerRpc]
@@ -141,36 +123,34 @@ public class PlayerStats : NetworkBehaviour
         }
     }
 
-    bool _spectaitCheck;
+    public AbilitieManager _abbil;
+
     void Spectate()
     {
-        if (_spectaitCheck != _movement._spectator)
+        if (!IsLocalPlayer) return;
+
+        if (_movement._spectator)
         {
-            _spectaitCheck = _movement._spectator;
+            _rb.useGravity = false;
+            _rb.velocity = new Vector3(0, 0, 0);
+            _gun.SetActive(false);
+            _abbil.enabled = false;
+        }
 
-            if (_movement._spectator)
-            {
-                GetComponent<Rigidbody>().useGravity = false;
-                GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
-                _gun.SetActive(false);
-                GetComponent<AbilitieManager>().enabled = false;
-            }
-
-            else
-            {
-                GetComponent<Rigidbody>().useGravity = true;
-                _gun.SetActive(true);
-                GetComponent<AbilitieManager>().enabled = true;
-            }
+        else
+        {
+            _rb.useGravity = true;
+            _gun.SetActive(true);
+            _abbil.enabled = true;
         }
     }
 
     public void GameEnd()
     {
+        _gameUI._uiEnd.SetActive(true);
         _endGame = true;
 
         _gameUI._deadUI.SetActive(false);
-        _gameUI._uiEnd.SetActive(true);
 
         GetComponent<Movement>()._speedAcceleration = 0;
         GetComponent<Movement>()._canJump = false;
@@ -183,7 +163,7 @@ public class PlayerStats : NetworkBehaviour
     private void Update()
     {
         SetCollor();
-        Spectate();
+        //Spectate();
 
         _hpRegenTimer += Time.deltaTime;
 
@@ -194,7 +174,10 @@ public class PlayerStats : NetworkBehaviour
 
         if (_endGame) return;
 
-        if (_movement._spectator) return;
+        if (IsLocalPlayer)
+        {
+            if (_movement._spectator) return;
+        }
 
         if (_hpNow.Value <= 0)
         {
@@ -234,7 +217,7 @@ public class PlayerStats : NetworkBehaviour
 
         else
         {
-            _hpNow.Value = _hp;
+            SetHpServerRpc();
         }
     }
 
