@@ -17,7 +17,7 @@ MonoBehaviour:
   _fireRate: 1
   _reloadSpeed: 2
   _weaponSpretAmount: 5
-  _damage: 101
+  _damage: 80
   _recoil:
   - {x: -2, y: 5}
   _weaponFlick: 10
@@ -34,5 +34,4 @@ MonoBehaviour:
   _UX:
     _shoot: {fileID: 9143881959711176506, guid: b9b0eb0bf1b9e1447bc7eac3962e354d,
       type: 3}
-    _shotPitch: 0.8
     _reload: {fileID: 0}

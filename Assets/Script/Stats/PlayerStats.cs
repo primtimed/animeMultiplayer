@@ -29,8 +29,8 @@ public class PlayerStats : NetworkBehaviour
 
     public bool _dead;
 
-    public float _hpRegenDelay;
-    [HideInInspector] public float _hpRegenTimer;
+    //public float _hpRegenDelay;
+    //[HideInInspector] public float _hpRegenTimer;
 
     bool _endGame;
 
@@ -88,7 +88,7 @@ public class PlayerStats : NetworkBehaviour
     {
         _hpNow.Value -= damage;
 
-        _hpRegenTimer = 0;
+        //_hpRegenTimer = 0;
 
         Debug.LogWarning(damage.ToString() + "Damage     ServerRpc");
     }
@@ -165,7 +165,7 @@ public class PlayerStats : NetworkBehaviour
         SetCollor();
         //Spectate();
 
-        _hpRegenTimer += Time.deltaTime;
+        //_hpRegenTimer += Time.deltaTime;
 
         if (GameObject.Find("Keep").GetComponent<MatchStats>()._teamWon.Value != Team.None)
         {
@@ -210,15 +210,15 @@ public class PlayerStats : NetworkBehaviour
             SetvisibleServerRpc(true);
         }
 
-        if (_hpRegenDelay <= _hpRegenTimer && _hpNow.Value <= (_hp - 1))
-        {
-            AddHPServerRpc();
-        }
+        //if (_hpRegenDelay <= _hpRegenTimer && _hpNow.Value <= (_hp - 1))
+        //{
+        //    AddHPServerRpc();
+        //}
 
-        else
-        {
-            SetHpServerRpc();
-        }
+        //else
+        //{
+        //    SetHpServerRpc();
+        //}
     }
 
     [ServerRpc(RequireOwnership = false)]

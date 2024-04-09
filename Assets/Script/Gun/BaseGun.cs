@@ -452,12 +452,6 @@ public class BaseGun : NetworkBehaviour
 
     private void Recoil()
     {
-        //float recoilX = Mathf.Lerp(_move._x, _move._x - _gun._recoil[_recoilInt].x / 3, 1);
-        //float recoilY = Mathf.Lerp(_move._y, _move._y - _gun._recoil[_recoilInt].x / 3, 1);
-
-        //_move._x -= recoilX;
-        //_move._y -= recoilX;
-
         _move._x -= _gun._recoil[_recoilInt].x / 3;
         _move._y -= _gun._recoil[_recoilInt].y / 3;
     }
@@ -470,8 +464,8 @@ public class BaseGun : NetworkBehaviour
 
         Shake();
 
-        Instantiate(_UX._sound, transform);
-        //ShotServerRpc();
+        //Instantiate(_UX._sound, transform);
+        ShotServerRpc();
 
         if (Physics.Raycast(_cam.transform.position, _bloom, out _hit, Mathf.Infinity))
         {
@@ -480,7 +474,7 @@ public class BaseGun : NetworkBehaviour
             {
                 if (GetComponentInParent<PlayerStats>()._team.Value != _hit.transform.GetComponent<PlayerStats>()._team.Value || GetComponentInParent<PlayerStats>()._team.Value == Team.FreeForAll)
                 {
-                    //_hit.transform.GetComponent<PlayerStats>().TakeDamageServerRpc(_gun._damage);
+                    _hit.transform.GetComponent<PlayerStats>().TakeDamageServerRpc(_gun._damage);
 
                     TakeDamageServerRpc(_gun._damage);
 
@@ -498,9 +492,9 @@ public class BaseGun : NetworkBehaviour
     {
         _hit.transform.GetComponent<PlayerStats>()._hpNow.Value -= damage;
 
-        _hit.transform.GetComponent<PlayerStats>()._hpRegenTimer = 0;
+        //_hit.transform.GetComponent<PlayerStats>()._hpRegenTimer = 0;
 
-        Debug.LogWarning(damage.ToString() + "Damage     ServerRpc");
+        Debug.LogWarning(damage.ToString() + "Damage ServerRpc");
     }
 
     IEnumerator Hit()

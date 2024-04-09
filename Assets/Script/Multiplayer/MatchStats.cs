@@ -16,12 +16,12 @@ public class MatchStats : NetworkBehaviour
 
     private void Update()
     {
-        if (_team1Points.Value >= 15)
+        if (_team1Points.Value >= _winningPoints)
         {
             _teamWon.Value = Team.Team1;
         }
 
-        else if (_team2Points.Value >= 15)
+        else if (_team2Points.Value >= _winningPoints)
         {
             _teamWon.Value = Team.Team2;
         }

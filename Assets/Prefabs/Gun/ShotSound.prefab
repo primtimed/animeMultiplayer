@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6689238854061112476}
   - component: {fileID: 9143881959711176506}
   - component: {fileID: -3801663275756264934}
+  - component: {fileID: -6786494702071328386}
   m_Layer: 0
   m_Name: ShotSound
   m_TagString: Untagged
@@ -52,11 +53,11 @@ AudioSource:
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 100
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
+  DopplerLevel: 0
+  MinDistance: 0
+  MaxDistance: 100
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 1
   BypassListenerEffects: 1
   BypassReverbZones: 1
@@ -70,17 +71,26 @@ AudioSource:
       outSlope: 0
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
     - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
+      time: 0.28683877
+      value: 0.13427329
+      inSlope: -0.71841335
+      outSlope: -0.71841335
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0.2680172
+      outWeight: 0.32477242
+    - serializedVersion: 3
+      time: 0.9888153
+      value: 0
+      inSlope: -1
+      outSlope: -1
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -142,3 +152,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _time: 1
+--- !u!114 &-6786494702071328386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3543306792914560877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 951099334
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 0
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1

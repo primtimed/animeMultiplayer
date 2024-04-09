@@ -370,8 +370,8 @@ MonoBehaviour:
     ForceSamePrefabs: 0
     RecycleNetworkIds: 1
     NetworkIdRecycleDelay: 120
-    RpcHashSize: 1
-    LoadSceneTimeOut: 200
+    RpcHashSize: 0
+    LoadSceneTimeOut: 120
     SpawnTimeout: 1
     EnableNetworkLogs: 1
     OldPrefabList: []
@@ -561,7 +561,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameID: 
-  _winningPoints: 10
+  _winningPoints: 15
   _team1Points:
     m_InternalValue: 0
   _team2Points:
