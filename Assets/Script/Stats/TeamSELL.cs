@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
+using TMPro;
 
 public class TeamSELL : MonoBehaviour
 {
@@ -11,6 +12,9 @@ public class TeamSELL : MonoBehaviour
     MatchStats _match;
 
     NetworkBehaviour _network;
+
+    public TextMeshProUGUI _team1Players;
+    public TextMeshProUGUI _team2Players;
 
     private void Start()
     {
@@ -39,5 +43,11 @@ public class TeamSELL : MonoBehaviour
     public void NotFreeForAllServerRpc()
     {
         _match._freeForAll.Value = false;
+    }
+
+    private void Update()
+    {
+        _team1Players.text = _match._team1Players.Value.ToString() + " Players";     
+        _team2Players.text = _match._team2Players.Value.ToString() + " Players";
     }
 }

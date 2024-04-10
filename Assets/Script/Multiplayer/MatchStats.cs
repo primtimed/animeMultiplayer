@@ -14,6 +14,9 @@ public class MatchStats : NetworkBehaviour
 
     public NetworkVariable<bool> _freeForAll;
 
+    public NetworkVariable<int> _team1Players;
+    public NetworkVariable<int> _team2Players;
+
     private void Update()
     {
         if (_team1Points.Value >= _winningPoints)

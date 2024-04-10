@@ -24,7 +24,7 @@ MonoBehaviour:
   _weaponType: 2
   _fireMode: 0
   _gun: {fileID: 199023552529132276, guid: ff51537bc54e9bd438412f820af46d95, type: 3}
-  _gunPNG: {fileID: 2800000, guid: fe80d34f52fc64541ad5297e1a9d1c3a, type: 3}
+  _gunPNG: {fileID: 2800000, guid: ac5d3bccf4b3a3449ad10e89fd7dbc28, type: 3}
   _hitEffect: {fileID: 7276296530774455120, guid: b7654e059a7b9b641b8d4d08c09263c2,
     type: 3}
   _flash: {fileID: 0}

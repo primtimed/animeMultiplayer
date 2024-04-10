@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d81257a48c5c4842a47f07f02d11be6, type: 3}
   m_Name: Grapplinghook
   m_EditorClassIdentifier: 
-  _icon: {fileID: 2800000, guid: 6116bb2346d697a4190f5c98633f6ee9, type: 3}
+  _icon: {fileID: 2800000, guid: c737031a8088b7042b07052521e580bb, type: 3}
   _maxDistance: 35
   _aimAssist: 1.5
   _spring: 15

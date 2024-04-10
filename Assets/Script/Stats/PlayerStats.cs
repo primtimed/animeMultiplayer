@@ -145,6 +145,19 @@ public class PlayerStats : NetworkBehaviour
         }
     }
 
+    public void GameStart()
+    {
+        if(_team.Value == Team.Team1)
+        {
+            _match._team1Players.Value += 1;
+        }
+
+        else if (_team.Value == Team.Team2)
+        {
+            _match._team2Players.Value += 1;
+        }
+    }
+
     public void GameEnd()
     {
         _gameUI._uiEnd.SetActive(true);

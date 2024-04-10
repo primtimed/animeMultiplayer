@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: pistol
   _ammo: 16
-  _fireRate: 0.2
+  _fireRate: 0.15
   _reloadSpeed: 2
   _weaponSpretAmount: 2
   _damage: 5
@@ -24,7 +24,7 @@ MonoBehaviour:
   _weaponType: 3
   _fireMode: 0
   _gun: {fileID: 4777070418287428037, guid: 892de77ca010c2940a538835f723c811, type: 3}
-  _gunPNG: {fileID: 2800000, guid: 1044b1302f5d17f4cb74d3f819051dc4, type: 3}
+  _gunPNG: {fileID: 2800000, guid: 206970088c9f9a548a9711400b424098, type: 3}
   _hitEffect: {fileID: 7276296530774455120, guid: b7654e059a7b9b641b8d4d08c09263c2,
     type: 3}
   _flash: {fileID: 0}
