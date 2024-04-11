@@ -1626,7 +1626,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 3623878783
+    m_Bits: 3690987647
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -6710,7 +6710,7 @@ PrefabInstance:
     - target: {fileID: 3953850268246250014, guid: 6a0c3922bf6077949ab936b599251bf9,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[7].m_MethodName
-      value: GameStart
+      value: GameStartServerRpc
       objectReference: {fileID: 0}
     - target: {fileID: 3953850268246250014, guid: 6a0c3922bf6077949ab936b599251bf9,
         type: 3}

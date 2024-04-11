@@ -50,7 +50,7 @@ public class PlayerStats : NetworkBehaviour
     {
         SetHpServerRpc();
 
-         _mash = GetComponentInChildren<MeshRenderer>();
+        _mash = GetComponentInChildren<MeshRenderer>();
 
         if (IsLocalPlayer)
         {
@@ -147,7 +147,13 @@ public class PlayerStats : NetworkBehaviour
 
     public void GameStart()
     {
-        if(_team.Value == Team.Team1)
+
+    }
+
+    [ServerRpc]
+    public void GameStartServerRpc()
+    {
+        if (_team.Value == Team.Team1)
         {
             _match._team1Players.Value += 1;
         }
